@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import MainPage          from './pages/MainPage.jsx';
-import BoardListPage     from './pages/BoardListPage.jsx';
-import BoardDetailPage   from './pages/BoardDetailPage.jsx';
-import ProductListPage   from './pages/ProductListPage.jsx';
+import MainPage from './pages/MainPage.jsx';
+import BoardListPage from './pages/BoardListPage.jsx';
+import BoardDetailPage from './pages/BoardDetailPage.jsx';
+import ProductListPage from './pages/ProductListPage.jsx';
 import ProductDetailPage from './pages/ProductDetailPage.jsx';
-import CartPage          from './pages/CartPage.jsx';
-import LoginPage         from './pages/LoginPage.jsx';
-import RegisterPage      from './pages/RegisterPage.jsx';
+import CartPage from './pages/CartPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import RegisterPage from './pages/RegisterPage.jsx';
 
 export default function App() {
-  const [page, setPage]       = useState(() => ({ name: localStorage.getItem('shc-page') || 'main', params: {} }));
+  const [page, setPage] = useState(() => ({ name: localStorage.getItem('shc-page') || 'main', params: {} }));
   const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('shc-logged-in') === 'true');
 
   const navigate = (name, params = {}) => {
@@ -18,10 +18,25 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
-  const onLogin  = (user) => { setIsLoggedIn(true);  localStorage.setItem('shc-logged-in', 'true'); };
-  const onLogout = ()     => { setIsLoggedIn(false); localStorage.removeItem('shc-logged-in'); navigate('main'); };
+  const onLogin = (user) => { setIsLoggedIn(true); localStorage.setItem('shc-logged-in', 'true'); navigate('main'); };
+  const onLogout = () => { setIsLoggedIn(false); localStorage.removeItem('shc-logged-in'); navigate('main'); };
 
-  const common = { navigate, isLoggedIn };
+  const onNavClick = (name) => navigate(name);
+  const onPostClick = (post) => navigate('board-detail', { id: post?.id, category: post?.category || 'recipe' });
+  const onProductClick = (product) => navigate('product-detail', { id: product?.id });
+  const onCartClick = () => navigate('cart');
+  const onBack = (fallback) => navigate(typeof fallback === 'string' ? fallback : 'main');
+
+  const common = {
+    navigate,
+    isLoggedIn,
+    onNavClick,
+    onPostClick,
+    onProductClick,
+    onCart: onCartClick,
+    onBack,
+    onLogout
+  };
 
   switch (page.name) {
     case 'main':

@@ -1,0 +1,164 @@
+.reg-page {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* 좌측 브랜드 영역 */
+.reg-brand {
+  flex: 1;
+  background: linear-gradient(160deg, #1e3320, #2d5035, #4a7a50, #6b9e72);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 72px;
+  position: relative;
+  overflow: hidden;
+}
+
+.reg-circle {
+  position: absolute;
+  right: -80px;
+  top: -80px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.reg-brand-content {
+  position: relative;
+  z-index: 1;
+}
+
+.reg-icon {
+  font-size: 52px;
+  margin-bottom: 24px;
+}
+
+.reg-brand-title {
+  font-size: 40px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.25;
+  margin-bottom: 18px;
+}
+
+.reg-brand-desc {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.75;
+}
+
+/* 우측 폼 영역 */
+.reg-form-area {
+  width: 520px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 52px;
+  background: #fff;
+  overflow-y: auto;
+}
+
+.reg-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: #2a2a2a;
+  margin-bottom: 28px;
+}
+
+/* 입력 폼 */
+.reg-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3a3a3a;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.reg-input {
+  width: 100%;
+  padding: 13px 16px;
+  font-size: 16px;
+  border: 1.5px solid #ddd;
+  border-radius: 12px;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+
+.reg-input:focus {
+  border-color: #4a7a50;
+}
+
+/* 건강 관심사 */
+.reg-interest-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3a3a3a;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.reg-interest-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 20px;
+}
+
+.reg-interest-btn {
+  padding: 7px 14px;
+  border-radius: 99px;
+  border: 1.5px solid #ddd;
+  background: #fff;
+  color: #8a8a7a;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reg-interest-btn.active {
+  border-color: #4a7a50;
+  background: #e8f0e9;
+  color: #4a7a50;
+}
+
+/* 기타 */
+.reg-error {
+  color: #e85a5a;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.reg-submit-btn {
+  padding: 15px;
+  background: #4a7a50;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-bottom: 14px;
+  width: 100%;
+}
+
+.reg-footer {
+  text-align: center;
+  font-size: 15px;
+  color: #8a8a7a;
+}
+
+.reg-link {
+  color: #4a7a50;
+  font-weight: 700;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}

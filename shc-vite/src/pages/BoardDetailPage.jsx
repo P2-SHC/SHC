@@ -44,7 +44,7 @@ export default function BoardDetailPage({
       <Header activePage={category} isLoggedIn={isLoggedIn} onNavClick={onNavClick} cartCount={2} />
 
       <div className="container--sm">
-        <button className="detail-back" onClick={onBack}>← {meta.label}으로 돌아가기</button>
+        <button className="detail-back" onClick={() => onBack?.(category)}>← {meta.label}으로 돌아가기</button>
 
         {/* 본문 */}
         <article className="detail-article">

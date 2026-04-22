@@ -1,0 +1,157 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* 좌측 브랜드 영역 */
+.login-brand {
+  flex: 1;
+  background: linear-gradient(160deg, #1e3320, #2d5035, #4a7a50, #6b9e72);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 72px;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-circle-1 {
+  position: absolute;
+  right: -80px;
+  top: -80px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.login-circle-2 {
+  position: absolute;
+  left: -60px;
+  bottom: -60px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.login-brand-content {
+  position: relative;
+  z-index: 1;
+}
+
+.login-icon {
+  font-size: 52px;
+  margin-bottom: 24px;
+}
+
+.login-brand-title {
+  font-size: 44px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.25;
+  margin-bottom: 18px;
+}
+
+.login-brand-desc {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.75;
+}
+
+/* 우측 폼 영역 */
+.login-form-area {
+  width: 500px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 52px;
+  background: #fff;
+}
+
+.login-header {
+  margin-bottom: 36px;
+}
+
+.login-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #2a2a2a;
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  font-size: 16px;
+  color: #8a8a7a;
+}
+
+/* 입력 폼 */
+.login-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #3a3a3a;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 17px;
+  border: 1.5px solid #ddd;
+  border-radius: 12px;
+  outline: none;
+  font-family: inherit;
+  box-sizing: border-box;
+  margin-bottom: 14px;
+  transition: border-color 0.2s;
+}
+
+.login-input:focus {
+  border-color: #4a7a50;
+}
+
+.login-error {
+  color: #e85a5a;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.login-btn {
+  padding: 16px;
+  background: #4a7a50;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-bottom: 18px;
+  width: 100%;
+}
+
+.login-footer {
+  text-align: center;
+  font-size: 16px;
+  color: #8a8a7a;
+  margin-bottom: 20px;
+}
+
+.login-link {
+  color: #4a7a50;
+  font-weight: 700;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.login-back-btn {
+  background: none;
+  border: none;
+  color: #bbb;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+}
