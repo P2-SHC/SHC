@@ -60,8 +60,7 @@ export default function ProductDetailPage({ params, navigate, isLoggedIn }) {
               </button>
               <button
                 onClick={handleAddCart}
-                className="pd-cart-btn"
-                style={{ background: added ? '#e8f0e9' : '#fff' }}
+                className={`pd-cart-btn ${added ? 'added' : ''}`}
               >
                 {added ? '✓ 담겼어요!' : '장바구니'}
               </button>

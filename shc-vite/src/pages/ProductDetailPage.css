@@ -155,4 +155,9 @@
   font-weight: 800;
   cursor: pointer;
   transition: all 0.2s;
+  background: #fff;
+}
+
+.pd-cart-btn.added {
+  background: #e8f0e9;
 }
