@@ -1,7 +1,7 @@
 import Header from '../components/Header.jsx';
 import './CartPage.css';
 
-export default function CartPage() {
+export default function CartPage({ setPage }) {
   return (
     <div className="cart-page">
       <Header />

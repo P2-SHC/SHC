@@ -5,7 +5,7 @@ import './BoardListPage.css';
 /**
  * BoardListPage - 게시판 목록 (SHC-002)
  */
-export default function BoardListPage() {
+export default function BoardListPage({ setPage }) {
   return (
     <div className="page">
       <Header />
@@ -31,7 +31,7 @@ export default function BoardListPage() {
         <div className="board-layout">
           {/* 게시글 목록 */}
           <div className="board-list">
-            <button className="board-post-card">
+            <button className="board-post-card" onClick={() => { setPage("BoardDetailPage") }}>
               <div className="board-post-card__img">🥗</div>
               <div className="board-post-card__body">
                 <Badge />
@@ -39,7 +39,7 @@ export default function BoardListPage() {
                 <p className="board-post-card__meta">2025.04.15 · 조회 1,240</p>
               </div>
             </button>
-            <button className="board-post-card">
+            <button className="board-post-card" onClick={() => { setPage("BoardDetailPage") }}>
               <div className="board-post-card__img">🥗</div>
               <div className="board-post-card__body">
                 <Badge />
@@ -52,11 +52,11 @@ export default function BoardListPage() {
           {/* TOP5 사이드바 */}
           <aside className="board-top5">
             <div className="board-top5__title">👑 조회수 TOP 5</div>
-            <button className="board-top5__item">
+            <button className="board-top5__item" onClick={() => { setPage("BoardDetailPage") }}>
               <span className="board-top5__rank board-top5__rank--1">1</span>
               <span className="board-top5__text">무릎 통증 없는 실내 스트레칭 5가지</span>
             </button>
-            <button className="board-top5__item">
+            <button className="board-top5__item" onClick={() => { setPage("BoardDetailPage") }}>
               <span className="board-top5__rank board-top5__rank--2">2</span>
               <span className="board-top5__text">혼자서도 즐거운 건강한 노후 만들기</span>
             </button>

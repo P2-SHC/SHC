@@ -36,16 +36,16 @@ export default function LoginPage() {
           />
         </div>
 
-        <button className="login-btn">
+        <button className="login-btn" onClick={() => { setPage("MainPage") }}>
           로그인
         </button>
 
         <div className="login-footer">
           계정이 없으신가요?{' '}
-          <button className="login-link">회원가입</button>
+          <button className="login-link" onClick={() => { setPage("RegisterPage") }}>회원가입</button>
         </div>
 
-        <button className="login-back-btn">← 메인으로 돌아가기</button>
+        <button className="login-back-btn" onClick={() => { setPage("MainPage") }}>← 메인으로 돌아가기</button>
       </div>
     </div>
   );
