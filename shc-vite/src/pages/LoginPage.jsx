@@ -1,17 +1,6 @@
-import { useState } from 'react';
 import './LoginPage.css';
 
-export default function LoginPage({ navigate, onLogin }) {
-  const [id, setId] = useState('');
-  const [pw, setPw] = useState('');
-  const [error, setError] = useState('');
-
-  const handleLogin = () => {
-    if (!id || !pw) { setError('아이디와 비밀번호를 입력해주세요.'); return; }
-    onLogin({ name: id, id });
-    navigate('main');
-  };
-
+export default function LoginPage() {
   return (
     <div className="login-page">
       {/* 좌측 브랜드 영역 */}
@@ -37,30 +26,26 @@ export default function LoginPage({ navigate, onLogin }) {
           <label className="login-label">아이디</label>
           <input
             className="login-input"
-            value={id} onChange={e => setId(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && handleLogin()}
             placeholder="아이디를 입력하세요"
           />
           <label className="login-label">비밀번호</label>
           <input
             className="login-input"
-            type="password" value={pw} onChange={e => setPw(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && handleLogin()}
+            type="password"
             placeholder="비밀번호를 입력하세요"
           />
-          {error && <div className="login-error">{error}</div>}
         </div>
 
-        <button onClick={handleLogin} className="login-btn">
+        <button className="login-btn">
           로그인
         </button>
 
         <div className="login-footer">
           계정이 없으신가요?{' '}
-          <button onClick={() => navigate('register')} className="login-link">회원가입</button>
+          <button className="login-link">회원가입</button>
         </div>
 
-        <button onClick={() => navigate('main')} className="login-back-btn">← 메인으로 돌아가기</button>
+        <button className="login-back-btn">← 메인으로 돌아가기</button>
       </div>
     </div>
   );
