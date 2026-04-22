@@ -1,0 +1,102 @@
+.detail-back {
+  background: none;
+  border: none;
+  color: var(--sage);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 20px;
+  padding: 0;
+  font-family: inherit;
+}
+
+/* 본문 */
+.detail-article {
+  background: var(--white);
+  border-radius: var(--r-xl);
+  padding: 36px 40px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+.detail-article__badge   { margin-bottom: 14px; }
+.detail-article__title   { font-size: 26px; font-weight: 800; color: var(--text-dark); line-height: 1.4; margin-bottom: 12px; }
+.detail-article__meta    { font-size: 15px; color: var(--text-light); margin-bottom: 0; }
+.detail-article__divider { height: 1px; background: var(--border-light); margin: 20px 0; }
+.detail-article__content { font-size: 17px; color: #3a3a3a; line-height: 1.9; white-space: pre-line; }
+
+/* 관련 상품 */
+.detail-products {
+  background: var(--white);
+  border-radius: var(--r-xl);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+.detail-products__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+.detail-products__grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+}
+.detail-product-card {
+  background: var(--beige);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-md);
+  padding: 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: box-shadow 0.2s;
+  font-family: inherit;
+}
+.detail-product-card:hover { box-shadow: var(--shadow-md); }
+.detail-product-card__emoji { font-size: 28px; display: block; margin-bottom: 8px; }
+.detail-product-card__name  { font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
+.detail-product-card__price { font-size: 15px; font-weight: 800; color: var(--sage); }
+
+/* 댓글 */
+.detail-comments {
+  background: var(--white);
+  border-radius: var(--r-xl);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-sm);
+}
+.detail-comments__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+.detail-comments__list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.comment {
+  padding: 14px 16px;
+  background: var(--beige);
+  border-radius: var(--r-md);
+}
+.comment__header { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.comment__author { font-size: 15px; font-weight: 700; color: var(--text-dark); }
+.comment__date   { font-size: 13px; color: var(--text-light); }
+.comment__text   { font-size: 16px; color: #3a3a3a; }
+
+.comment-form { display: flex; gap: 10px; }
+.comment-form__input { flex: 1; }
+
+.comment-login-notice {
+  text-align: center;
+  padding: 16px;
+  color: var(--text-light);
+  font-size: 16px;
+}
+.comment-login-notice__btn {
+  color: var(--sage);
+  font-weight: 700;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: inherit;
+}

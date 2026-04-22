@@ -1,0 +1,157 @@
+/* ──────────────────────────────────────────
+   CSS Custom Properties (Design Tokens)
+────────────────────────────────────────── */
+:root {
+  /* Colors */
+  --sage:        #4a7a50;
+  --sage-mid:    #6b9e72;
+  --sage-light:  #e8f0e9;
+  --beige:       #f7f3ec;
+  --beige-deep:  #ede8e0;
+  --peach:       #e8956d;
+  --peach-light: #fde8dc;
+  --white:       #ffffff;
+  --text-dark:   #2a2a2a;
+  --text-mid:    #5a5a5a;
+  --text-light:  #8a8a7a;
+  --border:      #e4dfd6;
+  --border-light:#f0ece4;
+
+  /* Radius */
+  --r-sm:  8px;
+  --r-md:  12px;
+  --r-lg:  16px;
+  --r-xl:  20px;
+  --r-2xl: 24px;
+
+  /* Shadow */
+  --shadow-sm: 0 2px 8px  rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 6px 28px rgba(0,0,0,0.12);
+
+  /* Typography */
+  --font-xs:  12px;
+  --font-sm:  14px;
+  --font-base:16px;
+  --font-md:  18px;
+  --font-lg:  20px;
+  --font-xl:  24px;
+  --font-2xl: 28px;
+  --font-3xl: 32px;
+}
+
+/* ──────────────────────────────────────────
+   Reset
+────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', -apple-system, sans-serif;
+  font-size: var(--font-md);
+  background: var(--beige);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+button { font-family: inherit; cursor: pointer; }
+input, textarea { font-family: inherit; }
+a { text-decoration: none; color: inherit; }
+
+/* ──────────────────────────────────────────
+   공통 버튼
+────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--r-md);
+  font-size: var(--font-base);
+  font-weight: 700;
+  padding: 10px 22px;
+  border: none;
+  transition: all 0.2s;
+}
+.btn--primary  { background: var(--sage);  color: var(--white); }
+.btn--outline  { background: var(--white); color: var(--sage);  border: 1.5px solid var(--sage); }
+.btn--ghost    { background: var(--sage-light); color: var(--sage); }
+.btn--subtle   { background: none; color: var(--text-mid); border: 1.5px solid var(--border); }
+.btn--lg       { padding: 14px 36px; font-size: var(--font-md); border-radius: var(--r-lg); }
+.btn--full     { width: 100%; }
+
+.btn--primary:hover  { background: var(--sage-mid); }
+.btn--outline:hover  { background: var(--sage-light); }
+.btn--ghost:hover    { background: #d4e8d6; }
+
+/* ──────────────────────────────────────────
+   공통 Input
+────────────────────────────────────────── */
+.input {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: var(--font-base);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  outline: none;
+  background: var(--white);
+  transition: border-color 0.2s;
+}
+.input:focus { border-color: var(--sage); }
+
+/* ──────────────────────────────────────────
+   공통 카드
+────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+.card:hover { box-shadow: var(--shadow-md); }
+
+/* ──────────────────────────────────────────
+   페이지 레이아웃
+────────────────────────────────────────── */
+.page { min-height: 100vh; background: var(--beige); }
+.container      { max-width: 1400px; margin: 0 auto; padding: 28px 24px; }
+.container--md  { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
+.container--sm  { max-width: 960px;  margin: 0 auto; padding: 28px 24px; }
+.container--xs  { max-width: 800px;  margin: 0 auto; padding: 28px 24px; }
+
+/* ──────────────────────────────────────────
+   Scrollbar
+────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--beige-deep); }
+::-webkit-scrollbar-thumb { background: #b8cebb; border-radius: 4px; }
+
+/* ──────────────────────────────────────────
+   Dev Page Switcher (App.jsx 전용)
+────────────────────────────────────────── */
+.dev-nav {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #1c2d1e;
+  border-radius: var(--r-lg);
+  padding: 10px 14px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  z-index: 9999;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+.dev-nav button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.dev-nav button:hover  { background: rgba(255,255,255,0.2); color: #fff; }
+.dev-nav button.active { background: var(--sage); color: #fff; }

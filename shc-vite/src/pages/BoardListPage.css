@@ -1,0 +1,111 @@
+.board-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.board-header__icon  { font-size: 40px; }
+.board-header__title { font-size: 28px; font-weight: 800; color: var(--text-dark); }
+.board-header__desc  { font-size: 16px; color: var(--text-light); }
+
+.board-search { margin-bottom: 24px; }
+.board-search__input { max-width: 420px; }
+
+.board-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.board-list { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+/* 게시글 카드 */
+.board-post-card {
+  display: flex;
+  gap: 20px;
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+  width: 100%;
+  font-family: inherit;
+}
+.board-post-card:hover { box-shadow: var(--shadow-lg); }
+.board-post-card__img {
+  width: 120px;
+  height: 90px;
+  flex-shrink: 0;
+  border-radius: var(--r-md);
+  background: var(--sage-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
+.board-post-card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+.board-post-card__title {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.4;
+}
+.board-post-card__meta { font-size: 15px; color: var(--text-light); }
+
+/* TOP5 */
+.board-top5 {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--white);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+.board-top5__title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+.board-top5__item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  margin-bottom: 12px;
+  width: 100%;
+  font-family: inherit;
+}
+.board-top5__rank {
+  font-size: 15px;
+  font-weight: 800;
+  width: 20px;
+  flex-shrink: 0;
+  color: #aaa;
+  line-height: 1.5;
+}
+.board-top5__rank--1 { color: var(--peach); }
+.board-top5__rank--2 { color: #c9a85a; }
+.board-top5__rank--3 { color: #7ab5c9; }
+.board-top5__text {
+  font-size: 14px;
+  color: var(--text-dark);
+  line-height: 1.5;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

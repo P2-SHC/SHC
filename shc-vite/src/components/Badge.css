@@ -1,0 +1,12 @@
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.badge--sage  { background: var(--sage-light); color: var(--sage); }
+.badge--peach { background: var(--peach-light); color: #c05a2a; }
+.badge--gold  { background: #fdf3dc; color: #946a10; }
+.badge--blue  { background: #dceaf8; color: #2a5a8f; }
