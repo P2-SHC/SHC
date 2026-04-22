@@ -12,7 +12,7 @@ export default function CartPage() {
         <div className="cart-list">
           <div className="cart-item">
             <input type="checkbox" checked className="cart-item-checkbox" readOnly />
-            <div className="cart-item-img" style={{ background: '#c17f5a15' }}>
+            <div className="cart-item-img">
               🍃
             </div>
             <div className="cart-item-info">

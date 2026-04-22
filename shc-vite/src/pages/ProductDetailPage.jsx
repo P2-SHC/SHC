@@ -14,7 +14,7 @@ export default function ProductDetailPage() {
 
         <div className="pd-card">
           {/* 이미지 */}
-          <div className="pd-image-box" style={{ background: '#c17f5a12' }}>
+          <div className="pd-image-box">
             🍃
           </div>
 

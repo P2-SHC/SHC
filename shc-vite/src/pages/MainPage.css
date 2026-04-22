@@ -4,6 +4,7 @@
   gap: 24px;
   align-items: flex-start;
 }
+
 .main-content {
   flex: 1;
   min-width: 0;
@@ -16,7 +17,7 @@
 .health-image-area {
   border-radius: var(--r-xl);
   border: 1.5px dashed #b8cebb;
-  background: linear-gradient(135deg, var(--sage-light) 0%, #f0f7ee 50%, rgba(253,232,220,0.15) 100%);
+  background: linear-gradient(135deg, var(--sage-light) 0%, #f0f7ee 50%, rgba(253, 232, 220, 0.15) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,19 +26,28 @@
   padding: 44px 24px;
   min-height: 220px;
 }
-.health-image-area__svg { display: block; }
-.health-image-area__text { text-align: center; }
+
+.health-image-area__svg {
+  display: block;
+}
+
+.health-image-area__text {
+  text-align: center;
+}
+
 .health-image-area__title {
   font-size: 15px;
   font-weight: 700;
   color: var(--sage);
   margin-bottom: 4px;
 }
+
 .health-image-area__desc {
   font-size: 13px;
   color: var(--text-light);
   line-height: 1.6;
 }
+
 .health-image-area__desc code {
   font-family: monospace;
   font-size: 12px;
@@ -45,19 +55,25 @@
 
 /* 섹션 */
 .main-section {}
+
 .main-section__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 14px;
 }
+
 .main-section__title {
   font-size: 20px;
   font-weight: 800;
   color: var(--text-dark);
   margin-bottom: 14px;
 }
-.main-section__header .main-section__title { margin-bottom: 0; }
+
+.main-section__header .main-section__title {
+  margin-bottom: 0;
+}
+
 .main-section__more {
   background: none;
   border: none;
@@ -69,7 +85,12 @@
 }
 
 /* 게시글 카드 */
-.post-list { display: flex; flex-direction: column; gap: 10px; }
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .post-card {
   display: flex;
   gap: 16px;
@@ -84,7 +105,11 @@
   width: 100%;
   font-family: inherit;
 }
-.post-card:hover { box-shadow: var(--shadow-lg); }
+
+.post-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
 .post-card__img {
   width: 88px;
   height: 70px;
@@ -96,8 +121,21 @@
   justify-content: center;
   font-size: 32px;
 }
-.post-card__body { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
-.post-card__badges { display: flex; gap: 6px; }
+
+.post-card__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.post-card__badges {
+  display: flex;
+  gap: 6px;
+}
+
 .post-card__title {
   font-size: 17px;
   font-weight: 600;
@@ -108,11 +146,21 @@
   -webkit-box-orient: vertical;
   line-height: 1.4;
 }
-.post-card__meta { font-size: 14px; color: var(--text-light); }
+
+.post-card__meta {
+  font-size: 14px;
+  color: var(--text-light);
+}
 
 /* 상품 그리드 */
-.product-grid { display: grid; gap: 14px; }
-.product-grid--3 { grid-template-columns: repeat(3,1fr); }
+.product-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.product-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
 
 .product-card {
   background: var(--white);
@@ -125,7 +173,12 @@
   transition: box-shadow 0.2s, transform 0.2s;
   font-family: inherit;
 }
-.product-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+
+.product-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
 .product-card__img {
   height: 120px;
   border-radius: var(--r-md);
@@ -135,6 +188,7 @@
   font-size: 48px;
   margin-bottom: 12px;
 }
+
 .product-card__name {
   font-size: 15px;
   font-weight: 600;
@@ -142,11 +196,13 @@
   margin-bottom: 8px;
   line-height: 1.4;
 }
+
 .product-card__footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .product-card__price {
   font-size: 17px;
   font-weight: 800;

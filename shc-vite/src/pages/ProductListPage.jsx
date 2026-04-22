@@ -21,7 +21,7 @@ export default function ProductListPage() {
 
         <div className="product-grid product-grid--3 product-grid--gap-lg">
           <button className="product-list-card">
-            <div className="product-list-card__img" style={{ background: '#c17f5a15' }}>🍃</div>
+            <div className="product-list-card__img">🍃</div>
             <p className="product-list-card__category">건강기능식품</p>
             <p className="product-list-card__name">프리미엄 홍삼정 골드</p>
             <div className="product-list-card__footer">
@@ -30,7 +30,7 @@ export default function ProductListPage() {
             </div>
           </button>
           <button className="product-list-card">
-            <div className="product-list-card__img" style={{ background: '#7a9e7e15' }}>💪</div>
+            <div className="product-list-card__img">💪</div>
             <p className="product-list-card__category">관절건강</p>
             <p className="product-list-card__name">관절 영양제 MSM 플러스</p>
             <div className="product-list-card__footer">

@@ -1,4 +1,5 @@
 .product-img {
+  --img-color: #7a9e7e;
   width: 100%;
   aspect-ratio: 1;
   background: color-mix(in srgb, var(--img-color) 12%, transparent);

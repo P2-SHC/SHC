@@ -5,7 +5,7 @@ import './Sidebars.css';
 function MiniProductCard() {
   return (
     <button className="mini-product-card">
-      <div className="mini-product-card__img" style={{ background: '#7a9e7e20' }}>
+      <div className="mini-product-card__img">
         💊
       </div>
       <div className="mini-product-card__info">
