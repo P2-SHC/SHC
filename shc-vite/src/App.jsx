@@ -16,12 +16,19 @@ export default function App() {
   const [page, setPage] = useState("MainPage");
   const [isLogin, setIsLogin] = useState(true);
   const [category, setCategory] = useState("");
+  const [selectedPostId, setSelectedPostId] = useState(null);
+  const navigate = (pageName, params = {}) => {
+    setPage(pageName);
+    if (params.postId) setSelectedPostId(params.postId);
+    if (params.category) setCategory(params.category);
+
+  }
 
   const login = () => { setIsLogin(true) }
   const logout = () => { setIsLogin(false) }
-  const navigate = (page, category = "") => {
-    setCategory(category); setPage(page);
-  }
+  // const navigate = (page, category = "") => {
+  //   setCategory(category); setPage(page);
+  // }
 
   const renderPage = () => {
     switch (page) {
@@ -40,7 +47,7 @@ export default function App() {
       case "BoardListPage":
         return <BoardListPage navigate={navigate} category={category} />
       case "BoardDetailPage":
-        return <BoardDetailPage navigate={navigate} />
+        return <BoardDetailPage navigate={navigate} postId={selectedPostId} />
       default: break;
     }
   }
@@ -48,9 +55,9 @@ export default function App() {
   return (
     <>
       <Header isLogin={isLogin} logout={logout} setPage={setPage} page={page} category={category} navigate={navigate} />
-    <LocationProvider>
-      {renderPage()}
-  </LocationProvider>
+      <LocationProvider>
+        {renderPage()}
+      </LocationProvider>
     </>
   );
 }

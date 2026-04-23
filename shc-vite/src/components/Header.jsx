@@ -40,9 +40,9 @@ export default function Header({ isLogin, logout, page, category, navigate }) {
       {/* 내비게이션 탭 */}
       <nav className="header__nav">
         <button className={navClassName("MainPage")} onClick={() => { navigate("MainPage") }}>홈</button>
-        <button className={navClassName("recipe")} onClick={() => { navigate("BoardListPage", "recipe") }}>레시피</button>
-        <button className={navClassName("life")} onClick={() => { navigate("BoardListPage", "life") }}>라이프</button>
-        <button className={navClassName("exercise")} onClick={() => { navigate("BoardListPage", "exercise") }}>운동</button>
+        <button className={navClassName("recipe")} onClick={() => { navigate("BoardListPage", { category: "recipe" }) }}>레시피</button>
+        <button className={navClassName("life")} onClick={() => { navigate("BoardListPage", { category: "life" }) }}>라이프</button>
+        <button className={navClassName("exercise")} onClick={() => { navigate("BoardListPage", { category: "exercise" }) }}>운동</button>
         <button className={navClassName("ProductListPage")} onClick={() => { navigate("ProductListPage") }}>상품</button>
       </nav>
     </header >

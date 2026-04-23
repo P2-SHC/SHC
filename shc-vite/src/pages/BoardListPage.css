@@ -146,6 +146,14 @@
   color: #7ab5c9;
 }
 
+.board-top5__rank--4 {
+  color: #3e9e66;
+}
+
+.board-top5__rank--5 {
+  color: #ab55ac;
+}
+
 .board-top5__text {
   font-size: 14px;
   color: var(--text-dark);
