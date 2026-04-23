@@ -2,11 +2,12 @@ import './Widgets.css';
 import { useContext, useState, useEffect } from 'react';
 import { LocationContext } from './LocationContext.jsx'
 import weatherDescriptions from '../data/weatherDes.json';
+import products from '../data/product.json'
 /**
  * AirQualityWidget - 미세먼지 위젯 (Glassmorphism)
  */
 let locationName = "";
-export function AirQualityWidget() {
+export function AirQualityWidget({ navigate }) {
   const [microDustData, setMicroDustData] = useState(null);
   const [loading, setLoading] = useState(true);
   const url = "https://api.waqi.info/feed/here/?token=db453069f29558ae9cda83a9b12c672fb737bdee";
@@ -45,26 +46,39 @@ export function AirQualityWidget() {
 
   const aqiInfo = getAqiInfo(microDustData.aqi);
 
+  // 미세먼지 나쁨 지수일때는 미세먼지 관련 상품 추천, 아닐경우 랜덤 추천
+  let recommendedProducts = [];
+  if (microDustData.aqi > 150) {
+    recommendedProducts = products.filter((product) => { return product.keyword.includes("미세먼지") }).slice(0, 3);
+  } else {
+    recommendedProducts = [...products].sort(() => 0.5 - Math.random()).slice(0, 3);
+  }
+
   return (
-    <div className={`widget ${aqiInfo.class}`}>
-      <div className="widget__title">미세먼지 현황 · {microDustData.city.name}</div>
-      <div className="widget__main-row">
-        <div className="widget__value">{aqiInfo.label} ({microDustData.aqi})</div>
-        <span className="widget__icon">{aqiInfo.icon}</span>
+    <div className="widget-container">
+      <div className={`widget ${aqiInfo.class}`}>
+        <div className="widget__title">미세먼지 현황 · {microDustData.city.name}</div>
+        <div className="widget__main-row">
+          <div className="widget__value">{aqiInfo.label} ({microDustData.aqi})</div>
+          <span className="widget__icon">{aqiInfo.icon}</span>
+        </div>
+        <div className="widget__grid">
+          <div className="widget__cell">
+            <div className="widget__cell-label">PM2.5</div>
+            <div className="widget__cell-value">
+              {microDustData.iaqi.pm25?.v || '-'}<span className="widget__unit">㎍/㎥</span>
+            </div>
+          </div>
+          <div className="widget__cell">
+            <div className="widget__cell-label">PM10</div>
+            <div className="widget__cell-value">
+              {microDustData.iaqi.pm10?.v || '-'}<span className="widget__unit">㎍/㎥</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="widget__grid">
-        <div className="widget__cell">
-          <div className="widget__cell-label">PM2.5</div>
-          <div className="widget__cell-value">
-            {microDustData.iaqi.pm25?.v || '-'}<span className="widget__unit">㎍/㎥</span>
-          </div>
-        </div>
-        <div className="widget__cell">
-          <div className="widget__cell-label">PM10</div>
-          <div className="widget__cell-value">
-            {microDustData.iaqi.pm10?.v || '-'}<span className="widget__unit">㎍/㎥</span>
-          </div>
-        </div>
+      <div className="widget__product-list">
+        {recommendedProducts.map((p) => <MiniProductCard key={p.id} navigate={navigate} product={p} />)}
       </div>
     </div>
   );
@@ -73,7 +87,7 @@ export function AirQualityWidget() {
 /**
  * WeatherWidget - 날씨 위젯 (Glassmorphism)
  */
-export function WeatherWidget() {
+export function WeatherWidget({ navigate }) {
   //geoIpify에서 가져온 위도 경도를 사용하여 openWeatherMap에서 날씨 정보를 가져옵니다.
   const { locationData, loading } = useContext(LocationContext);
   const [weatherData, setWeatherData] = useState(null);
@@ -132,5 +146,20 @@ export function WeatherWidget() {
         </div>
       </div>
     </div>
+  );
+}
+
+/* MiniProductCard - 위젯에 들어가는 상품 추천 카드*/
+function MiniProductCard({ navigate, product }) {
+  return (
+    <button className="mini-product-card" onClick={() => { navigate("ProductDetailPage", "", product.id) }}>
+      <div className="mini-product-card__img">
+        💊
+      </div>
+      <div className="mini-product-card__info">
+        <div className="mini-product-card__name">{product.title}</div>
+        <div className="mini-product-card__price">{product.price.toLocaleString()}원</div>
+      </div>
+    </button>
   );
 }

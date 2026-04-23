@@ -9,18 +9,19 @@ import ProductListPage from './pages/ProductListPage.jsx';
 import ProductDetailPage from './pages/ProductDetailPage.jsx';
 import BoardListPage from './pages/BoardListPage.jsx';
 import Header from './components/Header.jsx';
-
+import products from './data/product.json'
 
 
 export default function App() {
   const [page, setPage] = useState("MainPage");
   const [isLogin, setIsLogin] = useState(true);
   const [category, setCategory] = useState("");
+  const [productId, setProductId] = useState("");
 
   const login = () => { setIsLogin(true) }
   const logout = () => { setIsLogin(false) }
-  const navigate = (page, category = "") => {
-    setCategory(category); setPage(page);
+  const navigate = (page, category = "", productId = "") => {
+    setCategory(category); setPage(page); setProductId(productId);
   }
 
   const renderPage = () => {
@@ -36,7 +37,8 @@ export default function App() {
       case "ProductListPage":
         return <ProductListPage navigate={navigate} />
       case "ProductDetailPage":
-        return <ProductDetailPage navigate={navigate} />
+        const selectedProduct = products.find((product) => product.id === productId);
+        return <ProductDetailPage navigate={navigate} product={selectedProduct} />
       case "BoardListPage":
         return <BoardListPage navigate={navigate} category={category} />
       case "BoardDetailPage":
