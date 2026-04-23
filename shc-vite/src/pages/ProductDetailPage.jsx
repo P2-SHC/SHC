@@ -1,14 +1,12 @@
-import Header from '../components/Header.jsx';
 import Badge from '../components/Badge.jsx';
 import './ProductDetailPage.css';
 
-export default function ProductDetailPage() {
+export default function ProductDetailPage({ navigate }) {
   return (
     <div className="pd-page">
-      <Header />
 
       <div className="pd-container">
-        <button className="pd-back-btn">
+        <button className="pd-back-btn" onClick={() => { navigate("ProductListPage") }}>
           ← 상품 목록으로
         </button>
 
@@ -47,7 +45,7 @@ export default function ProductDetailPage() {
               <button className="pd-buy-btn">
                 바로 구매
               </button>
-              <button className="pd-cart-btn">
+              <button className="pd-cart-btn" onClick={() => { navigate("CartPage") }}>
                 장바구니
               </button>
             </div>
