@@ -2,7 +2,7 @@ import './RegisterPage.css';
 
 const INTERESTS = ['혈압관리', '당뇨관리', '관절건강', '뼈건강', '눈건강', '수면건강', '치매예방', '다이어트'];
 
-export default function RegisterPage({ setPage }) {
+export default function RegisterPage({ navigate }) {
   return (
     <div className="reg-page">
       {/* 좌측 */}
@@ -54,12 +54,12 @@ export default function RegisterPage({ setPage }) {
           </div>
         </div>
 
-        <button className="reg-submit-btn" onClick={() => { setPage("MainPage") }}>
+        <button className="reg-submit-btn" onClick={() => { navigate("MainPage") }}>
           회원가입 완료
         </button>
         <div className="reg-footer">
           이미 계정이 있으신가요?{' '}
-          <button className="reg-link" onClick={() => { setPage("LoginPage") }}>로그인</button>
+          <button className="reg-link" onClick={() => { navigate("LoginPage") }}>로그인</button>
         </div>
       </div>
     </div>

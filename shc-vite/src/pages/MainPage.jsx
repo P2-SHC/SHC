@@ -5,12 +5,12 @@ import './MainPage.css';
 /**
  * MainPage - 메인 페이지 (SHC-001)
  */
-export default function MainPage({ setPage }) {
+export default function MainPage({ navigate }) {
   return (
     <div className="page">
 
       <div className="container main-layout">
-        <LeftSidebar setPage={setPage} />
+        <LeftSidebar navigate={navigate} />
 
         <main className="main-content">
           {/* 건강 이미지 영역 */}
@@ -38,7 +38,7 @@ export default function MainPage({ setPage }) {
           <section className="main-section">
             <h2 className="main-section__title">최신 건강 정보</h2>
             <div className="post-list">
-              <button className="post-card" onClick={() => { setPage("BoardDetailPage") }}>
+              <button className="post-card" onClick={() => { navigate("BoardDetailPage") }}>
                 <div className="post-card__img">🥗</div>
                 <div className="post-card__body">
                   <div className="post-card__badges">
@@ -56,10 +56,10 @@ export default function MainPage({ setPage }) {
           <section className="main-section">
             <div className="main-section__header">
               <h2 className="main-section__title">추천 건강상품</h2>
-              <button className="main-section__more" onClick={() => { setPage("ProductListPage") }}>전체 보기 →</button>
+              <button className="main-section__more" onClick={() => { navigate("ProductListPage") }}>전체 보기 →</button>
             </div>
             <div className="product-grid product-grid--3">
-              <button className="product-card" onClick={() => { setPage("ProductDetailPage") }}>
+              <button className="product-card" onClick={() => { navigate("ProductDetailPage") }}>
                 <div className="product-card__img">🍃</div>
                 <p className="product-card__name">프리미엄 홍삼정 골드</p>
                 <div className="product-card__footer">
@@ -71,7 +71,7 @@ export default function MainPage({ setPage }) {
           </section>
         </main>
 
-        <RightSidebar setPage={setPage} />
+        <RightSidebar navigate={navigate} />
       </div>
     </div>
   );

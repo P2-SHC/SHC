@@ -4,12 +4,12 @@ import './BoardDetailPage.css';
 /**
  * BoardDetailPage - 게시판 상세 (SHC-003)
  */
-export default function BoardDetailPage({ setPage }) {
+export default function BoardDetailPage({ navigate }) {
   return (
     <div className="page">
 
       <div className="container--sm">
-        <button className="detail-back" onClick={() => { setPage("BoardListPage") }}>← 레시피으로 돌아가기</button>
+        <button className="detail-back" onClick={() => { navigate("BoardListPage") }}>← 레시피으로 돌아가기</button>
 
         {/* 본문 */}
         <article className="detail-article">
@@ -24,7 +24,7 @@ export default function BoardDetailPage({ setPage }) {
         <div className="detail-products">
           <h2 className="detail-products__title">관련 건강상품 추천</h2>
           <div className="detail-products__grid">
-            <button className="detail-product-card" onClick={() => { setPage("ProductDetailPage") }}>
+            <button className="detail-product-card" onClick={() => { navigate("ProductDetailPage") }}>
               <span className="detail-product-card__emoji">🍃</span>
               <p className="detail-product-card__name">프리미엄 홍삼정 골드</p>
               <p className="detail-product-card__price">89,000원</p>

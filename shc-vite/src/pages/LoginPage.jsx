@@ -1,6 +1,6 @@
 import './LoginPage.css';
 
-export default function LoginPage({ Login, setPage }) {
+export default function LoginPage({ login, navigate }) {
   return (
     <div className="login-page">
       {/* 좌측 브랜드 영역 */}
@@ -36,16 +36,16 @@ export default function LoginPage({ Login, setPage }) {
           />
         </div>
 
-        <button className="login-btn" onClick={() => { setPage("MainPage"); Login(); }}>
+        <button className="login-btn" onClick={() => { navigate("MainPage"); login(); }}>
           로그인
         </button>
 
         <div className="login-footer">
           계정이 없으신가요?{' '}
-          <button className="login-link" onClick={() => { setPage("RegisterPage") }}>회원가입</button>
+          <button className="login-link" onClick={() => { navigate("RegisterPage") }}>회원가입</button>
         </div>
 
-        <button className="login-back-btn" onClick={() => { setPage("MainPage") }}>← 메인으로 돌아가기</button>
+        <button className="login-back-btn" onClick={() => { navigate("MainPage") }}>← 메인으로 돌아가기</button>
       </div>
     </div>
   );

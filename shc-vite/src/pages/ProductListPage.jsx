@@ -4,7 +4,7 @@ import './ProductListPage.css';
 /**
  * ProductListPage - 상품 전체보기 (SHC-004)
  */
-export default function ProductListPage({ setPage }) {
+export default function ProductListPage({ navigate }) {
   return (
     <div className="page">
 
@@ -18,7 +18,7 @@ export default function ProductListPage({ setPage }) {
         </div>
 
         <div className="product-grid product-grid--3 product-grid--gap-lg">
-          <button className="product-list-card" onClick={() => { setPage("ProductDetailPage") }}>
+          <button className="product-list-card" onClick={() => { navigate("ProductDetailPage") }}>
             <div className="product-list-card__img">🍃</div>
             <p className="product-list-card__category">건강기능식품</p>
             <p className="product-list-card__name">프리미엄 홍삼정 골드</p>
@@ -27,7 +27,7 @@ export default function ProductListPage({ setPage }) {
               <Badge />
             </div>
           </button>
-          <button className="product-list-card" onClick={() => { setPage("ProductDetailPage") }}>
+          <button className="product-list-card" onClick={() => { navigate("ProductDetailPage") }}>
             <div className="product-list-card__img">💪</div>
             <p className="product-list-card__category">관절건강</p>
             <p className="product-list-card__name">관절 영양제 MSM 플러스</p>

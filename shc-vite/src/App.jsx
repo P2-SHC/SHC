@@ -10,33 +10,36 @@ import BoardListPage from './pages/BoardListPage.jsx';
 import Header from './components/Header.jsx';
 
 
+
 export default function App() {
   const [page, setPage] = useState("MainPage");
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [category, setCategory] = useState("");
 
-  const login = () => { setIsLogin(true); setPage("MainPage"); }
-  const logout = () => { setIsLogin(false); setPage("MainPage"); }
-  const navigate = (category) => { setCategory(category); setPage("BoardListPage"); }
+  const login = () => { setIsLogin(true) }
+  const logout = () => { setIsLogin(false) }
+  const navigate = (page, category = "") => {
+    setCategory(category); setPage(page);
+  }
 
   const renderPage = () => {
     switch (page) {
       case "MainPage":
-        return <MainPage setPage={setPage} />
+        return <MainPage navigate={navigate} />
       case "CartPage":
-        return <CartPage setPage={setPage} />
+        return <CartPage navigate={navigate} />
       case "LoginPage":
-        return <LoginPage login={login} setPage={setPage} />
+        return <LoginPage navigate={navigate} login={login} />
       case "RegisterPage":
-        return <RegisterPage setPage={setPage} />
+        return <RegisterPage navigate={navigate} />
       case "ProductListPage":
-        return <ProductListPage setPage={setPage} />
+        return <ProductListPage navigate={navigate} />
       case "ProductDetailPage":
-        return <ProductDetailPage setPage={setPage} />
+        return <ProductDetailPage navigate={navigate} />
       case "BoardListPage":
-        return <BoardListPage navigate={navigate} setPage={setPage} />
+        return <BoardListPage navigate={navigate} category={category} />
       case "BoardDetailPage":
-        return <BoardDetailPage setPage={setPage} />
+        return <BoardDetailPage navigate={navigate} />
       default: break;
     }
   }
