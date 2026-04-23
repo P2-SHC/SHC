@@ -1,11 +1,19 @@
 import './Header.css';
 
-export default function Header({ setPage }) {
+export default function Header({ isLogin, logout, setPage, page, category, navigate }) {
+  const navClassName = (target) => {
+    let isActive = false;
+    if (page == "MainPage") isActive = (target == "MainPage")
+    else if (page == "ProductListPage") isActive = (target == "ProductListPage")
+    else if (page == "BoardListPage") isActive = (category == target);
+    return isActive ? "header__nav-item header__nav-item--active" : "header__nav-item"
+  }
+
   return (
     <header className="header">
       {/* 상단 타이틀 행 */}
       <div className="header__top">
-        <button className="header__logo" onClick={() => { setPage("MainPage") }}>
+        <button className="header__logo" onClick={() => { setPage("MainPage"); setCategory(); }}>
           <span className="header__logo-icon">🌿</span>
           <div>
             <div className="header__logo-name">시니어헬스케어</div>
@@ -14,28 +22,29 @@ export default function Header({ setPage }) {
         </button>
 
         <div className="header__auth">
-          <span className="header__username">김영자님</span>
-          <button className="btn btn--ghost header__cart-btn" onClick={() => { setPage("CartPage") }}>
-            🛒 장바구니
-            <span className="header__cart-badge">2</span>
-          </button>
-          <button className="btn btn--subtle" onClick={() => { setPage("MainPage") }}>로그아웃</button>
-
-          {/* 비로그인 상태 UI (필요시 주석 해제)
-          <button className="btn btn--primary">로그인</button>
-          <button className="btn btn--outline">회원가입</button>
-          */}
+          {isLogin && <>
+            <span className="header__username">김영자님</span>
+            <button className="btn btn--ghost header__cart-btn" onClick={() => { setPage("CartPage") }}>
+              🛒 장바구니
+              <span className="header__cart-badge">2</span>
+            </button>
+            <button className="btn btn--subtle" onClick={() => { logout(); setPage("MainPage"); }}>로그아웃</button>
+          </>}
+          {!isLogin && <>
+            <button className="btn btn--primary" onClick={() => { setPage("LoginPage") }}>로그인</button>
+            <button className="btn btn--outline" onClick={() => { setPage("RegisterPage") }}>회원가입</button>
+          </>}
         </div>
       </div>
 
       {/* 내비게이션 탭 */}
       <nav className="header__nav">
-        <button className="header__nav-item header__nav-item--active" onClick={() => { setPage("MainPage") }}>홈</button>
-        <button className="header__nav-item" onClick={() => { setPage("BoardListPage") }}>레시피</button>
-        <button className="header__nav-item" onClick={() => { setPage("BoardListPage") }}>라이프</button>
-        <button className="header__nav-item" onClick={() => { setPage("BoardListPage") }}>운동</button>
-        <button className="header__nav-item" onClick={() => { setPage("ProductListPage") }}>건강상품</button>
+        <button className={navClassName("MainPage")} onClick={() => { setPage("MainPage") }}>홈</button>
+        <button className={navClassName("recipe")} onClick={() => { navigate("recipe") }}>레시피</button>
+        <button className={navClassName("life")} onClick={() => { navigate("life") }}>라이프</button>
+        <button className={navClassName("exercise")} onClick={() => { navigate("exercise") }}>운동</button>
+        <button className={navClassName("ProductListPage")} onClick={() => { setPage("ProductListPage") }}>상품</button>
       </nav>
-    </header>
+    </header >
   );
 }

@@ -1,10 +1,8 @@
-import Header from '../components/Header.jsx';
 import './CartPage.css';
 
 export default function CartPage({ setPage }) {
   return (
     <div className="cart-page">
-      <Header />
 
       <div className="cart-container">
         <h1 className="cart-title">장바구니</h1>

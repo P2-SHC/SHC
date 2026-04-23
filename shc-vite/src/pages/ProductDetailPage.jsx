@@ -1,11 +1,9 @@
-import Header from '../components/Header.jsx';
 import Badge from '../components/Badge.jsx';
 import './ProductDetailPage.css';
 
 export default function ProductDetailPage({ setPage }) {
   return (
     <div className="pd-page">
-      <Header />
 
       <div className="pd-container">
         <button className="pd-back-btn" onClick={() => { setPage("ProductListPage") }}>

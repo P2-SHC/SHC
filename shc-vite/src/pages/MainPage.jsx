@@ -1,4 +1,3 @@
-import Header from '../components/Header.jsx';
 import { LeftSidebar, RightSidebar } from '../components/Sidebars.jsx';
 import Badge from '../components/Badge.jsx';
 import './MainPage.css';
@@ -9,7 +8,6 @@ import './MainPage.css';
 export default function MainPage({ setPage }) {
   return (
     <div className="page">
-      <Header setPage={setPage} />
 
       <div className="container main-layout">
         <LeftSidebar setPage={setPage} />
@@ -73,7 +71,7 @@ export default function MainPage({ setPage }) {
           </section>
         </main>
 
-        <RightSidebar />
+        <RightSidebar setPage={setPage} />
       </div>
     </div>
   );

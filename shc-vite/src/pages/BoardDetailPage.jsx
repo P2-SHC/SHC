@@ -1,14 +1,12 @@
-import Header from '../components/Header.jsx';
 import Badge from '../components/Badge.jsx';
 import './BoardDetailPage.css';
 
 /**
  * BoardDetailPage - 게시판 상세 (SHC-003)
  */
-export default function BoardDetailPage() {
+export default function BoardDetailPage({ setPage }) {
   return (
     <div className="page">
-      <Header />
 
       <div className="container--sm">
         <button className="detail-back" onClick={() => { setPage("BoardListPage") }}>← 레시피으로 돌아가기</button>

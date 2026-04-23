@@ -1,4 +1,3 @@
-import Header from '../components/Header.jsx';
 import Badge from '../components/Badge.jsx';
 import './ProductListPage.css';
 
@@ -8,7 +7,6 @@ import './ProductListPage.css';
 export default function ProductListPage({ setPage }) {
   return (
     <div className="page">
-      <Header />
 
       <div className="container--md">
         <div className="product-list-header">

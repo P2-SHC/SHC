@@ -7,44 +7,43 @@ import RegisterPage from './pages/RegisterPage.jsx';
 import ProductListPage from './pages/ProductListPage.jsx';
 import ProductDetailPage from './pages/ProductDetailPage.jsx';
 import BoardListPage from './pages/BoardListPage.jsx';
+import Header from './components/Header.jsx';
 
 
 export default function App() {
   const [page, setPage] = useState("MainPage");
+  const [isLogin, setIsLogin] = useState(false);
+  const [category, setCategory] = useState("");
 
+  const login = () => { setIsLogin(true); setPage("MainPage"); }
+  const logout = () => { setIsLogin(false); setPage("MainPage"); }
+  const navigate = (category) => { setCategory(category); setPage("BoardListPage"); }
 
   const renderPage = () => {
     switch (page) {
       case "MainPage":
         return <MainPage setPage={setPage} />
-        break;
       case "CartPage":
         return <CartPage setPage={setPage} />
-        break;
       case "LoginPage":
-        return <LoginPage setPage={setPage} />
-        break;
+        return <LoginPage login={login} setPage={setPage} />
       case "RegisterPage":
         return <RegisterPage setPage={setPage} />
-        break;
       case "ProductListPage":
         return <ProductListPage setPage={setPage} />
-        break;
       case "ProductDetailPage":
         return <ProductDetailPage setPage={setPage} />
-        break;
       case "BoardListPage":
-        return <BoardListPage setPage={setPage} />
-        break;
+        return <BoardListPage navigate={navigate} setPage={setPage} />
       case "BoardDetailPage":
         return <BoardDetailPage setPage={setPage} />
-        break;
       default: break;
     }
   }
 
   return (
     <>
+      <Header isLogin={isLogin} logout={logout} setPage={setPage} page={page} category={category} navigate={navigate} />
       {renderPage()}
     </>
   );

@@ -1,6 +1,6 @@
 import './LoginPage.css';
 
-export default function LoginPage() {
+export default function LoginPage({ Login, setPage }) {
   return (
     <div className="login-page">
       {/* 좌측 브랜드 영역 */}
@@ -36,7 +36,7 @@ export default function LoginPage() {
           />
         </div>
 
-        <button className="login-btn" onClick={() => { setPage("MainPage") }}>
+        <button className="login-btn" onClick={() => { setPage("MainPage"); Login(); }}>
           로그인
         </button>
 

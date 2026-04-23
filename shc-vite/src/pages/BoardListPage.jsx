@@ -1,4 +1,3 @@
-import Header from '../components/Header.jsx';
 import Badge from '../components/Badge.jsx';
 import './BoardListPage.css';
 
@@ -8,7 +7,6 @@ import './BoardListPage.css';
 export default function BoardListPage({ setPage }) {
   return (
     <div className="page">
-      <Header />
 
       <div className="container--md">
         {/* 페이지 헤더 */}
