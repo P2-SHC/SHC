@@ -14,6 +14,16 @@
   box-shadow: 0 4px 20px rgba(70,120,180,0.25);
 }
 
+/* AQI Levels */
+.aqi-good { background: linear-gradient(135deg, #009966, #007a52); box-shadow: 0 4px 20px rgba(0, 153, 102, 0.3); }
+.aqi-moderate { background: linear-gradient(135deg, #ffde33, #d9bd2b); color: #333; box-shadow: 0 4px 20px rgba(255, 222, 51, 0.3); }
+.aqi-unhealthy-sensitive { background: linear-gradient(135deg, #ff9933, #d9822b); box-shadow: 0 4px 20px rgba(255, 153, 51, 0.3); }
+.aqi-unhealthy { background: linear-gradient(135deg, #cc0033, #a30029); box-shadow: 0 4px 20px rgba(204, 0, 51, 0.3); }
+.aqi-very-unhealthy { background: linear-gradient(135deg, #660099, #52007a); box-shadow: 0 4px 20px rgba(102, 0, 153, 0.3); }
+.aqi-hazardous { background: linear-gradient(135deg, #7e0023, #5c001a); box-shadow: 0 4px 20px rgba(126, 0, 35, 0.3); }
+
+.aqi-moderate .widget__title, .aqi-moderate .widget__cell-label { color: #555; }
+
 .widget__title   { font-size: 13px; font-weight: 600; opacity: 0.85; margin-bottom: 6px; }
 .widget__main-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 .widget__value   { font-size: 28px; font-weight: 800; }

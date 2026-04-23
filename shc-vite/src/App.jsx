@@ -1,3 +1,4 @@
+import { LocationProvider } from './components/LocationContext.jsx';
 import { useState } from 'react';
 import MainPage from './pages/MainPage.jsx';
 import BoardDetailPage from './pages/BoardDetailPage.jsx';
@@ -47,7 +48,9 @@ export default function App() {
   return (
     <>
       <Header isLogin={isLogin} logout={logout} setPage={setPage} page={page} category={category} navigate={navigate} />
-      {renderPage()}
+      <LocationProvider>
+        {renderPage()}
+      </LocationProvider>
     </>
   );
 }

@@ -1,10 +1,17 @@
 import Badge from '../components/Badge.jsx';
 import './ProductListPage.css';
+import products from '../data/product.json'
+import ProductItem from './ProductItem.jsx'
+import { useState } from 'react';
 
 /**
  * ProductListPage - 상품 전체보기 (SHC-004)
  */
 export default function ProductListPage({ navigate }) {
+  const [count, setCount] = useState(0);
+  let length = products.length - (count * 6 + 9);
+  if (length < 0) length = 0;
+
   return (
     <div className="page">
 
@@ -18,28 +25,13 @@ export default function ProductListPage({ navigate }) {
         </div>
 
         <div className="product-grid product-grid--3 product-grid--gap-lg">
-          <button className="product-list-card" onClick={() => { navigate("ProductDetailPage") }}>
-            <div className="product-list-card__img">🍃</div>
-            <p className="product-list-card__category">건강기능식품</p>
-            <p className="product-list-card__name">프리미엄 홍삼정 골드</p>
-            <div className="product-list-card__footer">
-              <span className="product-list-card__price">89,000원</span>
-              <Badge />
-            </div>
-          </button>
-          <button className="product-list-card" onClick={() => { navigate("ProductDetailPage") }}>
-            <div className="product-list-card__img">💪</div>
-            <p className="product-list-card__category">관절건강</p>
-            <p className="product-list-card__name">관절 영양제 MSM 플러스</p>
-            <div className="product-list-card__footer">
-              <span className="product-list-card__price">45,000원</span>
-              <Badge />
-            </div>
-          </button>
+          {products.slice(0, 9 + (count * 6)).map((product) => {
+            return <ProductItem product={product} navigate={navigate} key={product.id} />
+          })}
         </div>
 
         <div className="product-list-more">
-          <button className="btn btn--outline btn--lg">상품 더보기</button>
+          {length != 0 ? <button onClick={() => { setCount(count + 1) }} className="btn btn--outline btn--lg">상품 더보기</button> : <></>}
         </div>
       </div>
     </div>
