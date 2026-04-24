@@ -162,3 +162,28 @@
 .pd-cart-btn.added {
   background: #e8f0e9;
 }
+
+/* 재고 상태 표시 */
+.pd-stock-status {
+  margin-bottom: 24px;
+}
+
+.stock-alert {
+  font-size: 14px;
+  color: #666;
+}
+
+.stock-alert--warn {
+  color: #ff9800;
+  font-weight: 700;
+}
+
+.stock-alert--error {
+  color: #f44336;
+  font-weight: 700;
+}
+
+.btn-disabled {
+  background-color: #ccc !important;
+  cursor: not-allowed !important;
+}
