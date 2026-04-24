@@ -1,6 +1,7 @@
 import { LeftSidebar, RightSidebar } from '../components/Sidebars.jsx';
 import Badge from '../components/Badge.jsx';
 import './MainPage.css';
+import { AirQualityWidget, WeatherWidget } from '../components/Widgets.jsx';
 
 /**
  * MainPage - 메인 페이지 (SHC-001)
@@ -10,7 +11,7 @@ export default function MainPage({ navigate }) {
     <div className="page">
 
       <div className="container main-layout">
-        <LeftSidebar navigate={navigate} />
+        <AirQualityWidget navigate={navigate} />
 
         <main className="main-content">
           {/* 건강 이미지 영역 */}
@@ -51,27 +52,9 @@ export default function MainPage({ navigate }) {
               </button>
             </div>
           </section>
-
-          {/* 추천 상품 */}
-          <section className="main-section">
-            <div className="main-section__header">
-              <h2 className="main-section__title">추천 건강상품</h2>
-              <button className="main-section__more" onClick={() => { navigate("ProductListPage") }}>전체 보기 →</button>
-            </div>
-            <div className="product-grid product-grid--3">
-              <button className="product-card" onClick={() => { navigate("ProductDetailPage") }}>
-                <div className="product-card__img">🍃</div>
-                <p className="product-card__name">프리미엄 홍삼정 골드</p>
-                <div className="product-card__footer">
-                  <span className="product-card__price">89,000원</span>
-                  <Badge />
-                </div>
-              </button>
-            </div>
-          </section>
         </main>
 
-        <RightSidebar navigate={navigate} />
+        <WeatherWidget navigate={navigate} />
       </div>
     </div>
   );

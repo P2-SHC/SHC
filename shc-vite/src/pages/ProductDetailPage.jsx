@@ -1,7 +1,7 @@
 import Badge from '../components/Badge.jsx';
 import './ProductDetailPage.css';
 
-export default function ProductDetailPage({ navigate }) {
+export default function ProductDetailPage({ navigate, product }) {
   return (
     <div className="pd-page">
 
@@ -18,16 +18,16 @@ export default function ProductDetailPage({ navigate }) {
 
           {/* 상품 정보 */}
           <div className="pd-info-box">
-            <div className="pd-category">건강기능식품</div>
-            <h1 className="pd-title">프리미엄 홍삼정 골드</h1>
+            <div className="pd-category">{product.keyword.join(", ")}</div>
+            <h1 className="pd-title">{product.title}</h1>
 
             <div className="pd-tag-wrapper"><Badge /></div>
 
             <p className="pd-desc">
-              시니어를 위한 맞춤 건강기능식품입니다.
+              {product.description}
             </p>
 
-            <div className="pd-price">89,000원</div>
+            <div className="pd-price">{product.price.toLocaleString()}원</div>
 
             {/* 수량 */}
             <div className="pd-qty-wrapper">
