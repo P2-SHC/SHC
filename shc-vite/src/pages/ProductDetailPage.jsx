@@ -1,10 +1,12 @@
 import { useState, useContext } from 'react';
 import { ProductContext } from '../components/ProductContext.jsx';
+import { CartContext } from '../components/CartContext.jsx';
 import Badge from '../components/Badge.jsx';
 import './ProductDetailPage.css';
 
 export default function ProductDetailPage({ navigate, product, from, fromPostId }) {
   const { getStock, decreaseStock } = useContext(ProductContext);
+  const { addToCart } = useContext(CartContext);
   const [selectedQty, setSelectedQty] = useState(1);
 
   // 실시간 재고 상태 가져오기
@@ -99,7 +101,10 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
               >
                 {isOutOfStock ? '품절' : '바로 구매'}
               </button>
-              <button className="pd-cart-btn" onClick={() => { navigate("CartPage") }}>
+              <button className="pd-cart-btn" onClick={() => {
+                addToCart(product, selectedQty);
+                navigate("CartPage");
+              }}>
                 장바구니
               </button>
             </div>
