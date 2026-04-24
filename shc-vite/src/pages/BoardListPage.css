@@ -93,6 +93,17 @@
   color: var(--text-light);
 }
 
+/* 검색 결과 없음 */
+.board-empty {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.board-empty__text {
+  font-size: 16px;
+  color: var(--text-light);
+}
+
 /* TOP5 */
 .board-top5 {
   width: 220px;

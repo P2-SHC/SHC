@@ -8,6 +8,7 @@ import { useState } from 'react';
  */
 export default function BoardListPage({ navigate, category }) {
   const [postList, setPostList] = useState(articles);
+  const [searchTerm, setSearchTerm] = useState("");
   const categoryData = {
     recipe: {
       title: "레시피",
@@ -48,15 +49,32 @@ export default function BoardListPage({ navigate, category }) {
           <input
             className="input board-search__input"
             placeholder="게시글 검색..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
         <div className="board-layout">
           {/* 게시글 목록 */}
           <div className="board-list">
-            {postList
-              .filter(post => post.category === category)
-              .map(post => (
+            {(() => {
+              const query = searchTerm.trim().toLowerCase();
+              const filtered = postList
+                .filter(post => post.category === category)
+                .filter(post =>
+                  !query ||
+                  post.title.toLowerCase().includes(query)
+                );
+
+              if (filtered.length === 0) {
+                return (
+                  <div className="board-empty">
+                    <p className="board-empty__text">검색 결과가 없습니다.</p>
+                  </div>
+                );
+              }
+
+              return filtered.map(post => (
                 <button key={post.id} className="board-post-card" onClick={() => { navigate("BoardDetailPage", { postId: post.id }) }}>
                   <div className="board-post-card__img">{currentCategory.icon}</div>
                   <div className="board-post-card__body">
@@ -65,7 +83,8 @@ export default function BoardListPage({ navigate, category }) {
                     <p className="board-post-card__meta">{post.createdAt} · 조회수 {post.viewCount}</p>
                   </div>
                 </button>
-              ))}
+              ));
+            })()}
           </div>
 
           {/* TOP5 사이드바 */}
