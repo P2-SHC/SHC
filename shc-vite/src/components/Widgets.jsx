@@ -213,7 +213,7 @@ export function WeatherWidget({ navigate }) {
 /* MiniProductCard - 위젯에 들어가는 상품 추천 카드*/
 function MiniProductCard({ navigate, product }) {
   return (
-    <button className="mini-product-card" onClick={() => { navigate("ProductDetailPage", "", product.id) }}>
+    <button className="mini-product-card" onClick={() => { navigate("ProductDetailPage", { productId: product.id }) }}>
       <div className="mini-product-card__img">
         💊
       </div>
