@@ -19,12 +19,16 @@ export default function App() {
 
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [productId, setProductId] = useState("");
-  
+  const [from, setFrom] = useState("");
+  const [fromPostId, setFromPostId] = useState(null);
+
   const navigate = (pageName, params = {}) => {
     setPage(pageName);
     setSelectedPostId(params.postId ?? null);
     setCategory(params.category ?? "");
     setProductId(params.productId ?? "");
+    setFrom(params.from ?? "");
+    setFromPostId(params.fromPostId ?? null);
   }
 
   const login = () => { setIsLogin(true) }
@@ -44,7 +48,7 @@ export default function App() {
         return <ProductListPage navigate={navigate} />
       case "ProductDetailPage":
         const selectedProduct = products.find((product) => product.id === productId);
-        return <ProductDetailPage navigate={navigate} product={selectedProduct} />
+        return <ProductDetailPage navigate={navigate} product={selectedProduct} from={from} fromPostId={fromPostId} />
       case "BoardListPage":
         return <BoardListPage navigate={navigate} category={category} />
       case "BoardDetailPage":

@@ -3,7 +3,7 @@ import { ProductContext } from '../components/ProductContext.jsx';
 import Badge from '../components/Badge.jsx';
 import './ProductDetailPage.css';
 
-export default function ProductDetailPage({ navigate, product }) {
+export default function ProductDetailPage({ navigate, product, from, fromPostId }) {
   const { getStock, decreaseStock } = useContext(ProductContext);
   const [selectedQty, setSelectedQty] = useState(1);
 
@@ -36,8 +36,16 @@ export default function ProductDetailPage({ navigate, product }) {
   return (
     <div className="pd-page">
       <div className="pd-container">
-        <button className="pd-back-btn" onClick={() => { navigate("ProductListPage") }}>
-          ← 상품 목록으로
+        <button className="pd-back-btn" onClick={() => {
+          if (from === "BoardDetailPage") {
+            navigate("BoardDetailPage", { postId: fromPostId });
+          } else if (from === "MainPage") {
+            navigate("MainPage");
+          } else {
+            navigate("ProductListPage");
+          }
+        }}>
+          {from === "BoardDetailPage" ? "← 게시글로 돌아가기" : from === "MainPage" ? "← 메인으로" : "← 상품 목록으로"}
         </button>
 
         <div className="pd-card">
