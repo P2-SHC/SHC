@@ -9,7 +9,8 @@ let locationName = "";
 export function AirQualityWidget() {
   const [microDustData, setMicroDustData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const url = "https://api.waqi.info/feed/here/?token=db453069f29558ae9cda83a9b12c672fb737bdee";
+  const apiKey = import.meta.env.VITE_DUST_API_KEY;
+  const url = `https://api.waqi.info/feed/here/?token=${apiKey}`+;
 
   useEffect(() => {
     const fetchMicroDust = async () => {
