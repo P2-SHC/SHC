@@ -22,9 +22,9 @@ export default function App() {
   
   const navigate = (pageName, params = {}) => {
     setPage(pageName);
-    if (params.postId) setSelectedPostId(params.postId);
-    if (params.category) setCategory(params.category);
-    if (params.productId) setProductId(params.productId);
+    setSelectedPostId(params.postId ?? null);
+    setCategory(params.category ?? "");
+    setProductId(params.productId ?? "");
   }
 
   const login = () => { setIsLogin(true) }

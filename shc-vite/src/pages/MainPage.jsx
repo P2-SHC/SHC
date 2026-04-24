@@ -1,4 +1,4 @@
-import { LeftSidebar, RightSidebar } from '../components/Sidebars.jsx';
+
 import Badge from '../components/Badge.jsx';
 import './MainPage.css';
 import { AirQualityWidget, WeatherWidget } from '../components/Widgets.jsx';
