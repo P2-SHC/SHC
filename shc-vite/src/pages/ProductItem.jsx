@@ -3,7 +3,7 @@ import Badge from '../components/Badge'
 
 function ProductItem({ product, navigate }) {
     return (
-        <div>
+        <div className="product-item-container">
             <button className="product-list-card" onClick={() => { navigate("ProductDetailPage", "", product.id) }}>
                 <div className="product-list-card__img">🍃</div>
                 <p className="product-list-card__category">{product.keyword.join(", ")}</p>

@@ -1,9 +1,0 @@
-# feat: SHC-33 
-
-## body
-- 초기 화면 상품 9개 나열
-- 더보기 버튼을 누를 때마다 6개씩 추가
-- 더보기 버튼 누른 횟수 count는 useState로 관리  
-
-## footer
-- issue: SHC-33
