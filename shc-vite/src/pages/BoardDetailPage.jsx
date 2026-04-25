@@ -35,7 +35,7 @@ export default function BoardDetailPage({ navigate, postId }) {
   return (
     <div className="page">
       <div className="container--sm">
-        <button className="detail-back" onClick={() => { navigate("BoardListPage") }}>← 목록으로 돌아가기</button>
+        <button className="detail-back" onClick={() => { navigate("BoardListPage", { category: post.category }) }}>← 목록으로 돌아가기</button>
 
         {/* 본문 */}
         <article className="detail-article">
