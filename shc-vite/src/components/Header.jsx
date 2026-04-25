@@ -1,6 +1,9 @@
 import './Header.css';
+import { useContext } from 'react';
+import { CartContext } from './CartContext.jsx';
 
 export default function Header({ isLogin, logout, page, category, navigate }) {
+  const { cartCount } = useContext(CartContext);
   const navClassName = (target) => {
     let isActive = false;
     if (page == "MainPage") isActive = (target == "MainPage")
@@ -26,7 +29,7 @@ export default function Header({ isLogin, logout, page, category, navigate }) {
             <span className="header__username">김영자님</span>
             <button className="btn btn--ghost header__cart-btn" onClick={() => { navigate("CartPage") }}>
               🛒 장바구니
-              <span className="header__cart-badge">2</span>
+              {cartCount > 0 && <span className="header__cart-badge">{cartCount}</span>}
             </button>
             <button className="btn btn--subtle" onClick={() => { logout(); navigate("MainPage") }}>로그아웃</button>
           </>}

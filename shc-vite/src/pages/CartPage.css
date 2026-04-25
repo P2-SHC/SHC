@@ -133,6 +133,13 @@
   color: #4a7a50;
 }
 
+.cart-item-stock-warn {
+  font-size: 13px;
+  color: #e05050;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
 /* 수량 조절 */
 .cart-qty-controls {
   display: flex;

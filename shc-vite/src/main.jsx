@@ -4,9 +4,12 @@ import App from './App.jsx';
 import './styles/global.css';
 
 import { ProductProvider } from './components/ProductContext.jsx';
+import { CartProvider } from './components/CartContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <ProductProvider>
-    <App />
+    <CartProvider>
+      <App />
+    </CartProvider>
   </ProductProvider>
 );
