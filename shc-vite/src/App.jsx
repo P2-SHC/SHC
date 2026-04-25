@@ -1,5 +1,5 @@
 import { LocationProvider } from './components/LocationContext.jsx';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import MainPage from './pages/MainPage.jsx';
 import BoardDetailPage from './pages/BoardDetailPage.jsx';
 import CartPage from './pages/CartPage.jsx';
@@ -9,14 +9,16 @@ import ProductListPage from './pages/ProductListPage.jsx';
 import ProductDetailPage from './pages/ProductDetailPage.jsx';
 import BoardListPage from './pages/BoardListPage.jsx';
 import Header from './components/Header.jsx';
+import { UserContext } from './components/UserContext.jsx';
 import products from './data/product.json'
 
 
 export default function App() {
-  const [page, setPage] = useState("MainPage");
-  const [isLogin, setIsLogin] = useState(true);
-  const [category, setCategory] = useState("");
+  const { currentUser, logout: userLogout } = useContext(UserContext);
+  const isLogin = !!currentUser;
 
+  const [page, setPage] = useState("MainPage");
+  const [category, setCategory] = useState("");
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [productId, setProductId] = useState("");
   const [from, setFrom] = useState("");
@@ -31,8 +33,10 @@ export default function App() {
     setFromPostId(params.fromPostId ?? null);
   }
 
-  const login = () => { setIsLogin(true) }
-  const logout = () => { setIsLogin(false) }
+  const logout = () => {
+    userLogout();
+    navigate("MainPage");
+  }
 
   const renderPage = () => {
     switch (page) {
@@ -41,7 +45,7 @@ export default function App() {
       case "CartPage":
         return <CartPage navigate={navigate} />
       case "LoginPage":
-        return <LoginPage navigate={navigate} login={login} />
+        return <LoginPage navigate={navigate} />
       case "RegisterPage":
         return <RegisterPage navigate={navigate} />
       case "ProductListPage":
@@ -59,7 +63,7 @@ export default function App() {
 
   return (
     <>
-      <Header isLogin={isLogin} logout={logout} setPage={setPage} page={page} category={category} navigate={navigate} />
+      <Header isLogin={isLogin} logout={logout} page={page} category={category} navigate={navigate} />
       <LocationProvider>
         {renderPage()}
       </LocationProvider>

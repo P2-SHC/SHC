@@ -1,11 +1,31 @@
+import { useState, useContext } from 'react';
+import { UserContext } from '../components/UserContext.jsx';
 import './LoginPage.css';
 
-export default function LoginPage({ login, navigate }) {
+export default function LoginPage({ navigate }) {
+  const { login } = useContext(UserContext);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = async () => {
+    setError('');
+    if (!username || !password) {
+      setError('아이디와 비밀번호를 입력하세요.');
+      return;
+    }
+    const result = await login(username, password);
+    if (!result.success) {
+      setError(result.error);
+      return;
+    }
+    navigate('MainPage');
+  };
+
   return (
     <div className="login-page">
       {/* 좌측 브랜드 영역 */}
       <div className="login-brand">
-        {/* 배경 원형 장식 */}
         <div className="login-circle-1" />
         <div className="login-circle-2" />
         <div className="login-brand-content">
@@ -27,25 +47,33 @@ export default function LoginPage({ login, navigate }) {
           <input
             className="login-input"
             placeholder="아이디를 입력하세요"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
           />
           <label className="login-label">비밀번호</label>
           <input
             className="login-input"
             type="password"
             placeholder="비밀번호를 입력하세요"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
           />
         </div>
 
-        <button className="login-btn" onClick={() => { navigate("MainPage"); login(); }}>
+        {error && <p className="login-error">{error}</p>}
+
+        <button className="login-btn" onClick={handleLogin}>
           로그인
         </button>
 
         <div className="login-footer">
           계정이 없으신가요?{' '}
-          <button className="login-link" onClick={() => { navigate("RegisterPage") }}>회원가입</button>
+          <button className="login-link" onClick={() => navigate('RegisterPage')}>회원가입</button>
         </div>
 
-        <button className="login-back-btn" onClick={() => { navigate("MainPage") }}>← 메인으로 돌아가기</button>
+        <button className="login-back-btn" onClick={() => navigate('MainPage')}>← 메인으로 돌아가기</button>
       </div>
     </div>
   );

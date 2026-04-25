@@ -1,21 +1,32 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useRef } from 'react';
 import { ProductContext } from './ProductContext';
+import { UserContext } from './UserContext';
 
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
     const { getStock } = useContext(ProductContext);
-    
-    // 1. localStorage에서 장바구니 데이터 로드
+    const { currentUser } = useContext(UserContext);
+    const cartKey = `shc_cart_${currentUser?.username || 'guest'}`;
+    const cartKeyRef = useRef(cartKey);
+
+    // 1. localStorage에서 장바구니 데이터 로드 (유저별 키)
     const [cartItems, setCartItems] = useState(() => {
-        const savedCart = localStorage.getItem('shc_cart');
+        const savedCart = localStorage.getItem(cartKey);
         return savedCart ? JSON.parse(savedCart) : [];
     });
 
-    // 2. 장바구니 변경 시 localStorage 동기화
+    // 2. 장바구니 변경 시 localStorage 동기화 (현재 유저 키에 저장)
     useEffect(() => {
-        localStorage.setItem('shc_cart', JSON.stringify(cartItems));
+        localStorage.setItem(cartKeyRef.current, JSON.stringify(cartItems));
     }, [cartItems]);
+
+    // 3. 유저 변경(로그인/로그아웃) 시 해당 유저의 장바구니로 교체
+    useEffect(() => {
+        cartKeyRef.current = cartKey;
+        const savedCart = localStorage.getItem(cartKey);
+        setCartItems(savedCart ? JSON.parse(savedCart) : []);
+    }, [cartKey]);
 
     /**
      * 장바구니에 상품 추가
