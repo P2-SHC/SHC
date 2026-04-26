@@ -13,44 +13,85 @@
   gap: 24px;
 }
 
-/* 건강 이미지 영역 */
-.health-image-area {
+/* 최신 인기글 카드 */
+.featured-card {
   border-radius: var(--r-xl);
-  border: 1.5px dashed #b8cebb;
-  background: linear-gradient(135deg, var(--sage-light) 0%, #f0f7ee 50%, rgba(253, 232, 220, 0.15) 100%);
+  border: 1px solid var(--border-light);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  gap: 16px;
+}
+
+.featured-card__label {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-dark);
+  padding-bottom: 12px;
+  border-bottom: 1.5px solid var(--border-light);
+}
+
+.featured-card__body {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.featured-card__img {
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-light);
+  background: var(--sage-light);
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  padding: 44px 24px;
-  min-height: 220px;
+  font-size: 64px;
 }
 
-.health-image-area__svg {
-  display: block;
+.featured-card__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 160px;
 }
 
-.health-image-area__text {
-  text-align: center;
-}
-
-.health-image-area__title {
-  font-size: 15px;
+.featured-card__title {
+  font-size: 16px;
   font-weight: 700;
-  color: var(--sage);
-  margin-bottom: 4px;
+  color: var(--text-dark);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.health-image-area__desc {
+.featured-card__content {
+  flex: 1;
   font-size: 13px;
   color: var(--text-light);
-  line-height: 1.6;
+  line-height: 1.7;
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
-.health-image-area__desc code {
-  font-family: monospace;
-  font-size: 12px;
+.featured-card__empty {
+  font-size: 14px;
+  color: var(--text-light);
+  text-align: center;
+  padding: 24px 0;
 }
 
 /* 섹션 */

@@ -2,11 +2,26 @@
 import Badge from '../components/Badge.jsx';
 import './MainPage.css';
 import { AirQualityWidget, WeatherWidget } from '../components/Widgets.jsx';
+import { useState } from "react";
+import articles from '../article/articleData.json';
+
+const CATEGORY_ICON = { recipe: "🥗", life: "🧘", exercise: "🏃" };
 
 /**
  * MainPage - 메인 페이지 (SHC-001)
  */
+const today = new Date();
+
 export default function MainPage({ navigate }) {
+  const [postList, setPostList] = useState(articles);
+// 현재 날짜와 비교하여 가장 최신 날짜로 비교
+  const featuredPost = [...postList].sort((a, b) => {
+    const diffA = Math.abs(today - new Date(a.createdAt));
+    const diffB = Math.abs(today - new Date(b.createdAt));
+    //날짜 비교 및 조회수 높은 것
+    return diffA !== diffB ? diffA - diffB : b.viewCount - a.viewCount;
+  })[0];
+
   return (
     <div className="page">
 
@@ -14,47 +29,54 @@ export default function MainPage({ navigate }) {
         <AirQualityWidget navigate={navigate} />
 
         <main className="main-content">
-          {/* 건강 이미지 영역 */}
-          <div className="health-image-area">
-            <svg className="health-image-area__svg" width="120" height="90" viewBox="0 0 120 90" fill="none">
-              <rect x="2" y="2" width="116" height="86" rx="12" fill="#e8f0e9" stroke="#7ab87e" strokeWidth="1.5" strokeDasharray="5 3" />
-              <circle cx="38" cy="34" r="14" fill="#7ab87e" fillOpacity="0.3" />
-              <circle cx="38" cy="34" r="8" fill="#4a7a50" fillOpacity="0.5" />
-              <path d="M18 68 Q38 42 56 57 Q74 42 102 68" stroke="#4a7a50" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-              <rect x="62" y="18" width="46" height="9" rx="4.5" fill="#4a7a50" fillOpacity="0.22" />
-              <rect x="62" y="34" width="34" height="7" rx="3.5" fill="#4a7a50" fillOpacity="0.16" />
-              <rect x="62" y="47" width="40" height="7" rx="3.5" fill="#4a7a50" fillOpacity="0.16" />
-              <circle cx="91" cy="73" r="9" fill="#e8956d" fillOpacity="0.22" />
-            </svg>
-            <div className="health-image-area__text">
-              <p className="health-image-area__title">건강 이미지 영역</p>
-              <p className="health-image-area__desc">
-                시니어 건강 관련 대표 이미지를 삽입하세요<br />
-                <code>권장 사이즈: 820 × 220px · WebP</code>
-              </p>
-            </div>
+          {/* 최신 인기글 */}
+          <div className="featured-card">
+            <p className="featured-card__label">최신 인기글</p>
+            {featuredPost ? (
+              <div className="featured-card__body">
+                <div className="featured-card__img">
+                  {CATEGORY_ICON[featuredPost.category] ?? "📄"}
+                </div>
+                <div className="featured-card__info">
+                  <p className="featured-card__title">{featuredPost.title}</p>
+                  <p className="featured-card__content">
+                    {/*{featuredPost.content.replace(/[#*`>\-|!\[\]()]/g, '').trim()}*/}
+                    {/*md형식 문법 삭제*/}
+                    {featuredPost.content.replace(/[#*`>\-|!\[\]()]/g, '').split('\n').slice(0, 10).join('\n')}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <p className="featured-card__empty">게시글이 없습니다.</p>
+            )}
           </div>
 
           {/* 최신 건강 정보 */}
           <section className="main-section">
             <h2 className="main-section__title">최신 건강 정보</h2>
-            <div className="post-list">
-              <button className="post-card" onClick={() => { navigate("BoardDetailPage") }}>
-                <div className="post-card__img">🥗</div>
-                <div className="post-card__body">
-                  <div className="post-card__badges">
-                    <Badge />
-                    <Badge />
-                  </div>
-                  <p className="post-card__title">혈압에 좋은 바나나 스무디 만들기</p>
-                  <p className="post-card__meta">2025.04.15 · 조회 1,240</p>
-                </div>
-              </button>
+            <div className="board-list">
+              {[...postList]
+                //   글 가장 최신순으로 정렬
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .map(post => (
+                  <button key={post.id} className="board-post-card" onClick={() => {
+                    navigate("BoardDetailPage", { postId: post.id });
+                  }}>
+                    <div className="board-post-card__img">
+                      {CATEGORY_ICON[post.category] ?? "📄"}
+                    </div>
+                    <div className="board-post-card__body">
+                      {post.viewCount > 1000 && <Badge />}
+                      <p className="board-post-card__title">{post.title}</p>
+                      <p className="board-post-card__meta">{post.createdAt} · 조회수 {post.viewCount}</p>
+                    </div>
+                  </button>
+                ))}
             </div>
           </section>
         </main>
 
-        <WeatherWidget navigate={navigate} />
+        <WeatherWidget navigate={navigate}/>
       </div>
     </div>
   );
