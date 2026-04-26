@@ -61,7 +61,7 @@ export default function BoardDetailPage({ navigate, postId }) {
                   className="detail-product-card"
                   onClick={() => { navigate("ProductDetailPage", { productId: product.id, from: "BoardDetailPage", fromPostId: post.id }) }}
                 >
-                  <span className="detail-product-card__emoji">🍃</span>
+                  <img className="detail-product-card__img" src={product.image} alt={product.title} />
                   <p className="detail-product-card__name">{product.title}</p>
                   <p className="detail-product-card__price">{product.price.toLocaleString()}원</p>
                 </button>

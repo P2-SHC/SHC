@@ -5,12 +5,14 @@ function ProductItem({ product, navigate }) {
     return (
         <div className="product-item-container">
             <button className="product-list-card" onClick={() => { navigate("ProductDetailPage", { productId: product.id }) }}>
-                <div className="product-list-card__img">🍃</div>
+                <div className="product-list-card__img">
+                    <img src={product.image} alt={product.title} />
+                </div>
                 <p className="product-list-card__category">{product.keyword.join(", ")}</p>
                 <p className="product-list-card__name">{product.title}</p>
                 <div className="product-list-card__footer">
                     <span className="product-list-card__price">{product.price.toLocaleString()}원</span>
-                    <Badge />
+                    {/* <Badge /> */}
                 </div>
             </button>
         </div>

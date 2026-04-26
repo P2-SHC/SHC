@@ -35,7 +35,7 @@ export function CartProvider({ children }) {
      */
     const addToCart = (product, quantity) => {
         const currentStock = getStock(product.id);
-        
+
         setCartItems(prevItems => {
             const existingItem = prevItems.find(item => item.id === product.id);
             const currentCartQty = existingItem ? existingItem.quantity : 0;
@@ -59,7 +59,7 @@ export function CartProvider({ children }) {
                 return [...prevItems, { ...product, quantity }];
             }
         });
-        
+
         return true; // 성공 시 true 반환
     };
 
@@ -78,7 +78,7 @@ export function CartProvider({ children }) {
      */
     const updateCartQuantity = (productId, newQuantity) => {
         if (newQuantity < 1) return;
-        
+
         const currentStock = getStock(productId);
         if (newQuantity > currentStock) {
             alert(`현재 주문 가능한 최대 수량은 ${currentStock}개입니다.`);
@@ -105,11 +105,11 @@ export function CartProvider({ children }) {
     const cartCount = cartItems.length;
 
     return (
-        <CartContext.Provider value={{ 
-            cartItems, 
-            addToCart, 
-            removeFromCart, 
-            updateCartQuantity, 
+        <CartContext.Provider value={{
+            cartItems,
+            addToCart,
+            removeFromCart,
+            updateCartQuantity,
             clearCart,
             cartTotalPrice,
             cartCount
