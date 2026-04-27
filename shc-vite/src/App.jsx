@@ -33,8 +33,8 @@ export default function App() {
     setFromPostId(params.fromPostId ?? null);
   }
 
-  const logout = () => {
-    userLogout();
+  const logout = async () => {
+    await userLogout();
     navigate("MainPage");
   }
 
