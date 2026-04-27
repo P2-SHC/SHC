@@ -3,7 +3,17 @@ import { useContext } from 'react';
 import { CartContext } from './CartContext.jsx';
 import { UserContext } from './UserContext.jsx';
 
-export default function Header({ isLogin, logout, page, category, navigate }) {
+const WEATHER_OPTIONS = [
+  { code: '01d', label: '☀️ 맑음' },
+  { code: '02d', label: '🌤 구름 조금' },
+  { code: '04d', label: '☁️ 흐림' },
+  { code: '10d', label: '🌧 비' },
+  { code: '11d', label: '⛈ 천둥번개' },
+  { code: '13d', label: '🌨 눈' },
+  { code: '50d', label: '🌫 안개' },
+];
+
+export default function Header({ isLogin, logout, page, category, navigate, weatherIcon, onWeatherChange }) {
   const { cartCount } = useContext(CartContext);
   const { currentUser } = useContext(UserContext);
   const navClassName = (target) => {
@@ -51,6 +61,19 @@ export default function Header({ isLogin, logout, page, category, navigate }) {
         <button className={navClassName("exercise")} onClick={() => { navigate("BoardListPage", { category: "exercise" }) }}>운동</button>
         <button className={navClassName("ProductListPage")} onClick={() => { navigate("ProductListPage") }}>상품</button>
         <button className={`${navClassName("HealthRecommendPage")} header__nav-item--ai`} onClick={() => { navigate("HealthRecommendPage") }}>AI 건강추천</button>
+
+        {/* 메인 페이지에서만 날씨 배경 선택 드롭다운 표시 */}
+        {page === "MainPage" && (
+          <select
+            className="header__weather-select"
+            value={weatherIcon}
+            onChange={e => onWeatherChange(e.target.value)}
+          >
+            {WEATHER_OPTIONS.map(o => (
+              <option key={o.code} value={o.code}>{o.label}</option>
+            ))}
+          </select>
+        )}
       </nav>
     </header >
   );
