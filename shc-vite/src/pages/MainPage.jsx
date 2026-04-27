@@ -81,6 +81,7 @@ export default function MainPage({ navigate }) {
               {[...postList]
                 //   글 가장 최신순으로 정렬
                 .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .slice(0, 5)
                 .map(post => (
                   <button key={post.id} className="board-post-card" onClick={() => {
                     navigate("BoardDetailPage", { postId: post.id });
