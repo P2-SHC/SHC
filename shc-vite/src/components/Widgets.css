@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  width: 280px;
+  flex-shrink: 0;
 }
 
 .widget {
@@ -126,6 +128,62 @@
   margin-left: 2px;
 }
 
+/* AI 건강 맞춤 추천 카드 */
+.ai-recommend-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 18px 16px;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  box-shadow: 0 4px 16px rgba(204, 35, 102, 0.4);
+}
+
+.ai-recommend-card:hover {
+  background: linear-gradient(135deg, #d4801c, #c95530, #bf1f35, #a81b55, #9e1270);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(204, 35, 102, 0.5);
+}
+
+.ai-recommend-card__icon {
+  font-size: 42px;
+  flex-shrink: 0;
+}
+
+.ai-recommend-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-recommend-card__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.ai-recommend-card__desc {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.ai-recommend-card__arrow {
+  font-size: 28px;
+  color: #ffffff;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
 /* 추천 상품 리스트 영역 */
 .widget__product-section {
   margin-top: 20px;
@@ -146,18 +204,25 @@
 }
 
 /* 미니 상품 카드 스타일 */
+.widget__product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .mini-product-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
   width: 100%;
-  padding: 12px;
+  padding: 10px 8px;
   background: rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  text-align: left;
+  text-align: center;
 }
 
 .mini-product-card:hover {
@@ -167,12 +232,11 @@
 }
 
 .mini-product-card__img {
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  aspect-ratio: 1;
   background: #f0f7f4;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
-  flex-shrink: 0;
 }
 
 .mini-product-card__img img {
@@ -182,23 +246,20 @@
 }
 
 .mini-product-card__info {
-  flex: 1;
-  min-width: 0;
-  /* 텍스트 넘침 방지 */
+  width: 100%;
 }
 
 .mini-product-card__name {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   color: #2d3436;
   margin-bottom: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-break: keep-all;
+  line-height: 1.3;
 }
 
 .mini-product-card__price {
-  font-size: 13px;
+  font-size: 12px;
   color: #00b894;
   font-weight: 700;
 }

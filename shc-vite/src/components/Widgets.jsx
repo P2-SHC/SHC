@@ -230,12 +230,14 @@ export function WeatherWidget({ navigate }) {
           </div>
         </div>
       </div>
-      <div className="widget__product-section">
-        <div className="widget__product-title">추천 건강상품</div>
-        <div className="widget__product-list">
-          {recommendedProducts.map((p) => <MiniProductCard key={p.id} navigate={navigate} product={p} />)}
+      <button className="ai-recommend-card" onClick={() => navigate('HealthRecommendPage')}>
+        <div className="ai-recommend-card__icon">💊</div>
+        <div className="ai-recommend-card__body">
+          <div className="ai-recommend-card__title">AI 건강 맞춤 추천</div>
+          <div className="ai-recommend-card__desc">건강 상태를 알려주시면 딱 맞는 상품과 건강 정보를 추천해드려요</div>
         </div>
-      </div>
+        <div className="ai-recommend-card__arrow">›</div>
+      </button>
     </div>
   );
 }
