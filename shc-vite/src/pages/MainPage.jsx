@@ -12,6 +12,27 @@ const CATEGORY_ICON = { recipe: "🥗", life: "🧘", exercise: "🏃" };
  */
 const today = new Date();
 
+const getFirstImage = (content) => {
+  const match = content.match(/!\[.*?\]\((.*?)\)/);
+  if (match) {
+    const src = match[1];
+    return src.startsWith('http') ? src : `/src/data/boardIMG/${src}`;
+  }
+  return null;
+};
+
+const cleanContent = (content, maxLength = 100) => {
+  const cleaned = content
+    .replace(/!\[.*?\]\(.*?\)/g, '') // 이미지 제거
+    .replace(/<iframe.*?<\/iframe>/g, '') // iframe 제거
+    .replace(/[#*`>\-|!\[\]()]/g, '') // 마크다운 기호 제거
+    .replace(/\s+/g, ' ') // 연속된 공백 하나로 축소
+    .trim();
+
+  if (cleaned.length <= maxLength) return cleaned;
+  return cleaned.slice(0, maxLength) + "...";
+};
+
 export default function MainPage({ navigate }) {
   const [postList, setPostList] = useState(articles);
   // 현재 날짜와 비교하여 가장 최신 날짜로 비교
@@ -34,15 +55,17 @@ export default function MainPage({ navigate }) {
             <p className="featured-card__label">최신 인기글</p>
             {featuredPost ? (
               <div className="featured-card__body">
-                <div className="featured-card__img">
-                  {CATEGORY_ICON[featuredPost.category] ?? "📄"}
+                <div className="featured-card__img" onClick={() => navigate("BoardDetailPage", { postId: featuredPost.id })} style={{ cursor: 'pointer' }}>
+                  {getFirstImage(featuredPost.content) ? (
+                    <img src={getFirstImage(featuredPost.content)} alt={featuredPost.title} />
+                  ) : (
+                    CATEGORY_ICON[featuredPost.category] ?? "📄"
+                  )}
                 </div>
                 <div className="featured-card__info">
                   <p className="featured-card__title">{featuredPost.title}</p>
                   <p className="featured-card__content">
-                    {/*{featuredPost.content.replace(/[#*`>\-|!\[\]()]/g, '').trim()}*/}
-                    {/*md형식 문법 삭제*/}
-                    {featuredPost.content.replace(/[#*`>\-|!\[\]()]/g, '').split('\n').slice(0, 10).join('\n')}
+                    {cleanContent(featuredPost.content, 250)}
                   </p>
                 </div>
               </div>
@@ -63,7 +86,11 @@ export default function MainPage({ navigate }) {
                     navigate("BoardDetailPage", { postId: post.id });
                   }}>
                     <div className="board-post-card__img">
-                      {CATEGORY_ICON[post.category] ?? "📄"}
+                      {getFirstImage(post.content) ? (
+                        <img src={getFirstImage(post.content)} alt={post.title} />
+                      ) : (
+                        CATEGORY_ICON[post.category] ?? "📄"
+                      )}
                     </div>
                     <div className="board-post-card__body">
                       {post.viewCount > 1000 && <Badge />}
