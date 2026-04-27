@@ -6,30 +6,58 @@ import products from '../data/product.json'
 /**
  * AirQualityWidget - 미세먼지 위젯 (Glassmorphism)
  */
-let locationName = "";
+/**
+ * 도시 이름을 깔끔하게 반환하는 헬퍼 함수
+ */
+const getCleanCityName = (city) => {
+  if (!city) return "알 수 없음";
+
+  const cityMap = {
+    "Seoul": "서울시",
+    "Seongnam-si": "성남시",
+    "Gyeonggi-do": "경기도",
+    "Incheon": "인천시",
+    "Busan": "부산시",
+    "Daegu": "대구시",
+    "Daejeon": "대전시",
+    "Gwangju": "광주시",
+    "Suwon-si": "수원시",
+    "Yongin-si": "용인시",
+    "Goyang-si": "고양시"
+  };
+
+  return cityMap[city] || city.replace('-si', '').replace('-do', '');
+};
+
 export function AirQualityWidget({ navigate }) {
+  const { locationData, loading: locationLoading } = useContext(LocationContext);
   const [microDustData, setMicroDustData] = useState(null);
   const [loading, setLoading] = useState(true);
   const apiKey = import.meta.env.VITE_DUST_API_KEY;
-  const url = `https://api.waqi.info/feed/here/?token=${apiKey}`;
 
   useEffect(() => {
-    const fetchMicroDust = async () => {
-      try {
-        const res = await fetch(url);
-        const json = await res.json();
-        if (json.status === "ok") {
-          setMicroDustData(json.data);
-          locationName = json.data.city.name.split('-')[0];
+    if (locationData) {
+      const { lat, lng } = locationData.location;
+      const url = `https://api.waqi.info/feed/geo:${lat};${lng}/?token=${apiKey}`;
+
+      const fetchMicroDust = async () => {
+        try {
+          const res = await fetch(url);
+          const json = await res.json();
+          if (json.status === "ok") {
+            setMicroDustData(json.data);
+          }
+          setLoading(false);
+        } catch (error) {
+          console.error("Micro dust fetch error:", error);
+          setLoading(false);
         }
-        setLoading(false);
-      } catch (error) {
-        console.error("Micro dust fetch error:", error);
-        setLoading(false);
-      }
-    };
-    fetchMicroDust();
-  }, []);
+      };
+      fetchMicroDust();
+    }
+  }, [locationData, apiKey]);
+
+  const displayCity = getCleanCityName(locationData?.location?.city);
 
   // AQI 수치에 따른 정보 반환 함수
   const getAqiInfo = (aqi) => {
@@ -41,7 +69,7 @@ export function AirQualityWidget({ navigate }) {
     return { class: "aqi-hazardous", label: "위험", icon: "💀" };
   };
 
-  if (loading || !microDustData) {
+  if (locationLoading || loading || !microDustData) {
     return <div className="widget widget--green">미세먼지 정보 로딩 중...</div>;
   }
 
@@ -58,7 +86,7 @@ export function AirQualityWidget({ navigate }) {
   return (
     <div className="widget-container">
       <div className={`widget ${aqiInfo.class}`}>
-        <div className="widget__title">미세먼지 현황 · {microDustData.city.name}</div>
+        <div className="widget__title">미세먼지 현황 · {displayCity}</div>
         <div className="widget__main-row">
           <div className="widget__value">{aqiInfo.label} ({microDustData.aqi})</div>
           <span className="widget__icon">{aqiInfo.icon}</span>
@@ -126,6 +154,7 @@ export function WeatherWidget({ navigate }) {
   // weatherDes.json에서 현재 날씨 ID와 일치하는 한국어 설명을 찾습니다.
   const weatherInfo = weatherDescriptions.find(item => item.id === weatherData.weather[0].id);
   const description = weatherInfo ? weatherInfo.description : weatherData.weather[0].description;
+  const displayCity = getCleanCityName(locationData?.location?.city);
 
   // 날씨 기반 상품 추천 로직
   const mainWeather = weatherData.weather[0].main;
@@ -180,7 +209,7 @@ export function WeatherWidget({ navigate }) {
   return (
     <div className="widget-container">
       <div className="widget widget--blue">
-        <div className="widget__title">현재 날씨 · {locationName}</div>
+        <div className="widget__title">현재 날씨 · {displayCity}</div>
         <div className="widget__main-row">
           {/* main.temp로 온도 접근 */}
           <div className="widget__temp">{Math.round(weatherData.main.temp)}°</div>
