@@ -6,6 +6,15 @@ import { useState } from 'react';
 /**
  * BoardListPage - 게시판 목록 (SHC-002)
  */
+const getFirstImage = (content) => {
+  const match = content.match(/!\[.*?\]\((.*?)\)/);
+  if (match) {
+    const src = match[1];
+    return src.startsWith('http') ? src : `/src/data/boardIMG/${src}`;
+  }
+  return null;
+};
+
 export default function BoardListPage({ navigate, category }) {
   const [postList, setPostList] = useState(articles);
   const [searchTerm, setSearchTerm] = useState("");
@@ -76,7 +85,13 @@ export default function BoardListPage({ navigate, category }) {
 
               return filtered.map(post => (
                 <button key={post.id} className="board-post-card" onClick={() => { navigate("BoardDetailPage", { postId: post.id }) }}>
-                  <div className="board-post-card__img">{currentCategory.icon}</div>
+                  <div className="board-post-card__img">
+                    {getFirstImage(post.content) ? (
+                      <img src={getFirstImage(post.content)} alt={post.title} />
+                    ) : (
+                      currentCategory.icon
+                    )}
+                  </div>
                   <div className="board-post-card__body">
                     {post.viewCount > 1000 && <Badge />}
                     <p className="board-post-card__title">{post.title}</p>

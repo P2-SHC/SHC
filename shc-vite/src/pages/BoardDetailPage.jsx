@@ -4,6 +4,7 @@ import articles from "../article/articleData.json";
 import products from "../data/product.json";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 /**
  * BoardDetailPage - 게시판 상세 (SHC-003)
@@ -44,7 +45,24 @@ export default function BoardDetailPage({ navigate, postId }) {
           <p className="detail-article__meta">{post.createdAt} · 조회 {post.viewCount}</p>
           <div className="detail-article__divider" />
           <div className="detail-article__content">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
+              components={{
+                img: ({ src, alt }) => {
+                  const fullSrc = src.startsWith('http') ? src : `/src/data/boardIMG/${src}`;
+                  return <img src={fullSrc} alt={alt} style={{ maxWidth: '100%', borderRadius: '8px', margin: '1rem 0' }} />;
+                },
+                iframe: (props) => (
+                  <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '12px', margin: '1.5rem 0' }}>
+                    <iframe
+                      {...props}
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+                    />
+                  </div>
+                )
+              }}
+            >
               {post.content}
             </ReactMarkdown>
           </div>
