@@ -19,6 +19,7 @@ export default function App() {
   const isLogin = !!currentUser;
 
   const [page, setPage] = useState("MainPage");
+  const [weatherIcon, setWeatherIcon] = useState("01d");
   const [category, setCategory] = useState("");
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [productId, setProductId] = useState("");
@@ -42,7 +43,7 @@ export default function App() {
   const renderPage = () => {
     switch (page) {
       case "MainPage":
-        return <MainPage navigate={navigate} />
+        return <MainPage navigate={navigate} weatherIcon={weatherIcon} onWeatherLoad={setWeatherIcon} />
       case "CartPage":
         return <CartPage navigate={navigate} />
       case "LoginPage":
@@ -66,7 +67,7 @@ export default function App() {
 
   return (
     <>
-      <Header isLogin={isLogin} logout={logout} page={page} category={category} navigate={navigate} />
+      <Header isLogin={isLogin} logout={logout} page={page} category={category} navigate={navigate} weatherIcon={weatherIcon} onWeatherChange={setWeatherIcon} />
       <LocationProvider>
         {renderPage()}
       </LocationProvider>

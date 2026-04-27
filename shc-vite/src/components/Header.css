@@ -113,6 +113,29 @@
   border-bottom-color: var(--sage);
 }
 
+/* 날씨 배경 선택 드롭다운 */
+.header__weather-select {
+  margin-left: 12px;
+  padding: 6px 12px;
+  font-size: var(--font-sm);
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-mid);
+  background: var(--beige);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+  align-self: center;
+}
+
+.header__weather-select:hover,
+.header__weather-select:focus {
+  border-color: var(--sage);
+  color: var(--sage);
+}
+
 /* AI 맞춤추천 탭 */
 .header__nav-item--ai {
   color: #F27405;

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WeatherBackground – SHC2 Component Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; overflow: hidden; height: 100vh; background: #000; }
+  #root { width: 100vw; height: 100vh; position: relative; }
+
+  .switcher {
+    position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+    z-index: 100;
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(16px) saturate(1.4);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 10px 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .switcher-btn {
+    padding: 6px 14px; border-radius: 12px; border: none; cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700;
+    background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.85);
+    transition: all 0.2s; letter-spacing: 0.02em;
+  }
+  .switcher-btn:hover { background: rgba(255,255,255,0.3); color: #fff; }
+  .switcher-btn.active { background: rgba(255,255,255,0.9); color: #2a2a2a; }
+
+  .weather-label {
+    position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%);
+    z-index: 100; text-align: center; pointer-events: none;
+  }
+  .weather-label__code {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6); margin-bottom: 4px;
+  }
+  .weather-label__name { font-size: 28px; font-weight: 800; color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+  .weather-label__desc { font-size: 15px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+
+  .weather-bg { position: absolute; inset: 0; overflow: hidden; }
+
+  /* Cloud shapes */
+  .cloud { position: absolute; }
+  .cloud-body {
+    position: relative;
+    background: white;
+    border-radius: 50px;
+  }
+  .cloud-body::before, .cloud-body::after {
+    content: ''; position: absolute;
+    background: white; border-radius: 50%;
+  }
+
+  /* Lightning */
+  @keyframes lightning-flash {
+    0%,100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+  @keyframes cloud-drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(120vw); }
+  }
+  @keyframes sun-pulse {
+    0%,100% { box-shadow: 0 0 60px 30px rgba(255,210,60,0.45), 0 0 120px 60px rgba(255,165,0,0.2); }
+    50% { box-shadow: 0 0 80px 40px rgba(255,220,80,0.55), 0 0 160px 80px rgba(255,180,0,0.25); }
+  }
+  @keyframes fog-drift {
+    0% { transform: translateX(-10%) scaleX(1); opacity: 0.55; }
+    50% { transform: translateX(5%) scaleX(1.05); opacity: 0.7; }
+    100% { transform: translateX(-10%) scaleX(1); opacity: 0.55; }
+  }
+  @keyframes fog-drift2 {
+    0% { transform: translateX(5%) scaleX(1); opacity: 0.4; }
+    50% { transform: translateX(-8%) scaleX(1.08); opacity: 0.6; }
+    100% { transform: translateX(5%) scaleX(1); opacity: 0.4; }
+  }
+  @keyframes shimmer {
+    0%,100% { opacity: 0.08; }
+    50% { opacity: 0.18; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+const CODES = {
+  '01': { label: 'Clear',          desc: '구름 한 점 없는 맑은 하늘' },
+  '02': { label: 'Few Clouds',     desc: '약간의 구름이 낀 하늘' },
+  '03': { label: 'Scattered',      desc: '드문드문 구름이 낀 하늘' },
+  '04': { label: 'Dense Clouds',   desc: '구름이 많은 흐린 하늘' },
+  '09': { label: 'Light Rain',     desc: '가벼운 소나기' },
+  '10': { label: 'Heavy Rain',     desc: '강한 비' },
+  '11': { label: 'Thunderstorm',   desc: '천둥구름' },
+  '13': { label: 'Snow',           desc: '눈' },
+  '50': { label: 'Mist / Fog',     desc: '안개' },
+};
+
+/* ─── Canvas hook ─────────────────────────────────────────── */
+function useCanvas(draw, deps = []) {
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    resize();
+    window.addEventListener('resize', resize);
+    const ctx = canvas.getContext('2d');
+    let animId;
+    const loop = () => { draw(ctx, canvas.width, canvas.height); animId = requestAnimationFrame(loop); };
+    animId = requestAnimationFrame(loop);
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); };
+  }, deps);
+  return canvasRef;
+}
+
+/* ─── Mouse position hook ─────────────────────────────────── */
+function useMouse() {
+  const [pos, setPos] = useState({ x: 0.72, y: 0.18 });
+  useEffect(() => {
+    const h = (e) => setPos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
+    window.addEventListener('mousemove', h);
+    return () => window.removeEventListener('mousemove', h);
+  }, []);
+  return pos;
+}
+
+/* ─── CLEAR SKY ───────────────────────────────────────────── */
+function ClearSky() {
+  const mouse = useMouse();
+  const SUN_X = 72, SUN_Y = 16; // % of viewport
+  // Angle from sun to mouse (for flare direction)
+  const dx = mouse.x * 100 - SUN_X;
+  const dy = mouse.y * 100 - SUN_Y;
+  const dist = Math.sqrt(dx*dx + dy*dy);
+  const flareOpacity = Math.max(0, 1 - dist / 60) * 0.85;
+
+  const rays = useMemo(() => Array.from({length: 12}, (_,i) => ({
+    angle: (i / 12) * 360,
+    len: 80 + (i % 3) * 40,
+    width: i % 2 === 0 ? 2 : 1,
+  })), []);
+
+  return (
+    <div className="weather-bg" style={{ background: 'linear-gradient(175deg, #1565c0 0%, #1e88e5 18%, #42a5f5 40%, #90caf9 65%, #fce5b0 85%, #f9c06c 100%)' }}>
+      {/* Sky shimmer */}
+      <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse 80% 60% at 70% 20%, rgba(255,255,200,0.12) 0%, transparent 70%)', animation:'shimmer 4s ease-in-out infinite' }} />
+
+      {/* Sun rays */}
+      <svg style={{ position:'absolute', left:`${SUN_X}%`, top:`${SUN_Y}%`, transform:'translate(-50%,-50%)', overflow:'visible', width:1, height:1, pointerEvents:'none' }}>
+        {rays.map((r,i) => {
+          const rad = (r.angle * Math.PI) / 180;
+          return (
+            <line key={i}
+              x1={0} y1={0}
+              x2={Math.cos(rad) * (r.len + 20)} y2={Math.sin(rad) * (r.len + 20)}
+              stroke={`rgba(255,220,80,${0.25 - i*0.01})`} strokeWidth={r.width} strokeLinecap="round"
+            />
+          );
+        })}
+      </svg>
+
+      {/* Sun disc */}
+      <div style={{
+        position:'absolute', left:`${SUN_X}%`, top:`${SUN_Y}%`,
+        width:110, height:110, borderRadius:'50%',
+        background:'radial-gradient(circle, #fffde7 25%, #ffe57f 60%, #ffb300 100%)',
+        transform:'translate(-50%,-50%)',
+        boxShadow:'0 0 60px 30px rgba(255,210,60,0.45), 0 0 120px 60px rgba(255,165,0,0.2)',
+        animation:'sun-pulse 3s ease-in-out infinite',
+      }} />
+
+      {/* Lens flares along mouse axis */}
+      {[0.3, 0.5, 0.72, 1.1].map((t, i) => {
+        const fx = SUN_X + dx * t;
+        const fy = SUN_Y + dy * t;
+        const sizes = [14, 22, 10, 18];
+        return (
+          <div key={i} style={{
+            position:'absolute', left:`${fx}%`, top:`${fy}%`,
+            width:sizes[i], height:sizes[i] * (i%2===0 ? 1 : 0.4),
+            borderRadius:'50%',
+            background:`rgba(255,240,180,${flareOpacity * (0.9 - i*0.15)})`,
+            transform:'translate(-50%,-50%)',
+            pointerEvents:'none', transition:'left 0.05s, top 0.05s',
+          }} />
+        );
+      })}
+
+      {/* Horizon haze */}
+      <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'30%', background:'linear-gradient(to top, rgba(249,192,108,0.35) 0%, transparent 100%)' }} />
+    </div>
+  );
+}
+
+/* ─── CLOUD LAYER ─────────────────────────────────────────── */
+function CloudLayer({ clouds, scrollY }) {
+  return (
+    <>
+      {clouds.map((c, i) => (
+        <div key={i} style={{
+          position:'absolute',
+          left: c.x, top: c.y,
+          transform: `translateX(${scrollY * c.speed}px)`,
+          opacity: c.opacity,
+          zIndex: c.z,
+        }}>
+          <div style={{
+            position:'relative',
+            width: c.w, height: c.h * 0.45,
+            background: c.color,
+            borderRadius: c.h,
+            filter: `blur(${c.blur}px)`,
+          }}>
+            <div style={{ position:'absolute', width:c.w*0.55, height:c.w*0.55, borderRadius:'50%', background:c.color, top:`-${c.w*0.25}px`, left:`${c.w*0.15}px`, filter:`blur(${c.blur*0.5}px)` }} />
+            <div style={{ position:'absolute', width:c.w*0.4, height:c.w*0.4, borderRadius:'50%', background:c.color, top:`-${c.w*0.18}px`, left:`${c.w*0.45}px`, filter:`blur(${c.blur*0.5}px)` }} />
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}
+
+function makeClouds(count, dark = false) {
+  return Array.from({length: count}, (_, i) => ({
+    x: `${(i / count) * 110 - 10}%`,
+    y: `${5 + Math.random() * 40}%`,
+    w: 180 + Math.random() * 200,
+    h: 80 + Math.random() * 60,
+    color: dark ? `rgba(${160 + Math.floor(Math.random()*30)},${160+Math.floor(Math.random()*30)},${160+Math.floor(Math.random()*30)},0.9)` : `rgba(255,255,255,${0.82 + Math.random()*0.15})`,
+    opacity: 0.75 + Math.random() * 0.25,
+    speed: -(0.04 + Math.random() * 0.12) * (i % 2 === 0 ? 1 : 0.6),
+    blur: 2 + Math.random() * 3,
+    z: i % 3,
+  }));
+}
+
+function CloudySky({ code }) {
+  const [scrollY, setScrollY] = useState(0);
+  const numMap = { '02': 3, '03': 7, '04': 13 };
+  const count = numMap[code] || 3;
+  const dark = code === '04';
+
+  const clouds = useMemo(() => makeClouds(count, dark), [code]);
+
+  const skies = {
+    '02': 'linear-gradient(180deg, #3d85c4 0%, #64a9d8 40%, #9ecce8 70%, #d4ecf7 100%)',
+    '03': 'linear-gradient(180deg, #4a7da0 0%, #6f9db8 40%, #a0c4d8 70%, #cfe0ec 100%)',
+    '04': 'linear-gradient(180deg, #6a7a88 0%, #8fa0ae 40%, #b4c5cf 70%, #d5e0e8 100%)',
+  };
+
+  useEffect(() => {
+    const h = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', h);
+    return () => window.removeEventListener('scroll', h);
+  }, []);
+
+  return (
+    <div className="weather-bg" style={{ background: skies[code] || skies['02'] }}>
+      <CloudLayer clouds={clouds} scrollY={scrollY} />
+    </div>
+  );
+}
+
+/* ─── RAIN CANVAS ─────────────────────────────────────────── */
+function RainCanvas({ dropCount, speedMult, opacityMult, layerCount = 1, angleOffset = -0.22 }) {
+  const dropsRef = useRef([]);
+
+  const initDrops = (w, h) => {
+    dropsRef.current = Array.from({ length: dropCount }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      len: 14 + Math.random() * 24,
+      speed: (6 + Math.random() * 8) * speedMult,
+      opacity: (0.15 + Math.random() * 0.5) * opacityMult,
+      layer: Math.floor(Math.random() * layerCount),
+    }));
+  };
+
+  const canvasRef = useCanvas((ctx, w, h) => {
+    if (dropsRef.current.length === 0) initDrops(w, h);
+    ctx.clearRect(0, 0, w, h);
+    const drops = dropsRef.current;
+    drops.forEach(d => {
+      const lm = layerCount > 1 ? (d.layer === 0 ? 0.6 : 1.2) : 1;
+      ctx.beginPath();
+      ctx.strokeStyle = `rgba(174,214,241,${d.opacity})`;
+      ctx.lineWidth = d.layer === 0 ? 1 : 1.5;
+      ctx.moveTo(d.x, d.y);
+      ctx.lineTo(d.x + angleOffset * d.len * lm, d.y + d.len * lm);
+      ctx.stroke();
+      d.y += d.speed * lm;
+      d.x += angleOffset * d.speed * lm;
+      if (d.y > h + d.len) { d.y = -d.len; d.x = Math.random() * w; }
+    });
+  }, [dropCount, speedMult]);
+
+  return <canvas ref={canvasRef} style={{ position:'absolute', inset:0, width:'100%', height:'100%' }} />;
+}
+
+/* ─── LIGHT RAIN ──────────────────────────────────────────── */
+function LightRain() {
+  const clouds = useMemo(() => makeClouds(5, true), []);
+  return (
+    <div className="weather-bg" style={{ background:'linear-gradient(180deg, #6a7e8e 0%, #8fa3b0 40%, #b8ccd6 70%, #d5e3eb 100%)' }}>
+      <CloudLayer clouds={clouds} scrollY={0} />
+      <RainCanvas dropCount={100} speedMult={0.7} opacityMult={0.65} layerCount={1} angleOffset={-0.18} />
+    </div>
+  );
+}
+
+/* ─── HEAVY RAIN ──────────────────────────────────────────── */
+function HeavyRain() {
+  const clouds = useMemo(() => makeClouds(10, true), []);
+  return (
+    <div className="weather-bg" style={{ background:'linear-gradient(180deg, #2e3d4a 0%, #405060 40%, #5a7080 70%, #7a9098 100%)' }}>
+      <CloudLayer clouds={clouds} scrollY={0} />
+      <RainCanvas dropCount={320} speedMult={1.4} opacityMult={0.9} layerCount={2} angleOffset={-0.28} />
+    </div>
+  );
+}
+
+/* ─── THUNDERSTORM ────────────────────────────────────────── */
+function Thunderstorm() {
+  const [flash, setFlash] = useState(false);
+  const [flashBright, setFlashBright] = useState(false);
+  const clouds = useMemo(() => makeClouds(14, true).map(c => ({ ...c, color: `rgba(40,45,50,0.92)` })), []);
+
+  useEffect(() => {
+    let timeout;
+    const scheduleFlash = () => {
+      const delay = 1200 + Math.random() * 4000;
+      timeout = setTimeout(() => {
+        setFlash(true);
+        setTimeout(() => setFlashBright(true), 40);
+        setTimeout(() => setFlashBright(false), 90);
+        setTimeout(() => setFlash(true), 130);
+        setTimeout(() => setFlash(false), 200);
+        scheduleFlash();
+      }, delay);
+    };
+    scheduleFlash();
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
+    <div className="weather-bg" style={{ background:'linear-gradient(180deg, #0a0c12 0%, #141824 40%, #1e2535 70%, #2a3040 100%)' }}>
+      <CloudLayer clouds={clouds} scrollY={0} />
+      {/* Silhouette hills */}
+      <svg style={{ position:'absolute', bottom:0, left:0, right:0, width:'100%' }} viewBox="0 0 1440 200" preserveAspectRatio="none">
+        <path d="M0,200 L0,120 Q200,60 360,100 Q500,130 600,80 Q720,30 900,90 Q1080,140 1200,70 Q1320,20 1440,80 L1440,200 Z" fill="rgba(5,7,12,0.95)" />
+      </svg>
+      {/* Rain */}
+      <RainCanvas dropCount={280} speedMult={1.6} opacityMult={0.7} layerCount={2} angleOffset={-0.32} />
+      {/* Lightning flash */}
+      {flash && (
+        <div style={{
+          position:'absolute', inset:0, pointerEvents:'none',
+          background: flashBright ? 'rgba(220,230,255,0.55)' : 'rgba(180,200,255,0.18)',
+          transition:'background 0.04s',
+          zIndex: 50,
+        }} />
+      )}
+      {/* Lightning bolt SVG */}
+      {flash && (
+        <svg style={{ position:'absolute', left:'42%', top:'5%', width:60, height:200, opacity: flashBright ? 1 : 0.5, filter:'drop-shadow(0 0 12px rgba(200,220,255,0.9))' }} viewBox="0 0 60 200">
+          <polyline points="38,0 18,90 36,90 12,200" fill="none" stroke="rgba(220,235,255,0.95)" strokeWidth="3" strokeLinejoin="round" />
+          <polyline points="38,0 18,90 36,90 12,200" fill="none" stroke="white" strokeWidth="1.2" strokeLinejoin="round" />
+        </svg>
+      )}
+    </div>
+  );
+}
+
+/* ─── SNOW ────────────────────────────────────────────────── */
+function Snow() {
+  const flakesRef = useRef([]);
+  const timeRef = useRef(0);
+
+  const initFlakes = (w, h) => {
+    flakesRef.current = Array.from({ length: 160 }, (_, i) => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: 1.5 + Math.random() * 5,
+      speed: 0.6 + Math.random() * 1.4,
+      drift: Math.random() * Math.PI * 2,
+      driftSpeed: 0.003 + Math.random() * 0.008,
+      opacity: 0.4 + Math.random() * 0.6,
+      layer: i % 3,
+    }));
+  };
+
+  const canvasRef = useCanvas((ctx, w, h) => {
+    if (flakesRef.current.length === 0) initFlakes(w, h);
+    timeRef.current += 1;
+    ctx.clearRect(0, 0, w, h);
+    flakesRef.current.forEach(f => {
+      const layerSpeed = [0.5, 1, 1.5][f.layer];
+      f.drift += f.driftSpeed;
+      f.x += Math.sin(f.drift) * 0.5 * layerSpeed;
+      f.y += f.speed * layerSpeed;
+      if (f.y > h + f.r) { f.y = -f.r; f.x = Math.random() * w; }
+      const blur = [3, 1.5, 0][f.layer];
+      ctx.save();
+      ctx.filter = blur > 0 ? `blur(${blur}px)` : 'none';
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r * layerSpeed * 0.7 + f.r * 0.3, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${f.opacity * (0.5 + f.layer * 0.25)})`;
+      ctx.fill();
+      ctx.restore();
+    });
+  }, []);
+
+  return (
+    <div className="weather-bg" style={{ background:'linear-gradient(180deg, #8fa8c0 0%, #b0c8d8 35%, #cddee8 65%, #e5eff5 100%)' }}>
+      {/* Distant hills silhouette */}
+      <svg style={{ position:'absolute', bottom:0, left:0, right:0, width:'100%' }} viewBox="0 0 1440 180" preserveAspectRatio="none">
+        <path d="M0,180 L0,140 Q300,80 500,120 Q700,155 900,100 Q1100,50 1200,110 Q1320,145 1440,100 L1440,180 Z" fill="rgba(220,232,240,0.7)" />
+        <path d="M0,180 L0,160 Q200,130 400,150 Q600,168 800,140 Q1000,115 1200,145 Q1340,162 1440,140 L1440,180 Z" fill="rgba(240,248,252,0.9)" />
+      </svg>
+      <canvas ref={canvasRef} style={{ position:'absolute', inset:0, width:'100%', height:'100%' }} />
+    </div>
+  );
+}
+
+/* ─── FOG ─────────────────────────────────────────────────── */
+function Fog() {
+  const layers = [
+    { top:'10%', height:'35%', opacity:0.55, blur:18, anim:'fog-drift 12s ease-in-out infinite', delay:'0s' },
+    { top:'25%', height:'40%', opacity:0.5,  blur:24, anim:'fog-drift2 16s ease-in-out infinite', delay:'2s' },
+    { top:'42%', height:'35%', opacity:0.65, blur:20, anim:'fog-drift 10s ease-in-out infinite', delay:'5s' },
+    { top:'58%', height:'40%', opacity:0.6,  blur:28, anim:'fog-drift2 14s ease-in-out infinite', delay:'1s' },
+    { top:'72%', height:'35%', opacity:0.7,  blur:16, anim:'fog-drift 18s ease-in-out infinite', delay:'3s' },
+  ];
+
+  return (
+    <div className="weather-bg" style={{ background:'linear-gradient(180deg, #8c8c90 0%, #a8a8ac 30%, #c0c0c4 60%, #d8d8dc 100%)' }}>
+      {/* Muted tree silhouettes */}
+      <svg style={{ position:'absolute', bottom:0, left:0, right:0, width:'100%' }} viewBox="0 0 1440 220" preserveAspectRatio="none">
+        <path d="M0,220 L0,150 Q80,100 120,140 Q160,170 200,120 Q240,75 280,130 Q320,170 380,110 Q420,65 460,120 Q510,170 560,100 Q600,50 640,110 Q680,160 740,90 Q790,40 840,100 Q880,148 940,80 Q980,30 1040,90 Q1090,148 1150,80 Q1200,28 1280,90 Q1340,145 1440,80 L1440,220 Z" fill="rgba(100,100,105,0.4)" />
+      </svg>
+      {layers.map((l, i) => (
+        <div key={i} style={{
+          position:'absolute', left:'-10%', right:'-10%',
+          top: l.top, height: l.height,
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(210,210,215,0.9) 30%, rgba(215,215,220,0.95) 70%, transparent 100%)',
+          backdropFilter: `blur(${l.blur}px)`,
+          animation: l.anim, animationDelay: l.delay,
+          opacity: l.opacity,
+        }} />
+      ))}
+      {/* Heavy ground fog */}
+      <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'28%', background:'linear-gradient(to top, rgba(225,225,230,0.95) 0%, rgba(215,215,220,0.7) 50%, transparent 100%)', backdropFilter:'blur(30px)' }} />
+    </div>
+  );
+}
+
+/* ─── WEATHER BACKGROUND (main component) ─────────────────── */
+function WeatherBackground({ weatherCode }) {
+  const code = String(weatherCode).padStart(2, '0');
+  if (code === '01') return <ClearSky />;
+  if (code === '02' || code === '03' || code === '04') return <CloudySky code={code} />;
+  if (code === '09') return <LightRain />;
+  if (code === '10') return <HeavyRain />;
+  if (code === '11') return <Thunderstorm />;
+  if (code === '13') return <Snow />;
+  if (code === '50') return <Fog />;
+  return <div className="weather-bg" style={{ background:'#87c3e8' }} />;
+}
+
+/* ─── APP ─────────────────────────────────────────────────── */
+function App() {
+  const [code, setCode] = useState('01');
+  const info = CODES[code];
+
+  return (
+    <div style={{ width:'100vw', height:'100vh', position:'relative', overflow:'hidden' }}>
+      <WeatherBackground weatherCode={code} />
+
+      {/* Code switcher */}
+      <div className="switcher">
+        {Object.entries(CODES).map(([c, { label }]) => (
+          <button
+            key={c}
+            className={`switcher-btn${code === c ? ' active' : ''}`}
+            onClick={() => setCode(c)}
+          >
+            {c} · {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Weather label */}
+      <div className="weather-label">
+        <div className="weather-label__code">Code {code}</div>
+        <div className="weather-label__name">{info.label}</div>
+        <div className="weather-label__desc">{info.desc}</div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

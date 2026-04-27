@@ -2,6 +2,7 @@
 import Badge from '../components/Badge.jsx';
 import './MainPage.css';
 import { AirQualityWidget, WeatherWidget } from '../components/Widgets.jsx';
+import WeatherBackground from '../components/WeatherBackground.jsx';
 import { useState } from "react";
 import articles from '../article/articleData.json';
 
@@ -33,7 +34,7 @@ const cleanContent = (content, maxLength = 100) => {
   return cleaned.slice(0, maxLength) + "...";
 };
 
-export default function MainPage({ navigate }) {
+export default function MainPage({ navigate, weatherIcon, onWeatherLoad }) {
   const [postList, setPostList] = useState(articles);
 
   // 현재 날짜와 비교하여 가장 최신 날짜로 비교
@@ -45,8 +46,9 @@ export default function MainPage({ navigate }) {
   })[0];
 
   return (
-    <div className="page">
-
+    <div style={{ position: 'relative' }}>
+      {weatherIcon && <WeatherBackground weatherCode={weatherIcon} />}
+      <div className="page" style={{ background: 'transparent', position: 'relative', zIndex: 1 }}>
       <div className="container main-layout">
         <AirQualityWidget navigate={navigate} />
 
@@ -105,7 +107,8 @@ export default function MainPage({ navigate }) {
           </section>
         </main>
 
-        <WeatherWidget navigate={navigate} />
+        <WeatherWidget navigate={navigate} onWeatherLoad={onWeatherLoad} />
+      </div>
       </div>
     </div>
   );

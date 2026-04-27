@@ -119,7 +119,7 @@ export function AirQualityWidget({ navigate }) {
 /**
  * WeatherWidget - 날씨 위젯 (Glassmorphism)
  */
-export function WeatherWidget({ navigate }) {
+export function WeatherWidget({ navigate, onWeatherLoad }) {
   //geoIpify에서 가져온 위도 경도를 사용하여 openWeatherMap에서 날씨 정보를 가져옵니다.
   const { locationData, loading } = useContext(LocationContext);
   const [weatherData, setWeatherData] = useState(null);
@@ -137,7 +137,8 @@ export function WeatherWidget({ navigate }) {
           const res = await fetch(url);
           const data = await res.json();
           setWeatherData(data);
-          console.log(data.main.temp);
+          // 날씨 아이콘 코드를 MainPage로 전달 (배경 테마 적용용)
+          onWeatherLoad?.(data.weather[0].icon);
         } catch (error) {
           console.error("Weather fetch error:", error);
         }
