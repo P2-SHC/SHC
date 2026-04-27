@@ -4,7 +4,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* 상단 타이틀 행 */
@@ -27,7 +27,12 @@
   cursor: pointer;
   padding: 0;
 }
-.header__logo-icon { font-size: 28px; line-height: 1; }
+
+.header__logo-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
 .header__logo-name {
   font-size: 22px;
   font-weight: 800;
@@ -35,6 +40,7 @@
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
+
 .header__logo-sub {
   font-size: 12px;
   color: var(--text-light);
@@ -47,14 +53,17 @@
   align-items: center;
   gap: 10px;
 }
+
 .header__username {
   font-size: 16px;
   font-weight: 600;
   color: var(--text-dark);
 }
+
 .header__cart-btn {
   position: relative;
 }
+
 .header__cart-badge {
   position: absolute;
   top: -6px;
@@ -79,6 +88,7 @@
   display: flex;
   gap: 2px;
 }
+
 .header__nav-item {
   padding: 12px 22px;
   font-size: 17px;
@@ -92,11 +102,28 @@
   border-radius: 8px 8px 0 0;
   font-family: inherit;
 }
+
 .header__nav-item:hover {
   color: var(--sage);
 }
+
 .header__nav-item--active {
   font-weight: 700;
   color: var(--sage);
   border-bottom-color: var(--sage);
+}
+
+/* AI 맞춤추천 탭 */
+.header__nav-item--ai {
+  color: #F27405;
+  font-weight: 700;
+}
+
+.header__nav-item--ai:hover {
+  color: #F27405;
+}
+
+.header__nav-item--ai.header__nav-item--active {
+  color: #F27405;
+  border-bottom-color: #F27405;
 }

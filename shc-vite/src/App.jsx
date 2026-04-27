@@ -8,6 +8,7 @@ import RegisterPage from './pages/RegisterPage.jsx';
 import ProductListPage from './pages/ProductListPage.jsx';
 import ProductDetailPage from './pages/ProductDetailPage.jsx';
 import BoardListPage from './pages/BoardListPage.jsx';
+import HealthRecommendPage from './pages/HealthRecommendPage.jsx';
 import Header from './components/Header.jsx';
 import { UserContext } from './components/UserContext.jsx';
 import products from './data/product.json'
@@ -57,6 +58,8 @@ export default function App() {
         return <BoardListPage navigate={navigate} category={category} />
       case "BoardDetailPage":
         return <BoardDetailPage navigate={navigate} postId={selectedPostId} />
+      case "HealthRecommendPage":
+        return <HealthRecommendPage navigate={navigate} />
       default: break;
     }
   }
