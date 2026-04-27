@@ -9,7 +9,7 @@ const PAGE_SIZE = 5;
  * BoardListPage - 게시판 목록 (SHC-002)
  */
 const getFirstImage = (content) => {
-  const match = content.match(/!\\[.*?\\]\\((.*?)\\)/);
+  const match = content.match(/!\[.*?\]\((.*?)\)/);
   if (match) {
     const src = match[1];
     return src.startsWith('http') ? src : `/src/data/boardIMG/${src}`;
@@ -44,7 +44,8 @@ export default function BoardListPage({ navigate, category }) {
   //대소문자 구분없이 소문자로 검색
   const query = searchTerm.trim().toLowerCase();
   //현재 카테고리와 일치하는경우 + 검색어와 일치하는 경우
-  const filtered = postList
+  const filtered = [...postList]
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .filter(post => post.category === category)
     .filter(post => !query || post.title.toLowerCase().includes(query));
   //0부터 글이 5개 씩 늘어남
@@ -122,7 +123,7 @@ export default function BoardListPage({ navigate, category }) {
                     </div>
                   </button>
                 ))}
-                
+
                 {/* feat/boardScroll 브랜치의 무한 스크롤 감지 로직 통합 */}
                 <div ref={sentinelRef} className="board-sentinel" />
                 {isEnd && (
