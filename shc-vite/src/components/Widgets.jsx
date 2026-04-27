@@ -29,7 +29,7 @@ const getCleanCityName = (city) => {
   return cityMap[city] || city.replace('-si', '').replace('-do', '');
 };
 
-export function AirQualityWidget({ navigate }) {
+export function AirQualityWidget({ navigate, isDark }) {
   const { locationData, loading: locationLoading } = useContext(LocationContext);
   const [microDustData, setMicroDustData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -107,7 +107,7 @@ export function AirQualityWidget({ navigate }) {
         </div>
       </div>
       <div className="widget__product-section">
-        <div className="widget__product-title">추천 건강상품</div>
+        <div className={`widget__product-title${isDark ? ' text-white' : ''}`}>추천 건강상품</div>
         <div className="widget__product-list">
           {recommendedProducts.map((p) => <MiniProductCard key={p.id} navigate={navigate} product={p} />)}
         </div>
