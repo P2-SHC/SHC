@@ -51,13 +51,15 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
         </button>
 
         <div className="pd-card">
-          <div className="pd-image-box">🍃</div>
+          <div className="pd-image-box">
+            <img src={product.image} alt={product.title} />
+          </div>
 
           <div className="pd-info-box">
             <div className="pd-category">{product.keyword.join(", ")}</div>
             <h1 className="pd-title">{product.title}</h1>
 
-            <div className="pd-tag-wrapper"><Badge /></div>
+            {/* <div className="pd-tag-wrapper"><Badge /></div> */}
 
             <p className="pd-desc">{product.description}</p>
             <div className="pd-price">{product.price.toLocaleString()}원</div>

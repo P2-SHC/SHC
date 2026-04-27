@@ -8,6 +8,15 @@ const PAGE_SIZE = 5;
 /**
  * BoardListPage - 게시판 목록 (SHC-002)
  */
+const getFirstImage = (content) => {
+  const match = content.match(/!\\[.*?\\]\\((.*?)\\)/);
+  if (match) {
+    const src = match[1];
+    return src.startsWith('http') ? src : `/src/data/boardIMG/${src}`;
+  }
+  return null;
+};
+
 export default function BoardListPage({ navigate, category }) {
   const [postList] = useState(articles);
   const [searchTerm, setSearchTerm] = useState("");
@@ -65,10 +74,8 @@ export default function BoardListPage({ navigate, category }) {
 
   return (
     <div className="page">
-
       <div className="container--md">
         {/* 페이지 헤더 */}
-
         <div className="board-header">
           <span className="board-header__icon">{currentCategory.icon} </span>
           <div>
@@ -100,7 +107,14 @@ export default function BoardListPage({ navigate, category }) {
               <>
                 {visiblePosts.map(post => (
                   <button key={post.id} className="board-post-card" onClick={() => { navigate("BoardDetailPage", { postId: post.id }) }}>
-                    <div className="board-post-card__img">{currentCategory.icon}</div>
+                    <div className="board-post-card__img">
+                      {/* dev 브랜치의 이미지 미리보기 로직 통합 */}
+                      {getFirstImage(post.content) ? (
+                        <img src={getFirstImage(post.content)} alt={post.title} />
+                      ) : (
+                        currentCategory.icon
+                      )}
+                    </div>
                     <div className="board-post-card__body">
                       {post.viewCount > 1000 && <Badge />}
                       <p className="board-post-card__title">{post.title}</p>
@@ -108,6 +122,8 @@ export default function BoardListPage({ navigate, category }) {
                     </div>
                   </button>
                 ))}
+                
+                {/* feat/boardScroll 브랜치의 무한 스크롤 감지 로직 통합 */}
                 <div ref={sentinelRef} className="board-sentinel" />
                 {isEnd && (
                   <p className="board-end-text">마지막입니다</p>

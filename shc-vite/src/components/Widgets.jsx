@@ -216,7 +216,7 @@ function MiniProductCard({ navigate, product }) {
   return (
     <button className="mini-product-card" onClick={() => { navigate("ProductDetailPage", { productId: product.id, from: "MainPage" }) }}>
       <div className="mini-product-card__img">
-        💊
+        <img src={product.image} alt={product.title} />
       </div>
       <div className="mini-product-card__info">
         <div className="mini-product-card__name">{product.title}</div>
