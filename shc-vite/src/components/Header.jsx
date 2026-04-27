@@ -10,6 +10,7 @@ export default function Header({ isLogin, logout, page, category, navigate }) {
     let isActive = false;
     if (page == "MainPage") isActive = (target == "MainPage")
     else if (page == "ProductListPage") isActive = (target == "ProductListPage")
+    else if (page == "HealthRecommendPage") isActive = (target == "HealthRecommendPage")
     else if (page == "BoardListPage") isActive = (category == target);
     return isActive ? "header__nav-item header__nav-item--active" : "header__nav-item"
   }
@@ -49,6 +50,7 @@ export default function Header({ isLogin, logout, page, category, navigate }) {
         <button className={navClassName("life")} onClick={() => { navigate("BoardListPage", { category: "life" }) }}>라이프</button>
         <button className={navClassName("exercise")} onClick={() => { navigate("BoardListPage", { category: "exercise" }) }}>운동</button>
         <button className={navClassName("ProductListPage")} onClick={() => { navigate("ProductListPage") }}>상품</button>
+        <button className={navClassName("HealthRecommendPage")} onClick={() => { navigate("HealthRecommendPage") }}>맞춤추천</button>
       </nav>
     </header >
   );

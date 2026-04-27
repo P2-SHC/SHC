@@ -14,7 +14,7 @@ const today = new Date();
 
 export default function MainPage({ navigate }) {
   const [postList, setPostList] = useState(articles);
-// 현재 날짜와 비교하여 가장 최신 날짜로 비교
+  // 현재 날짜와 비교하여 가장 최신 날짜로 비교
   const featuredPost = [...postList].sort((a, b) => {
     const diffA = Math.abs(today - new Date(a.createdAt));
     const diffB = Math.abs(today - new Date(b.createdAt));
@@ -76,7 +76,7 @@ export default function MainPage({ navigate }) {
           </section>
         </main>
 
-        <WeatherWidget navigate={navigate}/>
+        <WeatherWidget navigate={navigate} />
       </div>
     </div>
   );
