@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main  # main 브랜치에 머지되거나 push될 때 실행
+      - main 
 
 jobs:
   deploy:
@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd SHC/src-vite  # clone 받은 폴더명으로 수정하세요
+            cd SHC/shc-vite  
             git pull origin main
             npm install
             npm run build
