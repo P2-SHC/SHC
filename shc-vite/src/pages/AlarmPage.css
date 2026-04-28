@@ -1,0 +1,297 @@
+/* ── Page ───────────────────────────────────────────────── */
+.alarm-page__title {
+  font-size: var(--font-2xl);
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.alarm-page__desc {
+  font-size: var(--font-base);
+  color: var(--text-mid);
+  margin-bottom: 32px;
+}
+
+.alarm-login-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 80px 0;
+  font-size: var(--font-lg);
+  color: var(--text-mid);
+}
+
+/* ── Tabs ────────────────────────────────────────────────── */
+.alarm-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 0;
+  border-bottom: 2px solid var(--border-light);
+}
+
+.alarm-tab {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  padding: 12px 22px;
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.18s;
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
+}
+
+.alarm-tab:hover {
+  color: var(--sage);
+  background: var(--sage-light);
+}
+
+.alarm-tab--active {
+  color: var(--sage);
+  border-bottom-color: var(--sage);
+  background: var(--sage-light);
+}
+
+/* ── Tab Content ─────────────────────────────────────────── */
+.alarm-tab-content {
+  background: var(--white);
+  border-radius: 0 var(--r-lg) var(--r-lg) var(--r-lg);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+  border-top: none;
+}
+
+/* ── Section ─────────────────────────────────────────────── */
+.alarm-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.alarm-section__title {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.alarm-empty {
+  color: var(--text-light);
+  text-align: center;
+  padding: 32px 0;
+  font-size: var(--font-base);
+}
+
+.alarm-empty-inline {
+  color: var(--text-light);
+  font-size: var(--font-sm);
+}
+
+/* ── Time Alarm List ─────────────────────────────────────── */
+.alarm-time-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.alarm-time-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--beige);
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-light);
+}
+
+.alarm-time-item__time {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.alarm-time-item__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.alarm-add-time {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding-top: 4px;
+}
+
+.alarm-time-input {
+  width: auto !important;
+  max-width: 160px;
+  padding: 10px 14px !important;
+}
+
+/* ── Medicine List ───────────────────────────────────────── */
+.medicine-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.medicine-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--beige);
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-light);
+}
+
+.medicine-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.medicine-card__name {
+  font-size: var(--font-md);
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.medicine-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: var(--font-sm);
+  color: var(--text-mid);
+}
+
+.medicine-card__remaining {
+  color: var(--sage);
+  font-weight: 600;
+}
+
+.medicine-card__remaining--low {
+  color: var(--peach);
+}
+
+.medicine-card__times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.medicine-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ── Medicine Form ───────────────────────────────────────── */
+.medicine-form-wrapper {
+  background: var(--beige);
+  border-radius: var(--r-md);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.form-subtitle {
+  font-size: var(--font-md);
+  font-weight: 700;
+  color: var(--sage);
+  margin-bottom: 16px;
+}
+
+.medicine-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-row label {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--text-mid);
+}
+
+.alarm-times-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alarm-times-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 36px;
+  align-items: center;
+}
+
+.alarm-time-add-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+/* ── Chips ───────────────────────────────────────────────── */
+.alarm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--sage-light);
+  color: var(--sage);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: var(--font-sm);
+  font-weight: 600;
+}
+
+.alarm-chip__remove {
+  background: none;
+  border: none;
+  color: var(--sage);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+/* ── Button extras ───────────────────────────────────────── */
+.btn--sm {
+  padding: 6px 14px;
+  font-size: var(--font-sm);
+  border-radius: var(--r-sm);
+}
+
+.btn--danger {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+
+.btn--danger:hover {
+  background: #fca5a5;
+}

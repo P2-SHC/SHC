@@ -10,7 +10,9 @@ import ProductDetailPage from './pages/ProductDetailPage.jsx';
 import BoardListPage from './pages/BoardListPage.jsx';
 import HealthRecommendPage from './pages/HealthRecommendPage.jsx';
 import CheckoutPage from './pages/CheckoutPage.jsx';
+import AlarmPage from './pages/AlarmPage.jsx';
 import Header from './components/Header.jsx';
+import AlarmNotifier from './components/AlarmNotifier.jsx';
 import { UserContext } from './components/UserContext.jsx';
 import products from './data/product.json'
 
@@ -69,6 +71,8 @@ export default function App() {
         return <HealthRecommendPage navigate={navigate} savedState={healthSavedState} onSaveState={setHealthSavedState} />
       case "CheckoutPage":
         return <CheckoutPage navigate={navigate} orderItems={orderItems} fromCart={fromCart} />
+      case "AlarmPage":
+        return <AlarmPage navigate={navigate} />
       default: break;
     }
   }
@@ -79,6 +83,7 @@ export default function App() {
       <LocationProvider>
         {renderPage()}
       </LocationProvider>
+      <AlarmNotifier />
     </>
   );
 }
