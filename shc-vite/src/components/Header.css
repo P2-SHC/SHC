@@ -192,3 +192,70 @@
   color: #F27405;
   border-bottom-color: #F27405;
 }
+
+/* 실시간 시계 */
+.header__clock {
+  margin-left: auto;
+  align-self: center;
+  color: var(--text-dark);
+  padding: 0 12px;
+  background: none;
+  border: none;
+  white-space: nowrap;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.header__clock-label {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.header__clock-time {
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.header__clock-colon {
+  animation: clock-blink 1s infinite;
+  color: var(--sage);
+  display: inline-block;
+  width: 0.5ch;
+  text-align: center;
+}
+
+@keyframes clock-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.header__clock-seconds {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  margin-left: 6px;
+  opacity: 0.7;
+}
+
+/* 건강 알리미 탭 */
+.header__nav-item--alarm {
+  color: var(--sage);
+  font-weight: 700;
+}
+
+.header__nav-item--alarm:hover {
+  color: var(--sage);
+}
+
+.header__nav-item--alarm.header__nav-item--active {
+  color: var(--sage);
+  border-bottom-color: var(--sage);
+  background: var(--sage-light);
+}
