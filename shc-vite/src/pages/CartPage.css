@@ -10,7 +10,7 @@
 }
 
 .cart-title {
-  font-size: 26px;
+  font-size: 1.625rem;
   font-weight: 800;
   color: #2a2a2a;
   margin-bottom: 24px;
@@ -23,19 +23,19 @@
 }
 
 .cart-login-icon {
-  font-size: 72px;
+  font-size: 4.5rem;
   margin-bottom: 20px;
 }
 
 .cart-login-title {
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 700;
   color: #2a2a2a;
   margin-bottom: 12px;
 }
 
 .cart-login-desc {
-  font-size: 17px;
+  font-size: 1.0625rem;
   color: #8a8a7a;
   margin-bottom: 28px;
 }
@@ -46,7 +46,7 @@
   border: none;
   border-radius: 14px;
   padding: 14px 44px;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 700;
   cursor: pointer;
 }
@@ -58,12 +58,12 @@
 }
 
 .cart-empty-icon {
-  font-size: 64px;
+  font-size: 4rem;
   margin-bottom: 16px;
 }
 
 .cart-empty-text {
-  font-size: 20px;
+  font-size: 1.25rem;
   color: #8a8a7a;
   margin-bottom: 24px;
 }
@@ -74,7 +74,7 @@
   border: none;
   border-radius: 14px;
   padding: 14px 36px;
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 700;
   cursor: pointer;
 }
@@ -112,7 +112,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 2rem;
   background: #c17f5a15;
 }
 
@@ -121,20 +121,20 @@
 }
 
 .cart-item-name {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
   color: #2a2a2a;
   margin-bottom: 4px;
 }
 
 .cart-item-price {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
   color: #4a7a50;
 }
 
 .cart-item-stock-warn {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: #e05050;
   font-weight: 600;
   margin-top: 4px;
@@ -153,7 +153,7 @@
   border-radius: 8px;
   background: #f0f7f1;
   border: 1px solid #ccc;
-  font-size: 18px;
+  font-size: 1.125rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -161,14 +161,14 @@
 }
 
 .cart-qty-value {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
   min-width: 24px;
   text-align: center;
 }
 
 .cart-item-total {
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 700;
   min-width: 96px;
   text-align: right;
@@ -178,7 +178,7 @@
   background: none;
   border: none;
   color: #ccc;
-  font-size: 20px;
+  font-size: 1.25rem;
   cursor: pointer;
   padding: 4px 8px;
   line-height: 1;
@@ -200,12 +200,12 @@
 }
 
 .cart-summary-label {
-  font-size: 17px;
+  font-size: 1.0625rem;
   color: #5a5a5a;
 }
 
 .cart-summary-total {
-  font-size: 26px;
+  font-size: 1.625rem;
   font-weight: 800;
   color: #4a7a50;
 }
@@ -217,7 +217,7 @@
   color: #fff;
   border: none;
   border-radius: 14px;
-  font-size: 19px;
+  font-size: 1.1875rem;
   font-weight: 800;
   cursor: pointer;
 }

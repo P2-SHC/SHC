@@ -29,20 +29,24 @@
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 6px 28px rgba(0, 0, 0, 0.12);
 
-  /* Typography */
-  --font-xs: 12px;
-  --font-sm: 14px;
-  --font-base: 16px;
-  --font-md: 18px;
-  --font-lg: 20px;
-  --font-xl: 24px;
-  --font-2xl: 28px;
-  --font-3xl: 32px;
+  /* Typography — rem 기반 (html font-size 변경으로 전체 비례 확대/축소) */
+  --font-xs: 0.75rem;
+  --font-sm: 0.875rem;
+  --font-base: 1rem;
+  --font-md: 1.125rem;
+  --font-lg: 1.25rem;
+  --font-xl: 1.5rem;
+  --font-2xl: 1.75rem;
+  --font-3xl: 2rem;
 }
 
 /* ──────────────────────────────────────────
    Reset
 ────────────────────────────────────────── */
+html {
+  font-size: 16px;
+}
+
 *,
 *::before,
 *::after {

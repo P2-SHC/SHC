@@ -6,7 +6,7 @@
 }
 
 .hr-header__icon {
-  font-size: 44px;
+  font-size: 2.75rem;
 }
 
 .hr-header__title {
@@ -81,13 +81,13 @@
 }
 
 .hr-condition-btn__icon {
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 .hr-condition-btn__star {
   margin-left: auto;
   color: var(--sage);
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 /* 텍스트에리어 */

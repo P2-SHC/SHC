@@ -6,17 +6,17 @@
 }
 
 .board-header__icon {
-  font-size: 40px;
+  font-size: 2.5rem;
 }
 
 .board-header__title {
-  font-size: 28px;
+  font-size: 1.75rem;
   font-weight: 800;
   color: var(--text-dark);
 }
 
 .board-header__desc {
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-light);
 }
 
@@ -70,7 +70,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 2.5rem;
   overflow: hidden;
 }
 
@@ -89,14 +89,14 @@
 }
 
 .board-post-card__title {
-  font-size: 19px;
+  font-size: 1.1875rem;
   font-weight: 700;
   color: var(--text-dark);
   line-height: 1.4;
 }
 
 .board-post-card__meta {
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: var(--text-light);
 }
 
@@ -107,7 +107,7 @@
 }
 
 .board-empty__text {
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-light);
 }
 
@@ -119,7 +119,7 @@
 /* 마지막 메시지 */
 .board-end-text {
   text-align: center;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-light);
   padding: 20px 0 8px;
 }
@@ -136,7 +136,7 @@
 }
 
 .board-top5__title {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 800;
   color: var(--text-dark);
   margin-bottom: 16px;
@@ -157,7 +157,7 @@
 }
 
 .board-top5__rank {
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 800;
   width: 20px;
   flex-shrink: 0;
@@ -186,7 +186,7 @@
 }
 
 .board-top5__text {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-dark);
   line-height: 1.5;
   overflow: hidden;

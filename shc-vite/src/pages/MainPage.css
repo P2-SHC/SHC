@@ -26,7 +26,7 @@
 }
 
 .featured-card__label {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 800;
   color: var(--text-dark);
   padding-bottom: 12px;
@@ -49,7 +49,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 80px;
+  font-size: 5rem;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
@@ -70,7 +70,7 @@
 }
 
 .featured-card__title {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--text-dark);
   border: 1px solid var(--border-light);
@@ -85,7 +85,7 @@
 
 .featured-card__content {
   flex: 1;
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: var(--text-mid);
   line-height: 1.8;
   border: 1px solid var(--border-light);
@@ -99,7 +99,7 @@
 }
 
 .featured-card__empty {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-light);
   text-align: center;
   padding: 24px 0;
@@ -116,7 +116,7 @@
 }
 
 .main-section__title {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--text-dark);
   margin-bottom: 14px;
@@ -130,7 +130,7 @@
   background: none;
   border: none;
   color: var(--sage);
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
@@ -171,7 +171,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 2rem;
   overflow: hidden;
 }
 
@@ -190,7 +190,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 2rem;
 }
 
 .post-card__body {
@@ -208,7 +208,7 @@
 }
 
 .post-card__title {
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 600;
   color: var(--text-dark);
   overflow: hidden;
@@ -219,7 +219,7 @@
 }
 
 .post-card__meta {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-light);
 }
 
@@ -256,13 +256,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 48px;
+  font-size: 3rem;
   margin-bottom: 12px;
   background: #c17f5a15
 }
 
 .product-card__name {
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: var(--text-dark);
   margin-bottom: 8px;
@@ -276,7 +276,7 @@
 }
 
 .product-card__price {
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 800;
   color: var(--sage);
 }
