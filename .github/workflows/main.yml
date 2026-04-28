@@ -2,27 +2,37 @@ name: Deploy to EC2
 
 on:
   push:
-    branches:
-      - main 
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Deploy to EC2 via SSH
-        uses: appleboy/ssh-action@master
+      - name: Build Docker image
+        run: docker build -t shc-app ./shc-vite
+
+      - name: Save image as tar
+        run: docker save shc-app | gzip > shc-app.tar.gz
+
+      - name: Copy to EC2
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: shc-app.tar.gz
+          target: ~/
+
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd SHC/shc-vite  
-            git pull origin main
-            npm install
-            npm run build
-            # Nginx가 보는 경로로 빌드 파일을 복사 (필요한 경우)
-            # sudo cp -r dist/* /var/www/html/
+            docker load < ~/shc-app.tar.gz
+            docker stop shc-app || true
+            docker rm shc-app || true
+            docker run -d --name shc-app -p 80:80 shc-app
