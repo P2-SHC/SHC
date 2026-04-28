@@ -280,3 +280,11 @@
   font-weight: 800;
   color: var(--sage);
 }
+
+/* 이스터 에그: 젠 모드 */
+.main-layout.zen-mode {
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px);
+  transition: all 0.5s ease-in-out;
+}

@@ -119,7 +119,7 @@ export function AirQualityWidget({ navigate, isDark }) {
 /**
  * WeatherWidget - 날씨 위젯 (Glassmorphism)
  */
-export function WeatherWidget({ navigate, onWeatherLoad }) {
+export function WeatherWidget({ navigate, onWeatherLoad, onIconClick }) {
   //geoIpify에서 가져온 위도 경도를 사용하여 openWeatherMap에서 날씨 정보를 가져옵니다.
   const { locationData, loading } = useContext(LocationContext);
   const [weatherData, setWeatherData] = useState(null);
@@ -216,7 +216,12 @@ export function WeatherWidget({ navigate, onWeatherLoad }) {
           <div className="widget__temp">{Math.round(weatherData.main.temp)}°</div>
           <span className="widget__icon widget__icon--lg">
             {/* 날씨 아이콘 동적 처리 (선택사항) */}
-            <img src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} alt="Weather icon" />
+            <img 
+              src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} 
+              alt="Weather icon" 
+              onClick={onIconClick}
+              style={{ cursor: onIconClick ? 'pointer' : 'default' }}
+            />
           </span>
         </div>
         <div className="widget__condition">{description}</div>
