@@ -22,13 +22,10 @@ export default function CartPage({ navigate }) {
       alert('주문할 상품을 선택해주세요.');
       return;
     }
-    for (const item of selectedItems) {
-      const success = decreaseStock(item.id, item.quantity);
-      if (!success) return;
-    }
-    selectedItems.forEach(item => removeFromCart(item.id));
-    setCheckedIds(prev => prev.filter(id => !selectedItems.find(i => i.id === id)));
-    alert('주문이 완료되었습니다!');
+    navigate('CheckoutPage', {
+      orderItems: selectedItems,
+      fromCart: true,
+    });
   };
 
   if (cartItems.length === 0) {
