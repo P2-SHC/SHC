@@ -29,7 +29,16 @@ const getCleanCityName = (city) => {
   return cityMap[city] || city.replace('-si', '').replace('-do', '');
 };
 
-export function AirQualityWidget({ navigate, isDark }) {
+const getWeatherKeyword = (icon) => {
+  if (!icon) return '환절기';
+  const code = icon.slice(0, 2);
+  if (code === '01') return '자외선';
+  if (['09', '10', '11'].includes(code)) return '비';
+  if (code === '13') return '눈';
+  return '환절기';
+};
+
+export function AirQualityWidget({ navigate, isDark, weatherIcon }) {
   const { locationData, loading: locationLoading } = useContext(LocationContext);
   const [microDustData, setMicroDustData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -75,13 +84,25 @@ export function AirQualityWidget({ navigate, isDark }) {
 
   const aqiInfo = getAqiInfo(microDustData.aqi);
 
-  // 미세먼지 나쁨 지수일때는 미세먼지 관련 상품 추천, 아닐경우 랜덤 추천
-  let recommendedProducts = [];
-  if (microDustData.aqi > 150) {
-    recommendedProducts = products.filter((product) => { return product.keyword.includes("미세먼지") }).slice(0, 3);
-  } else {
-    recommendedProducts = [...products].sort(() => 0.5 - Math.random()).slice(0, 3);
-  }
+  // 미세먼지 상품 1개 (없으면 랜덤)
+  const microDustPool = products.filter(p => p.keyword.includes('미세먼지'));
+  const microDustProduct = microDustPool.length > 0
+    ? microDustPool[Math.floor(Math.random() * microDustPool.length)]
+    : products[Math.floor(Math.random() * products.length)];
+
+  // 날씨 관련 상품 2개 (부족하면 랜덤으로 보충)
+  const weatherKeyword = getWeatherKeyword(weatherIcon);
+  const weatherPool = products
+    .filter(p => p.keyword.includes(weatherKeyword) && p.id !== microDustProduct?.id)
+    .sort(() => 0.5 - Math.random());
+
+  const fallbackPool = products
+    .filter(p => !p.keyword.includes(weatherKeyword) && p.id !== microDustProduct?.id)
+    .sort(() => 0.5 - Math.random());
+
+  const weatherProducts = [...weatherPool, ...fallbackPool].slice(0, 2);
+
+  const recommendedProducts = [microDustProduct, ...weatherProducts].filter(Boolean);
 
   return (
     <div className="widget-container">
@@ -156,56 +177,6 @@ export function WeatherWidget({ navigate, onWeatherLoad, onIconClick }) {
   const weatherInfo = weatherDescriptions.find(item => item.id === weatherData.weather[0].id);
   const description = weatherInfo ? weatherInfo.description : weatherData.weather[0].description;
   const displayCity = getCleanCityName(locationData?.location?.city);
-
-  // 날씨 기반 상품 추천 로직
-  const mainWeather = weatherData.weather[0].main;
-  const temp = weatherData.main.temp;
-  let weatherKeyword = "";
-
-  // 1. 날씨 상태에 따른 키워드 매핑
-  if (["Rain", "Drizzle", "Thunderstorm"].includes(mainWeather)) {
-    weatherKeyword = "비";
-  } else if (mainWeather === "Snow") {
-    weatherKeyword = "눈";
-  } else if (mainWeather === "Clear") {
-    weatherKeyword = "자외선";
-  } else if (mainWeather === "Clouds") {
-    weatherKeyword = "흐림";
-  } else {
-    weatherKeyword = "환절기";
-  }
-
-  // 2. 온도에 따른 키워드 보정 (한파/폭염)
-  if (temp <= 5) {
-    weatherKeyword = "한파";
-  } else if (temp >= 30) {
-    weatherKeyword = "폭염";
-  }
-
-  // 3. 상품 필터링
-  let recommendedProducts = products.filter((product) =>
-    product.keyword.includes(weatherKeyword)
-  );
-
-  // 만약 검색된 상품이 없거나 부족하면 환절기 키워드나 랜덤으로 보충
-  if (recommendedProducts.length < 3) {
-    const fallbackProducts = products.filter((product) =>
-      product.keyword.includes("환절기") && !recommendedProducts.includes(product)
-    );
-    recommendedProducts = [...recommendedProducts, ...fallbackProducts].slice(0, 3);
-  }
-
-  // 최종적으로도 부족하면 랜덤 추천
-  if (recommendedProducts.length < 3) {
-    const randomProducts = [...products]
-      .sort(() => 0.5 - Math.random())
-      .filter(p => !recommendedProducts.includes(p))
-      .slice(0, 3 - recommendedProducts.length);
-    recommendedProducts = [...recommendedProducts, ...randomProducts];
-  } else {
-    recommendedProducts = recommendedProducts.slice(0, 3);
-  }
-
 
   return (
     <div className="widget-container">

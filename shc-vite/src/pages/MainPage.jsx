@@ -66,7 +66,7 @@ export default function MainPage({ navigate, weatherIcon, onWeatherLoad }) {
       {weatherIcon && <WeatherBackground weatherCode={weatherIcon} />}
       <div className="page" style={{ background: 'transparent', position: 'relative', zIndex: 1 }}>
         <div className={`container main-layout${isZenMode ? ' zen-mode' : ''}`}>
-          {!isZenMode && <AirQualityWidget navigate={navigate} isDark={isDark} />}
+          {!isZenMode && <AirQualityWidget navigate={navigate} isDark={isDark} weatherIcon={weatherIcon} />}
 
           {!isZenMode && (
             <main className="main-content">
