@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import products from '../data/product.json';
+import articles from '../article/articleData.json';
 import './HealthRecommendPage.css';
 
 const HEALTH_CONDITIONS = [
@@ -22,31 +23,9 @@ const HEALTH_CONDITIONS = [
   { id: '피부건강', label: '피부 건강', icon: '✨' },
 ];
 
-const BOARDS = {
-  recipe: [
-    { id: 1, title: '혈압에 좋은 바나나 스무디 만들기', tag: '혈압관리' },
-    { id: 2, title: '관절에 좋은 연어 샐러드 레시피', tag: '관절건강' },
-    { id: 3, title: '당뇨 예방 현미밥 짓는 법', tag: '당뇨관리' },
-    { id: 4, title: '뼈 건강 두유 미역국', tag: '뼈건강' },
-    { id: 5, title: '눈 건강을 위한 당근 주스', tag: '눈건강' },
-  ],
-  lifestyle: [
-    { id: 1, title: '봄철 건강 관리 10가지 방법', tag: '계절건강' },
-    { id: 2, title: '수면의 질을 높이는 저녁 루틴', tag: '수면건강' },
-    { id: 3, title: '사회적 교류가 치매 예방에 미치는 영향', tag: '치매예방' },
-    { id: 4, title: '스트레스 해소에 좋은 취미 생활', tag: '취미생활' },
-    { id: 5, title: '혼자서도 즐거운 건강한 노후 만들기', tag: '노후생활' },
-  ],
-  exercise: [
-    { id: 1, title: '무릎 통증 없는 실내 스트레칭 5가지', tag: '스트레칭' },
-    { id: 2, title: '아침 10분 혈액순환 체조', tag: '혈액순환' },
-    { id: 3, title: '노르딕 워킹으로 전신 운동하기', tag: '유산소운동' },
-    { id: 4, title: '낙상 예방 균형 감각 훈련', tag: '낙상예방' },
-    { id: 5, title: '수중 운동의 효과와 방법', tag: '수중운동' },
-  ],
-};
+// BOARDS 상수가 제거되고 articleData.json 데이터를 사용합니다.
 
-const CATEGORY_LABEL = { recipe: '레시피', lifestyle: '라이프', exercise: '운동' };
+const CATEGORY_LABEL = { recipe: '레시피', life: '라이프', exercise: '운동' };
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -55,10 +34,16 @@ function buildPrompt(conditions, freeText) {
     .map(p => `[${p.id}] ${p.title} (키워드: ${p.keyword.join(', ')})`)
     .join('\n');
 
-  const postSummary = Object.entries(BOARDS)
-    .flatMap(([category, posts]) =>
-      posts.map(p => `[${category}:${p.id}] ${p.title} (태그: ${p.tag})`)
-    )
+  const postSummary = articles
+    .filter(article => {
+      // 선택된 건강 상태(id)와 게시글의 키워드가 일치하는 것만 필터링 (공백 제거 후 비교)
+      if (conditions.length === 0) return true; // 선택된 게 없으면 전체 중 일부 제공
+      return article.keyword.some(k =>
+        conditions.some(cond => k.replace(/\s/g, '') === cond.replace(/\s/g, ''))
+      );
+    })
+    .slice(0, 20) // 너무 많으면 프롬프트가 길어지므로 최대 20개로 제한
+    .map(p => `[${p.category}:${p.id}] ${p.title} (키워드: ${p.keyword.join(', ')})`)
     .join('\n');
 
   const userInfo = [
@@ -87,7 +72,7 @@ ${postSummary}
 반드시 아래 JSON 형식으로만 응답하세요 (다른 텍스트 없이):
 {
   "productIds": [숫자 배열],
-  "posts": [{"category": "recipe|lifestyle|exercise", "id": 숫자} 배열],
+  "posts": [{"category": "recipe|life|exercise", "id": 숫자} 배열],
   "comment": "마크다운 조언 텍스트"
 }`;
 }
@@ -98,6 +83,9 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(savedState?.result ?? null);
   const [error, setError] = useState('');
+
+  const currentUser = JSON.parse(localStorage.getItem('shc_current_user') || '{}');
+  const userInterests = currentUser?.interests ?? [];
 
   const toggleCondition = (id) => {
     setSelected(prev =>
@@ -144,8 +132,8 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
 
       const recommendedPosts = (parsed.posts || [])
         .map(({ category, id }) => {
-          const post = BOARDS[category]?.find(p => p.id === id);
-          return post ? { ...post, category } : null;
+          const post = articles.find(p => p.id === id && p.category === category);
+          return post ? { ...post } : null;
         })
         .filter(Boolean);
 
@@ -192,6 +180,7 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
                 >
                   <span className="hr-condition-btn__icon">{c.icon}</span>
                   <span>{c.label}</span>
+                  {userInterests.includes(c.id) && <span className="hr-condition-btn__star">★</span>}
                 </button>
               ))}
             </div>
@@ -278,7 +267,7 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
                     >
                       <span className="hr-post-card__category">{CATEGORY_LABEL[post.category]}</span>
                       <span className="hr-post-card__title">{post.title}</span>
-                      <span className="hr-post-card__tag hr-tag">{post.tag}</span>
+                      <span className="hr-post-card__tag hr-tag">{post.keyword[0]}</span>
                     </button>
                   ))}
                 </div>
