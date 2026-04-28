@@ -2,6 +2,7 @@ import './Header.css';
 import { useContext } from 'react';
 import { CartContext } from './CartContext.jsx';
 import { UserContext } from './UserContext.jsx';
+import { useFontSize } from './FontSizeContext.jsx';
 
 const WEATHER_OPTIONS = [
   { code: '01d', label: '☀️ 맑음' },
@@ -16,6 +17,7 @@ const WEATHER_OPTIONS = [
 export default function Header({ isLogin, logout, page, category, navigate, weatherIcon, onWeatherChange }) {
   const { cartCount } = useContext(CartContext);
   const { currentUser } = useContext(UserContext);
+  const { fontScale, setFontScale } = useFontSize();
   const navClassName = (target) => {
     let isActive = false;
     if (page == "MainPage") isActive = (target == "MainPage")
@@ -37,19 +39,36 @@ export default function Header({ isLogin, logout, page, category, navigate, weat
           </div>
         </button>
 
-        <div className="header__auth">
-          {isLogin && <>
-            <span className="header__username">{currentUser?.name}님</span>
-            <button className="btn btn--ghost header__cart-btn" onClick={() => { navigate("CartPage") }}>
-              🛒 장바구니
-              {cartCount > 0 && <span className="header__cart-badge">{cartCount}</span>}
-            </button>
-            <button className="btn btn--subtle" onClick={logout}>로그아웃</button>
-          </>}
-          {!isLogin && <>
-            <button className="btn btn--primary" onClick={() => { navigate("LoginPage") }}>로그인</button>
-            <button className="btn btn--outline" onClick={() => { navigate("RegisterPage") }}>회원가입</button>
-          </>}
+        <div className="header__right">
+          <div className="header__font-ctrl">
+            <button
+              className={`header__font-btn${fontScale === 'small' ? ' header__font-btn--active' : ''}`}
+              onClick={() => setFontScale('small')}
+            >작게</button>
+            <button
+              className={`header__font-btn${fontScale === 'default' ? ' header__font-btn--active' : ''}`}
+              onClick={() => setFontScale('default')}
+            >기본</button>
+            <button
+              className={`header__font-btn${fontScale === 'large' ? ' header__font-btn--active' : ''}`}
+              onClick={() => setFontScale('large')}
+            >크게</button>
+          </div>
+
+          <div className="header__auth">
+            {isLogin && <>
+              <span className="header__username">{currentUser?.name}님</span>
+              <button className="btn btn--ghost header__cart-btn" onClick={() => { navigate("CartPage") }}>
+                🛒 장바구니
+                {cartCount > 0 && <span className="header__cart-badge">{cartCount}</span>}
+              </button>
+              <button className="btn btn--subtle" onClick={logout}>로그아웃</button>
+            </>}
+            {!isLogin && <>
+              <button className="btn btn--primary" onClick={() => { navigate("LoginPage") }}>로그인</button>
+              <button className="btn btn--outline" onClick={() => { navigate("RegisterPage") }}>회원가입</button>
+            </>}
+          </div>
         </div>
       </div>
 

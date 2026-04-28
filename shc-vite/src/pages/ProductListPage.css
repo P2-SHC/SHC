@@ -6,17 +6,17 @@
 }
 
 .product-list-header__icon {
-  font-size: 40px;
+  font-size: 2.5rem;
 }
 
 .product-list-header__title {
-  font-size: 28px;
+  font-size: 1.75rem;
   font-weight: 800;
   color: var(--text-dark);
 }
 
 .product-list-header__desc {
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-light);
 }
 
@@ -73,14 +73,14 @@
 }
 
 .product-list-card__category {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--text-light);
   font-weight: 500;
   margin-bottom: 4px;
 }
 
 .product-list-card__name {
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 700;
   color: var(--text-dark);
   margin-bottom: 10px;
@@ -95,7 +95,7 @@
 }
 
 .product-list-card__price {
-  font-size: 19px;
+  font-size: 1.1875rem;
   font-weight: 800;
   color: var(--sage);
 }

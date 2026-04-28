@@ -14,14 +14,14 @@
 .product-img--lg  { border-radius: var(--r-lg); }
 
 .product-img__emoji {
-  font-size: 48px;
+  font-size: 3rem;
   line-height: 1;
 }
-.product-img--sm .product-img__emoji { font-size: 24px; }
-.product-img--lg .product-img__emoji { font-size: 80px; }
+.product-img--sm .product-img__emoji { font-size: 1.5rem; }
+.product-img--lg .product-img__emoji { font-size: 5rem; }
 
 .product-img__label {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-light);
   font-weight: 600;
 }
