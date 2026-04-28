@@ -211,13 +211,17 @@
 .co-pay-btn--mobile { display: none; }
 
 /* 사이드바 */
+.co-sidebar {
+  position: sticky;
+  top: 6.5rem;
+  align-self: start;
+}
+
 .co-sidebar-card {
   background: #fff;
   border-radius: 14px;
   padding: 1.4rem 1.5rem;
   box-shadow: 0 1px 5px rgba(0,0,0,0.06);
-  position: sticky;
-  top: 1.5rem;
 }
 .co-sidebar-title {
   font-size: 0.95rem;
@@ -279,8 +283,6 @@
   }
   .co-sidebar {
     order: -1;
-  }
-  .co-sidebar-card {
     position: static;
   }
   .co-pay-btn--mobile {
