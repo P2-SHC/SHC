@@ -25,6 +25,7 @@ export default function App() {
   const [productId, setProductId] = useState("");
   const [from, setFrom] = useState("");
   const [fromPostId, setFromPostId] = useState(null);
+  const [healthSavedState, setHealthSavedState] = useState(null);
 
   const navigate = (pageName, params = {}) => {
     setPage(pageName);
@@ -60,7 +61,7 @@ export default function App() {
       case "BoardDetailPage":
         return <BoardDetailPage navigate={navigate} postId={selectedPostId} />
       case "HealthRecommendPage":
-        return <HealthRecommendPage navigate={navigate} />
+        return <HealthRecommendPage navigate={navigate} savedState={healthSavedState} onSaveState={setHealthSavedState} />
       default: break;
     }
   }

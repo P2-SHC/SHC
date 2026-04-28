@@ -43,11 +43,13 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
             navigate("BoardDetailPage", { postId: fromPostId });
           } else if (from === "MainPage") {
             navigate("MainPage");
+          } else if (from === "HealthRecommendPage") {
+            navigate("HealthRecommendPage");
           } else {
             navigate("ProductListPage");
           }
         }}>
-          {from === "BoardDetailPage" ? "← 게시글로 돌아가기" : from === "MainPage" ? "← 메인으로" : "← 상품 목록으로"}
+          {from === "BoardDetailPage" ? "← 게시글로 돌아가기" : from === "MainPage" ? "← 메인으로" : from === "HealthRecommendPage" ? "← 추천 결과로 돌아가기" : "← 상품 목록으로"}
         </button>
 
         <div className="pd-card">
