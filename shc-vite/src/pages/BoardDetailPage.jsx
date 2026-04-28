@@ -23,15 +23,27 @@ export default function BoardDetailPage({ navigate, postId }) {
     );
   }
 
-  // 키워드 교집합 기반 추천 상품 로직 (겹치는 키워드가 많은 순으로 정렬)
-  const recommendedProducts = products
-    .map(product => {
-      const matchCount = product.keyword.filter(k => post.keyword.includes(k)).length;
-      return { ...product, matchCount };
-    })
-    .filter(product => product.matchCount > 0)
-    .sort((a, b) => b.matchCount - a.matchCount)
-    .slice(0, 3);
+  // 카테고리 우선 + 키워드 교집합 기반 추천 상품 로직
+  const withScore = products.map(product => ({
+    ...product,
+    matchCount: product.keyword.filter(k => post.keyword.includes(k)).length,
+  }));
+
+  let recommendedProducts;
+  if (post.category === 'life') {
+    recommendedProducts = withScore
+      .filter(p => p.matchCount > 0)
+      .sort((a, b) => b.matchCount - a.matchCount)
+      .slice(0, 3);
+  } else {
+    const preferred = withScore
+      .filter(p => p.category === post.category && p.matchCount > 0)
+      .sort((a, b) => b.matchCount - a.matchCount);
+    const others = withScore
+      .filter(p => p.category !== post.category && p.matchCount > 0)
+      .sort((a, b) => b.matchCount - a.matchCount);
+    recommendedProducts = [...preferred, ...others].slice(0, 3);
+  }
 
   return (
     <div className="page">
@@ -70,7 +82,7 @@ export default function BoardDetailPage({ navigate, postId }) {
 
         {/* 관련 상품 추천 */}
         <div className="detail-products">
-          <h2 className="detail-products__title">관련 건강상품 추천</h2>
+          <h2 className="detail-products__title">추천 상품</h2>
           <div className="detail-products__grid">
             {recommendedProducts.length > 0 ? (
               recommendedProducts.map(product => (
