@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { UserContext } from '../components/UserContext.jsx';
+import registerImg from '../data/registerIMG/register.png';
 import './RegisterPage.css';
 
 const HEALTH_CONDITIONS = [
@@ -68,9 +69,12 @@ export default function RegisterPage({ navigate }) {
     <div className="reg-page">
       {/* 좌측 */}
       <div className="reg-brand">
-        <div className="reg-circle" />
+        <div className="reg-circle-1" />
+        <div className="reg-circle-2" />
+        <div className="reg-brand-img-wrapper">
+          <img src={registerImg} alt="register" className="reg-brand-img" />
+        </div>
         <div className="reg-brand-content">
-          <div className="reg-icon">🌿</div>
           <h1 className="reg-brand-title">시니어헬스케어<br />커뮤니티에<br />오신 것을<br />환영합니다</h1>
           <p className="reg-brand-desc">건강한 노후를 위한<br />가장 쉬운 시작</p>
         </div>
