@@ -65,7 +65,9 @@ export default function CartPage({ navigate }) {
                   onChange={() => toggleCheck(item.id)}
                   className="cart-item-checkbox"
                 />
-                <div className="cart-item-img">💊</div>
+                <div className="cart-item-img">
+                  <img src={item.image} alt={item.title} />
+                </div>
                 <div className="cart-item-info">
                   <div className="cart-item-name">{item.title}</div>
                   <div className="cart-item-price">{item.price.toLocaleString()}원</div>
