@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd SHC  # clone 받은 폴더명으로 수정하세요
+            cd SHC/src-vite  # clone 받은 폴더명으로 수정하세요
             git pull origin main
             npm install
             npm run build
