@@ -79,7 +79,8 @@ ${productSummary}
 ${postSummary}
 
 규칙:
-- 상품 최대 4개, 게시글 최대 4개 추천
+- 상품과 게시글 각각 최대 4개까지 추천할 수 있지만, 사용자의 건강 상태와 관련성이 높은 것만 엄선하세요
+- 관련성이 낮은 항목은 추천하지 마세요. 관련 항목이 적다면 1~2개만 추천해도 됩니다
 - 목록에 없는 항목은 절대 추천하지 마세요
 - comment는 사용자 건강 상태에 맞는 따뜻하고 구체적인 조언을 마크다운 형식으로 3~5문장 작성
 
@@ -91,11 +92,11 @@ ${postSummary}
 }`;
 }
 
-export default function HealthRecommendPage({ navigate }) {
-  const [selected, setSelected] = useState([]);
-  const [freeText, setFreeText] = useState('');
+export default function HealthRecommendPage({ navigate, savedState, onSaveState }) {
+  const [selected, setSelected] = useState(savedState?.selected ?? []);
+  const [freeText, setFreeText] = useState(savedState?.freeText ?? '');
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState(savedState?.result ?? null);
   const [error, setError] = useState('');
 
   const toggleCondition = (id) => {
@@ -165,6 +166,7 @@ export default function HealthRecommendPage({ navigate }) {
     setFreeText('');
     setResult(null);
     setError('');
+    onSaveState(null);
   };
 
   return (
@@ -241,7 +243,10 @@ export default function HealthRecommendPage({ navigate }) {
                     <button
                       key={product.id}
                       className="hr-product-card card"
-                      onClick={() => navigate('ProductDetailPage', { productId: product.id, from: 'HealthRecommendPage' })}
+                      onClick={() => {
+                        onSaveState({ selected, freeText, result });
+                        navigate('ProductDetailPage', { productId: product.id, from: 'HealthRecommendPage' });
+                      }}
                     >
                       <div className="hr-product-card__img">
                         <img src={product.image} alt={product.title} />
