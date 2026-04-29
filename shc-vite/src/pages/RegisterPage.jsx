@@ -1,84 +1,133 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { UserContext } from '../components/UserContext.jsx';
+import registerImg from '../data/registerIMG/register.png';
+import './RegisterPage.css';
 
-const INTERESTS = ['혈압관리', '당뇨관리', '관절건강', '뼈건강', '눈건강', '수면건강', '치매예방', '다이어트'];
+const HEALTH_CONDITIONS = [
+  { id: '고혈압', label: '고혈압', icon: '❤️' },
+  { id: '당뇨', label: '당뇨', icon: '🩸' },
+  { id: '관절통', label: '관절·무릎 통증', icon: '🦵' },
+  { id: '눈건강', label: '눈 건강', icon: '👁️' },
+  { id: '수면', label: '수면 장애', icon: '😴' },
+  { id: '소화', label: '소화·장 건강', icon: '🌿' },
+  { id: '피로', label: '만성 피로', icon: '⚡' },
+  { id: '스트레스', label: '스트레스', icon: '🧘' },
+  { id: '면역력', label: '면역력 강화', icon: '🛡️' },
+  { id: '체중관리', label: '체중 관리', icon: '⚖️' },
+  { id: '뼈건강', label: '뼈·골다공증', icon: '🦴' },
+  { id: '혈액순환', label: '혈액 순환', icon: '🔄' },
+  { id: '미세먼지', label: '미세먼지·호흡기', icon: '😷' },
+  { id: '두뇌건강', label: '두뇌·기억력', icon: '🧠' },
+  { id: '피부건강', label: '피부 건강', icon: '✨' },
+];
 
-export default function RegisterPage({ navigate, onLogin }) {
-  const [form, setForm] = useState({ name: '', id: '', pw: '', pw2: '', age: '' });
+export default function RegisterPage({ navigate }) {
+  const { register } = useContext(UserContext);
+  const [form, setForm] = useState({ name: '', username: '', password: '', passwordConfirm: '', age: '' });
   const [interests, setInterests] = useState([]);
   const [error, setError] = useState('');
 
-  const set = (key) => (e) => setForm(f => ({ ...f, [key]: e.target.value }));
-  const toggleInterest = (v) => setInterests(s => s.includes(v) ? s.filter(x => x !== v) : [...s, v]);
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleRegister = () => {
-    if (!form.name || !form.id || !form.pw) { setError('필수 항목을 모두 입력해주세요.'); return; }
-    if (form.pw !== form.pw2) { setError('비밀번호가 일치하지 않습니다.'); return; }
-    onLogin({ name: form.name, id: form.id });
-    navigate('main');
+  const toggleInterest = (id) => {
+    setInterests(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
   };
 
-  const inputStyle = {
-    width: '100%', padding: '13px 16px', fontSize: 16,
-    border: '1.5px solid #ddd', borderRadius: 12, outline: 'none',
-    fontFamily: 'inherit', boxSizing: 'border-box', marginBottom: 12,
+  const handleSubmit = async () => {
+    setError('');
+    if (!form.name || !form.username || !form.password) {
+      setError('이름, 아이디, 비밀번호는 필수입니다.');
+      return;
+    }
+    if (!/^[a-zA-Z0-9]{4,12}$/.test(form.username)) {
+      setError('아이디는 영문+숫자 4~12자여야 합니다.');
+      return;
+    }
+    if (form.password.length < 8) {
+      setError('비밀번호는 8자 이상이어야 합니다.');
+      return;
+    }
+    if (form.password !== form.passwordConfirm) {
+      setError('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+    const result = await register({
+      username: form.username,
+      password: form.password,
+      name: form.name,
+      age: form.age ? Number(form.age) : null,
+      interests,
+    });
+    if (!result.success) {
+      setError(result.error);
+      return;
+    }
+    navigate('LoginPage');
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex' }}>
+    <div className="reg-page">
       {/* 좌측 */}
-      <div style={{ flex: 1, background: 'linear-gradient(160deg, #1e3320, #2d5035, #4a7a50, #6b9e72)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '60px 72px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', right: -80, top: -80, width: 280, height: 280, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ fontSize: 52, marginBottom: 24 }}>🌿</div>
-          <h1 style={{ fontSize: 40, fontWeight: 900, color: '#fff', lineHeight: 1.25, marginBottom: 18 }}>시니어헬스케어<br />커뮤니티에<br />오신 것을<br />환영합니다</h1>
-          <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.75)', lineHeight: 1.75 }}>건강한 노후를 위한<br />가장 쉬운 시작</p>
+      <div className="reg-brand">
+        <div className="reg-circle-1" />
+        <div className="reg-circle-2" />
+        <div className="reg-brand-img-wrapper">
+          <img src={registerImg} alt="register" className="reg-brand-img" />
+        </div>
+        <div className="reg-brand-content">
+          <h1 className="reg-brand-title">시니어헬스케어<br />커뮤니티에<br />오신 것을<br />환영합니다</h1>
+          <p className="reg-brand-desc">건강한 노후를 위한<br />가장 쉬운 시작</p>
         </div>
       </div>
 
       {/* 우측 폼 */}
-      <div style={{ width: 520, flexShrink: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '48px 52px', background: '#fff', overflowY: 'auto' }}>
-        <h2 style={{ fontSize: 30, fontWeight: 800, color: '#2a2a2a', marginBottom: 28 }}>회원가입</h2>
+      <div className="reg-form-area">
+        <h2 className="reg-title">회원가입</h2>
 
-        {[
-          ['이름 *', 'name', 'text', '이름을 입력하세요'],
-          ['아이디 *', 'id', 'text', '영문+숫자 4-12자'],
-          ['비밀번호 *', 'pw', 'password', '8자 이상'],
-          ['비밀번호 확인 *', 'pw2', 'password', '비밀번호 재입력'],
-          ['나이', 'age', 'number', '나이를 입력하세요'],
-        ].map(([label, key, type, ph]) => (
-          <div key={key}>
-            <label style={{ fontSize: 14, fontWeight: 600, color: '#3a3a3a', display: 'block', marginBottom: 5 }}>{label}</label>
-            <input
-              type={type} value={form[key]} onChange={set(key)} placeholder={ph}
-              style={inputStyle}
-              onFocus={e => e.target.style.borderColor = '#4a7a50'}
-              onBlur={e => e.target.style.borderColor = '#ddd'}
-            />
-          </div>
-        ))}
+        <div>
+          <label className="reg-label">이름 *</label>
+          <input className="reg-input" name="name" placeholder="이름을 입력하세요" value={form.name} onChange={handleChange} />
+        </div>
+        <div>
+          <label className="reg-label">아이디 *</label>
+          <input className="reg-input" name="username" placeholder="영문+숫자 4-12자" value={form.username} onChange={handleChange} />
+        </div>
+        <div>
+          <label className="reg-label">비밀번호 *</label>
+          <input className="reg-input" type="password" name="password" placeholder="8자 이상" value={form.password} onChange={handleChange} />
+        </div>
+        <div>
+          <label className="reg-label">비밀번호 확인 *</label>
+          <input className="reg-input" type="password" name="passwordConfirm" placeholder="비밀번호 재입력" value={form.passwordConfirm} onChange={handleChange} />
+        </div>
+        <div>
+          <label className="reg-label">나이</label>
+          <input className="reg-input" type="number" name="age" placeholder="나이를 입력하세요" value={form.age} onChange={handleChange} />
+        </div>
 
         <div style={{ marginBottom: 20 }}>
-          <label style={{ fontSize: 14, fontWeight: 600, color: '#3a3a3a', display: 'block', marginBottom: 8 }}>건강 관심사</label>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
-            {INTERESTS.map(v => (
+          <label className="reg-interest-label">건강 관심사</label>
+          <div className="reg-interest-wrapper">
+            {HEALTH_CONDITIONS.map(c => (
               <button
-                key={v} onClick={() => toggleInterest(v)}
-                style={{ padding: '7px 14px', borderRadius: 99, border: '1.5px solid', fontSize: 14, fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s', borderColor: interests.includes(v) ? '#4a7a50' : '#ddd', background: interests.includes(v) ? '#e8f0e9' : '#fff', color: interests.includes(v) ? '#4a7a50' : '#8a8a7a' }}
+                key={c.id}
+                className={`reg-interest-btn${interests.includes(c.id) ? ' active' : ''}`}
+                onClick={() => toggleInterest(c.id)}
               >
-                {v}
+                {c.label}
               </button>
             ))}
           </div>
         </div>
 
-        {error && <div style={{ color: '#e85a5a', fontSize: 14, marginBottom: 10 }}>{error}</div>}
+        {error && <p className="reg-error">{error}</p>}
 
-        <button onClick={handleRegister} style={{ padding: '15px', background: '#4a7a50', color: '#fff', border: 'none', borderRadius: 14, fontSize: 17, fontWeight: 800, cursor: 'pointer', marginBottom: 14, width: '100%' }}>
+        <button className="reg-submit-btn" onClick={handleSubmit}>
           회원가입 완료
         </button>
-        <div style={{ textAlign: 'center', fontSize: 15, color: '#8a8a7a' }}>
+        <div className="reg-footer">
           이미 계정이 있으신가요?{' '}
-          <button onClick={() => navigate('login')} style={{ color: '#4a7a50', fontWeight: 700, background: 'none', border: 'none', cursor: 'pointer', fontSize: 15 }}>로그인</button>
+          <button className="reg-link" onClick={() => navigate('LoginPage')}>로그인</button>
         </div>
       </div>
     </div>

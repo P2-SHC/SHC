@@ -1,28 +1,265 @@
+.widget-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 280px;
+  flex-shrink: 0;
+}
+
 .widget {
   border-radius: 20px;
   padding: 20px;
   color: var(--white);
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(12px);
 }
+
 .widget--green {
-  background: linear-gradient(135deg, rgba(108,143,114,0.9), rgba(74,122,80,0.85));
-  box-shadow: 0 4px 20px rgba(74,122,80,0.25);
-}
-.widget--blue {
-  background: linear-gradient(135deg, rgba(90,143,200,0.9), rgba(70,120,180,0.85));
-  box-shadow: 0 4px 20px rgba(70,120,180,0.25);
+  background: linear-gradient(135deg, rgba(108, 143, 114, 0.9), rgba(74, 122, 80, 0.85));
+  box-shadow: 0 4px 20px rgba(74, 122, 80, 0.25);
 }
 
-.widget__title   { font-size: 13px; font-weight: 600; opacity: 0.85; margin-bottom: 6px; }
-.widget__main-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.widget__value   { font-size: 28px; font-weight: 800; }
-.widget__temp    { font-size: 42px; font-weight: 800; line-height: 1; }
-.widget__icon    { font-size: 32px; }
-.widget__icon--lg{ font-size: 44px; }
-.widget__condition { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
-.widget__grid    { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.widget__cell    { background: rgba(255,255,255,0.2); border-radius: 10px; padding: 8px 10px; }
-.widget__cell-label { font-size: 11px; opacity: 0.8; }
-.widget__cell-value { font-size: 17px; font-weight: 700; }
-.widget__unit    { font-size: 11px; opacity: 0.8; margin-left: 2px; }
+.widget--blue {
+  background: linear-gradient(135deg, rgba(90, 143, 200, 0.9), rgba(70, 120, 180, 0.85));
+  box-shadow: 0 4px 20px rgba(70, 120, 180, 0.25);
+}
+
+/* AQI Levels */
+.aqi-good {
+  background: linear-gradient(135deg, #009966, #007a52);
+  box-shadow: 0 4px 20px rgba(0, 153, 102, 0.3);
+}
+
+.aqi-moderate {
+  background: linear-gradient(135deg, #ffde33, #d9bd2b);
+  color: #333;
+  box-shadow: 0 4px 20px rgba(255, 222, 51, 0.3);
+}
+
+.aqi-unhealthy-sensitive {
+  background: linear-gradient(135deg, #ff9933, #d9822b);
+  box-shadow: 0 4px 20px rgba(255, 153, 51, 0.3);
+}
+
+.aqi-unhealthy {
+  background: linear-gradient(135deg, #cc0033, #a30029);
+  box-shadow: 0 4px 20px rgba(204, 0, 51, 0.3);
+}
+
+.aqi-very-unhealthy {
+  background: linear-gradient(135deg, #660099, #52007a);
+  box-shadow: 0 4px 20px rgba(102, 0, 153, 0.3);
+}
+
+.aqi-hazardous {
+  background: linear-gradient(135deg, #7e0023, #5c001a);
+  box-shadow: 0 4px 20px rgba(126, 0, 35, 0.3);
+}
+
+.aqi-moderate .widget__title,
+.aqi-moderate .widget__cell-label {
+  color: #555;
+}
+
+.widget__title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.widget__main-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.widget__value {
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.widget__temp {
+  font-size: 2.625rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.widget__icon {
+  font-size: 2rem;
+}
+
+.widget__icon--lg {
+  font-size: 2.75rem;
+}
+
+.widget__condition {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.widget__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.widget__cell {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.widget__cell-label {
+  font-size: 0.6875rem;
+  opacity: 0.8;
+}
+
+.widget__cell-value {
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.widget__unit {
+  font-size: 0.6875rem;
+  opacity: 0.8;
+  margin-left: 2px;
+}
+
+/* AI 건강 맞춤 추천 카드 */
+.ai-recommend-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 18px 16px;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  box-shadow: 0 4px 16px rgba(204, 35, 102, 0.4);
+}
+
+.ai-recommend-card:hover {
+  background: linear-gradient(135deg, #d4801c, #c95530, #bf1f35, #a81b55, #9e1270);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(204, 35, 102, 0.5);
+}
+
+.ai-recommend-card__icon {
+  font-size: 2.625rem;
+  flex-shrink: 0;
+}
+
+.ai-recommend-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-recommend-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.ai-recommend-card__desc {
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.ai-recommend-card__arrow {
+  font-size: 1.75rem;
+  color: #ffffff;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* 추천 상품 리스트 영역 */
+.widget__product-section {
+  margin-top: 20px;
+}
+
+.widget__product-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  padding: 0 2px;
+}
+
+.widget__product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 미니 상품 카드 스타일 */
+.widget__product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mini-product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.mini-product-card:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.mini-product-card__img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #f0f7f4;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mini-product-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mini-product-card__info {
+  width: 100%;
+}
+
+.mini-product-card__name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #2d3436;
+  margin-bottom: 2px;
+  word-break: keep-all;
+  line-height: 1.3;
+}
+
+.mini-product-card__price {
+  font-size: 0.75rem;
+  color: #00b894;
+  font-weight: 700;
+}

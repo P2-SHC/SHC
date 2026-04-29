@@ -1,67 +1,116 @@
-import { useState } from 'react';
-import Header from '../components/Header.jsx';
+import { useState, useContext } from 'react';
+import { ProductContext } from '../components/ProductContext.jsx';
+import { CartContext } from '../components/CartContext.jsx';
 import Badge from '../components/Badge.jsx';
-import { products, fmt } from '../data/index.js';
+import './ProductDetailPage.css';
 
-export default function ProductDetailPage({ params, navigate, isLoggedIn }) {
-  const product = products.find(p => p.id === params?.productId) || products[0];
-  const [qty, setQty] = useState(1);
-  const [added, setAdded] = useState(false);
+export default function ProductDetailPage({ navigate, product, from, fromPostId }) {
+  const { getStock, decreaseStock } = useContext(ProductContext);
+  const { addToCart } = useContext(CartContext);
+  const [selectedQty, setSelectedQty] = useState(1);
 
-  const handleAddCart = () => {
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+  if (!product) return <div className="pd-page"><div className="pd-container">상품을 찾을 수 없습니다.</div></div>;
+
+  // 실시간 재고 상태 가져오기
+  const currentStock = getStock(product.id);
+  const isOutOfStock = currentStock <= 0;
+  const isLowStock = currentStock > 0 && currentStock <= 5;
+
+  // 수량 조절 함수
+  const handleQtyChange = (amount) => {
+    const newQty = selectedQty + amount;
+    if (newQty < 1) return;
+    if (newQty > currentStock) {
+      alert(`현재 주문 가능한 최대 수량은 ${currentStock}개입니다.`);
+      return;
+    }
+    setSelectedQty(newQty);
+  };
+
+  // 바로 구매 함수
+  const handleBuyNow = () => {
+    if (isOutOfStock) return;
+    navigate('CheckoutPage', {
+      orderItems: [{ ...product, quantity: selectedQty }],
+      fromCart: false,
+    });
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f7f3ec' }}>
-      <Header page="products" navigate={navigate} isLoggedIn={isLoggedIn} cartCount={2} />
-
-      <div style={{ maxWidth: 1000, margin: '0 auto', padding: '28px 24px' }}>
-        <button onClick={() => navigate('products')} style={{ background: 'none', border: 'none', color: '#4a7a50', fontSize: 16, fontWeight: 600, cursor: 'pointer', marginBottom: 24, padding: 0 }}>
-          ← 상품 목록으로
+    <div className="pd-page">
+      <div className="pd-container">
+        <button className="pd-back-btn" onClick={() => {
+          if (from === "BoardDetailPage") {
+            navigate("BoardDetailPage", { postId: fromPostId });
+          } else if (from === "MainPage") {
+            navigate("MainPage");
+          } else if (from === "HealthRecommendPage") {
+            navigate("HealthRecommendPage");
+          } else {
+            navigate("ProductListPage");
+          }
+        }}>
+          {from === "BoardDetailPage" ? "← 게시글로 돌아가기" : from === "MainPage" ? "← 메인으로" : from === "HealthRecommendPage" ? "← 추천 결과로 돌아가기" : "← 상품 목록으로"}
         </button>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 36, background: '#fff', borderRadius: 24, padding: 40, boxShadow: '0 4px 24px rgba(0,0,0,0.07)' }}>
-          {/* 이미지 */}
-          <div style={{ borderRadius: 18, background: `${product.color}12`, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 320, fontSize: 100 }}>
-            {product.emoji}
+        <div className="pd-card">
+          <div className="pd-image-box">
+            <img src={product.image} alt={product.title} />
           </div>
 
-          {/* 상품 정보 */}
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 0 }}>
-            <div style={{ fontSize: 12, color: '#aaa', fontWeight: 500, marginBottom: 8 }}>{product.category}</div>
-            <h1 style={{ fontSize: 26, fontWeight: 800, color: '#2a2a2a', lineHeight: 1.3, marginBottom: 14 }}>{product.name}</h1>
+          <div className="pd-info-box">
+            <div className="pd-category">{product.keyword.join(", ")}</div>
+            <h1 className="pd-title">{product.title}</h1>
 
-            {product.tag && <div style={{ marginBottom: 14 }}><Badge text={product.tag} variant={product.tag === '베스트' || product.tag === '인기' ? 'peach' : 'sage'} /></div>}
+            {/* <div className="pd-tag-wrapper"><Badge /></div> */}
 
-            <p style={{ fontSize: 16, color: '#5a5a5a', lineHeight: 1.8, marginBottom: 20, paddingBottom: 20, borderBottom: '1px solid #f0ece4' }}>
-              {product.desc || '시니어를 위한 맞춤 건강기능식품입니다.'}
-            </p>
+            <p className="pd-desc">{product.description}</p>
+            <div className="pd-price">{product.price.toLocaleString()}원</div>
 
-            <div style={{ fontSize: 32, fontWeight: 900, color: '#4a7a50', marginBottom: 22 }}>{fmt(product.price)}</div>
-
-            {/* 수량 */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
-              <span style={{ fontSize: 17, fontWeight: 600, color: '#2a2a2a' }}>수량</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#f7f3ec', borderRadius: 12, padding: '4px 8px' }}>
-                <button onClick={() => setQty(q => Math.max(1, q - 1))} style={{ width: 36, height: 36, borderRadius: 8, background: '#fff', border: '1px solid #ddd', fontSize: 20, cursor: 'pointer', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
-                <span style={{ fontSize: 18, fontWeight: 700, minWidth: 32, textAlign: 'center' }}>{qty}</span>
-                <button onClick={() => setQty(q => q + 1)} style={{ width: 36, height: 36, borderRadius: 8, background: '#fff', border: '1px solid #ddd', fontSize: 20, cursor: 'pointer', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+            {/* 수량 및 재고 알림 */}
+            <div className="pd-qty-wrapper">
+              <span className="pd-qty-label">수량</span>
+              <div className="pd-qty-controls">
+                <button
+                  className="pd-qty-btn"
+                  onClick={() => handleQtyChange(-1)}
+                  disabled={isOutOfStock}
+                >−</button>
+                <span className="pd-qty-value">{isOutOfStock ? 0 : selectedQty}</span>
+                <button
+                  className="pd-qty-btn"
+                  onClick={() => handleQtyChange(1)}
+                  disabled={isOutOfStock}
+                >+</button>
               </div>
-              <span style={{ fontSize: 15, color: '#8a8a7a' }}>총 {fmt(product.price * qty)}</span>
+              <span className="pd-total-price">
+                총 {(product.price * (isOutOfStock ? 0 : selectedQty)).toLocaleString()}원
+              </span>
+            </div>
+
+            {/* 재고 경고 메시지 */}
+            <div className="pd-stock-status">
+              {isOutOfStock ? (
+                <span className="stock-alert stock-alert--error">⚠️ 현재 품절된 상품입니다.</span>
+              ) : isLowStock ? (
+                <span className="stock-alert stock-alert--warn">⚠️ 품절 임박! 현재 {currentStock}개 남았습니다.</span>
+              ) : null}
             </div>
 
             {/* 버튼 */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              <button onClick={() => navigate('cart')} style={{ padding: 16, background: '#4a7a50', color: '#fff', border: 'none', borderRadius: 14, fontSize: 18, fontWeight: 800, cursor: 'pointer' }}>
-                바로 구매
-              </button>
+            <div className="pd-action-wrapper">
               <button
-                onClick={handleAddCart}
-                style={{ padding: 16, background: added ? '#e8f0e9' : '#fff', color: '#4a7a50', border: '2px solid #4a7a50', borderRadius: 14, fontSize: 18, fontWeight: 800, cursor: 'pointer', transition: 'all 0.2s' }}
+                className={`pd-buy-btn ${isOutOfStock ? 'btn-disabled' : ''}`}
+                onClick={handleBuyNow}
+                disabled={isOutOfStock}
               >
-                {added ? '✓ 담겼어요!' : '장바구니'}
+                {isOutOfStock ? '품절' : '바로 구매'}
+              </button>
+              <button className="pd-cart-btn" onClick={() => {
+                addToCart(product, selectedQty);
+                navigate("CartPage", { productId: product.id });
+              }}>
+                장바구니
               </button>
             </div>
           </div>

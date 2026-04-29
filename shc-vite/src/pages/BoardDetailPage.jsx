@@ -1,119 +1,124 @@
-import Header from '../components/Header.jsx';
 import Badge from '../components/Badge.jsx';
 import './BoardDetailPage.css';
+import articles from "../article/articleData.json";
+import products from "../data/product.json";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 /**
  * BoardDetailPage - 게시판 상세 (SHC-003)
- * @prop {'recipe'|'lifestyle'|'exercise'} category
- * @prop {object}   post        - { title, date, views, tag, content }
- * @prop {boolean}  isLoggedIn
- * @prop {Array}    comments    - [{ author, text, date }]
- * @prop {Array}    relatedProducts - 관련 상품 3개
- * @prop {string}   commentValue   - 댓글 입력값 (controlled)
- * @prop {Function} onCommentChange
- * @prop {Function} onCommentSubmit
- * @prop {Function} onBack
- * @prop {Function} onProductClick
- * @prop {Function} onNavClick
  */
+export default function BoardDetailPage({ navigate, postId, from }) {
+  const post = articles.find(article => article.id === postId);
 
-const META = {
-  recipe:    { label:'레시피', icon:'🥗' },
-  lifestyle: { label:'라이프', icon:'🌸' },
-  exercise:  { label:'운동',   icon:'🏃' },
-};
+  if (!post) {
+    return (
+      <div className="page">
+        <div className="container--sm">
+          <p>게시글을 찾을 수 없습니다.</p>
+          <button onClick={() => {
+            if (from === 'HealthRecommendPage') {
+              navigate('HealthRecommendPage');
+            } else {
+              navigate('BoardListPage');
+            }
+          }}>목록으로 돌아가기</button>
+        </div>
+      </div>
+    );
+  }
 
-export default function BoardDetailPage({
-  category = 'recipe',
-  post = MOCK_POST,
-  isLoggedIn = false,
-  comments = MOCK_COMMENTS,
-  relatedProducts = MOCK_PRODUCTS,
-  commentValue = '',
-  onCommentChange,
-  onCommentSubmit,
-  onBack,
-  onProductClick,
-  onNavClick,
-}) {
-  const meta = META[category];
-  const fmt = (n) => Number(n).toLocaleString('ko-KR') + '원';
+  // 카테고리 우선 + 키워드 교집합 기반 추천 상품 로직
+  const withScore = products.map(product => ({
+    ...product,
+    matchCount: product.keyword.filter(k => post.keyword.includes(k)).length,
+  }));
+
+  let recommendedProducts;
+  if (post.category === 'life') {
+    recommendedProducts = withScore
+      .filter(p => p.matchCount > 0)
+      .sort((a, b) => b.matchCount - a.matchCount)
+      .slice(0, 3);
+  } else {
+    const preferred = withScore
+      .filter(p => p.category === post.category && p.matchCount > 0)
+      .sort((a, b) => b.matchCount - a.matchCount);
+    const others = withScore
+      .filter(p => p.category !== post.category && p.matchCount > 0)
+      .sort((a, b) => b.matchCount - a.matchCount);
+    recommendedProducts = [...preferred, ...others].slice(0, 3);
+  }
 
   return (
     <div className="page">
-      <Header activePage={category} isLoggedIn={isLoggedIn} onNavClick={onNavClick} cartCount={2} />
-
       <div className="container--sm">
-        <button className="detail-back" onClick={onBack}>← {meta.label}으로 돌아가기</button>
+        <button className="detail-back" onClick={() => {
+          if (from === 'HealthRecommendPage') {
+            navigate('HealthRecommendPage');
+          } else if (from === 'MainPage') {
+            navigate('MainPage');
+          } else {
+            navigate('BoardListPage', { category: post.category });
+          }
+        }}>
+          {from === 'HealthRecommendPage' ? '← 추천 결과로 돌아가기' : from === 'MainPage' ? '← 메인으로 돌아가기' : '← 목록으로 돌아가기'}
+        </button>
 
         {/* 본문 */}
         <article className="detail-article">
-          <div className="detail-article__badge"><Badge text={post.tag} variant="sage" /></div>
+          <div className="detail-article__badge">{post.viewCount > 1000 && <Badge />}</div>
           <h1 className="detail-article__title">{post.title}</h1>
-          <p className="detail-article__meta">{post.date} · 조회 {Number(post.views).toLocaleString()}</p>
+          <p className="detail-article__meta">{post.createdAt} · 조회 {post.viewCount}</p>
           <div className="detail-article__divider" />
-          <p className="detail-article__content">{post.content}</p>
+          <div className="detail-article__content">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
+              components={{
+                img: ({ src, alt }) => {
+                  const fullSrc = src.startsWith('http') ? src : `/src/data/boardIMG/${src}`;
+                  return <img src={fullSrc} alt={alt} style={{ maxWidth: '100%', borderRadius: '8px', margin: '1rem 0' }} />;
+                },
+                iframe: (props) => (
+                  <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '12px', margin: '1.5rem 0' }}>
+                    <iframe
+                      {...props}
+                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+                    />
+                  </div>
+                )
+              }}
+            >
+              {post.content}
+            </ReactMarkdown>
+          </div>
         </article>
 
         {/* 관련 상품 추천 */}
         <div className="detail-products">
-          <h2 className="detail-products__title">관련 건강상품 추천</h2>
+          <h2 className="detail-products__title">추천 상품</h2>
           <div className="detail-products__grid">
-            {relatedProducts.map(p => (
-              <button key={p.id} className="detail-product-card" onClick={() => onProductClick?.(p)}>
-                <span className="detail-product-card__emoji">{p.emoji}</span>
-                <p className="detail-product-card__name">{p.name}</p>
-                <p className="detail-product-card__price">{fmt(p.price)}</p>
-              </button>
-            ))}
+            {recommendedProducts.length > 0 ? (
+              recommendedProducts.map(product => (
+                <button
+                  key={product.id}
+                  className="detail-product-card"
+                  onClick={() => { navigate("ProductDetailPage", { productId: product.id, from: "BoardDetailPage", fromPostId: post.id }) }}
+                >
+                  <img className="detail-product-card__img" src={product.image} alt={product.title} />
+                  <p className="detail-product-card__name">{product.title}</p>
+                  <p className="detail-product-card__price">{product.price.toLocaleString()}원</p>
+                </button>
+              ))
+            ) : (
+              <p className="detail-products__empty">관련 추천 상품이 없습니다.</p>
+            )}
           </div>
         </div>
 
-        {/* 댓글 */}
-        <div className="detail-comments">
-          <h2 className="detail-comments__title">댓글 {comments.length}</h2>
-          <div className="detail-comments__list">
-            {comments.map((c, i) => (
-              <div key={i} className="comment">
-                <div className="comment__header">
-                  <span className="comment__author">{c.author}</span>
-                  <span className="comment__date">{c.date}</span>
-                </div>
-                <p className="comment__text">{c.text}</p>
-              </div>
-            ))}
-          </div>
-          {isLoggedIn ? (
-            <div className="comment-form">
-              <input
-                className="input comment-form__input"
-                value={commentValue}
-                onChange={e => onCommentChange?.(e.target.value)}
-                placeholder="댓글을 입력하세요..."
-              />
-              <button className="btn btn--primary" onClick={onCommentSubmit}>등록</button>
-            </div>
-          ) : (
-            <p className="comment-login-notice">
-              댓글을 달려면 <button className="comment-login-notice__btn" onClick={() => onNavClick?.('login')}>로그인</button>이 필요합니다.
-            </p>
-          )}
-        </div>
       </div>
     </div>
   );
 }
-
-const MOCK_POST = {
-  title:'혈압에 좋은 바나나 스무디 만들기', date:'2025.04.15', views:1240, tag:'혈압관리',
-  content:'바나나는 칼륨이 풍부하여 혈압 조절에 도움이 됩니다.\n\n재료: 바나나 1개, 저지방 우유 200ml, 꿀 1큰술\n\n만드는 법:\n1. 바나나를 적당히 썰어 믹서기에 넣습니다.\n2. 차가운 저지방 우유를 붓고 꿀을 추가합니다.\n3. 30초간 곱게 갈아줍니다.\n4. 컵에 담아 즉시 마십니다.',
-};
-const MOCK_COMMENTS = [
-  { author:'김영자', text:'정말 도움이 됩니다. 꼭 실천해볼게요!', date:'2025.04.17' },
-  { author:'박정수', text:'좋은 정보 감사합니다.', date:'2025.04.16' },
-];
-const MOCK_PRODUCTS = [
-  { id:1, name:'프리미엄 홍삼정 골드',   price:89000, emoji:'🍃' },
-  { id:2, name:'관절 영양제 MSM 플러스', price:45000, emoji:'💪' },
-  { id:3, name:'루테인 눈 영양제',        price:32000, emoji:'👁️' },
-];

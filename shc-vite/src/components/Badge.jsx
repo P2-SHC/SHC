@@ -1,13 +1,7 @@
 import './Badge.css';
 
-/**
- * Badge
- * @prop {string} text    - 배지 텍스트
- * @prop {'sage'|'peach'|'gold'|'blue'} variant
- */
-export default function Badge({ text, variant = 'sage' }) {
-  if (!text) return null;
+export default function Badge() {
   return (
-    <span className={`badge badge--${variant}`}>{text}</span>
+    <span className="badge badge--sage">인기</span>
   );
 }

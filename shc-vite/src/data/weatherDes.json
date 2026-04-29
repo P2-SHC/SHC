@@ -1,0 +1,326 @@
+[
+    {
+        "id": 200,
+        "main": "Thunderstorm",
+        "description": "가벼운 비를 동반한 천둥구름",
+        "icon": "11"
+    },
+    {
+        "id": 201,
+        "main": "Thunderstorm",
+        "description": "비를 동반한 천둥구름",
+        "icon": "11"
+    },
+    {
+        "id": 202,
+        "main": "Thunderstorm",
+        "description": "폭우를 동반한 천둥구름",
+        "icon": "11"
+    },
+    {
+        "id": 210,
+        "main": "Thunderstorm",
+        "description": "약한 천둥구름",
+        "icon": "11"
+    },
+    {
+        "id": 211,
+        "main": "Thunderstorm",
+        "description": "천둥구름",
+        "icon": "11"
+    },
+    {
+        "id": 212,
+        "main": "Thunderstorm",
+        "description": "강한 천둥구름",
+        "icon": "11"
+    },
+    {
+        "id": 221,
+        "main": "Thunderstorm",
+        "description": "불규칙적 천둥구름",
+        "icon": "11"
+    },
+    {
+        "id": 230,
+        "main": "Thunderstorm",
+        "description": "약한 연무를 동반한 천둥구름",
+        "icon": "11"
+    },
+    {
+        "id": 231,
+        "main": "Thunderstorm",
+        "description": "연무를 동반한 천둥구름",
+        "icon": "11"
+    },
+    {
+        "id": 232,
+        "main": "Thunderstorm",
+        "description": "강한 안개비를 동반한 천둥구름",
+        "icon": "11"
+    },
+    {
+        "id": 300,
+        "main": "Drizzle",
+        "description": "가벼운 안개비",
+        "icon": "09"
+    },
+    {
+        "id": 301,
+        "main": "Drizzle",
+        "description": "안개비",
+        "icon": "09"
+    },
+    {
+        "id": 302,
+        "main": "Drizzle",
+        "description": "강한 안개비",
+        "icon": "09"
+    },
+    {
+        "id": 310,
+        "main": "Drizzle",
+        "description": "가벼운 적은비",
+        "icon": "09"
+    },
+    {
+        "id": 311,
+        "main": "Drizzle",
+        "description": "적은비",
+        "icon": "09"
+    },
+    {
+        "id": 312,
+        "main": "Drizzle",
+        "description": "강한 적은비",
+        "icon": "09"
+    },
+    {
+        "id": 313,
+        "main": "Drizzle",
+        "description": "소나기와 안개비",
+        "icon": "09"
+    },
+    {
+        "id": 314,
+        "main": "Drizzle",
+        "description": "강한 소나기와 안개비",
+        "icon": "09"
+    },
+    {
+        "id": 321,
+        "main": "Drizzle",
+        "description": "소나기",
+        "icon": "09"
+    },
+    {
+        "id": 500,
+        "main": "Rain",
+        "description": "악한 비",
+        "icon": "10"
+    },
+    {
+        "id": 501,
+        "main": "Rain",
+        "description": "중간 비",
+        "icon": "10"
+    },
+    {
+        "id": 502,
+        "main": "Rain",
+        "description": "강한 비",
+        "icon": "10"
+    },
+    {
+        "id": 503,
+        "main": "Rain",
+        "description": "매우 강한 비",
+        "icon": "10"
+    },
+    {
+        "id": 504,
+        "main": "Rain",
+        "description": "극심한 비",
+        "icon": "10"
+    },
+    {
+        "id": 511,
+        "main": "Rain",
+        "description": "우박",
+        "icon": "13"
+    },
+    {
+        "id": 520,
+        "main": "Rain",
+        "description": "약한 소나기 비",
+        "icon": "09"
+    },
+    {
+        "id": 521,
+        "main": "Rain",
+        "description": "소나기 비",
+        "icon": "09"
+    },
+    {
+        "id": 522,
+        "main": "Rain",
+        "description": "강한 소나기 비",
+        "icon": "09"
+    },
+    {
+        "id": 531,
+        "main": "Rain",
+        "description": "불규칙적 소나기 비",
+        "icon": "09"
+    },
+    {
+        "id": 600,
+        "main": "Snow",
+        "description": "가벼운 눈",
+        "icon": "13"
+    },
+    {
+        "id": 601,
+        "main": "Snow",
+        "description": "눈",
+        "icon": "13"
+    },
+    {
+        "id": 602,
+        "main": "Snow",
+        "description": "강한 눈",
+        "icon": "13"
+    },
+    {
+        "id": 611,
+        "main": "Snow",
+        "description": "진눈깨비",
+        "icon": "13"
+    },
+    {
+        "id": 612,
+        "main": "Snow",
+        "description": "소나기 진눈깨비",
+        "icon": "13"
+    },
+    {
+        "id": 615,
+        "main": "Snow",
+        "description": "약한 비와 눈",
+        "icon": "13"
+    },
+    {
+        "id": 616,
+        "main": "Snow",
+        "description": "비와 눈",
+        "icon": "13"
+    },
+    {
+        "id": 620,
+        "main": "Snow",
+        "description": "약한 소나기 눈",
+        "icon": "13"
+    },
+    {
+        "id": 621,
+        "main": "Snow",
+        "description": "소나기 눈",
+        "icon": "13"
+    },
+    {
+        "id": 622,
+        "main": "Snow",
+        "description": "강한 소나기 눈",
+        "icon": "13"
+    },
+    {
+        "id": 701,
+        "main": "Mist",
+        "description": "박무",
+        "icon": "50"
+    },
+    {
+        "id": 711,
+        "main": "Smoke",
+        "description": "연기",
+        "icon": "50"
+    },
+    {
+        "id": 721,
+        "main": "Haze",
+        "description": "연무",
+        "icon": "50"
+    },
+    {
+        "id": 731,
+        "main": "Dust",
+        "description": "모래 먼지",
+        "icon": "50"
+    },
+    {
+        "id": 741,
+        "main": "Fog",
+        "description": "안개",
+        "icon": "50"
+    },
+    {
+        "id": 751,
+        "main": "Sand",
+        "description": "모래",
+        "icon": "50"
+    },
+    {
+        "id": 761,
+        "main": "Dust",
+        "description": "먼지",
+        "icon": "50"
+    },
+    {
+        "id": 762,
+        "main": "Ash",
+        "description": "화산재",
+        "icon": "50"
+    },
+    {
+        "id": 771,
+        "main": "Squall",
+        "description": "돌풍",
+        "icon": "50"
+    },
+    {
+        "id": 781,
+        "main": "Tornado",
+        "description": "토네이도",
+        "icon": "50"
+    },
+    {
+        "id": 800,
+        "main": "Clear",
+        "description": "구름 한 점 없는 맑은 하늘",
+        "icon": "01"
+    },
+    {
+        "id": 801,
+        "main": "Clouds",
+        "description": "약간의 구름이 낀 하늘",
+        "icon": "01"
+    },
+    {
+        "id": 802,
+        "main": "Clouds",
+        "description": "드문드문 구름이 낀 하늘",
+        "icon": "02"
+    },
+    {
+        "id": 803,
+        "main": "Clouds",
+        "description": "구름이 거의 없는 하늘",
+        "icon": "02"
+    },
+    {
+        "id": 804,
+        "main": "Clouds",
+        "description": "구름으로 뒤덮인 흐린 하늘",
+        "icon": "04"
+    }
+]

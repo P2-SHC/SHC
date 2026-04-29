@@ -4,7 +4,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* 상단 타이틀 행 */
@@ -27,16 +27,22 @@
   cursor: pointer;
   padding: 0;
 }
-.header__logo-icon { font-size: 28px; line-height: 1; }
+
+.header__logo-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
 .header__logo-name {
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 800;
   color: var(--sage);
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
+
 .header__logo-sub {
-  font-size: 12px;
+  font-size: var(--font-xs);
   color: var(--text-light);
   font-weight: 400;
 }
@@ -47,14 +53,17 @@
   align-items: center;
   gap: 10px;
 }
+
 .header__username {
-  font-size: 16px;
+  font-size: var(--font-base);
   font-weight: 600;
   color: var(--text-dark);
 }
+
 .header__cart-btn {
   position: relative;
 }
+
 .header__cart-badge {
   position: absolute;
   top: -6px;
@@ -64,7 +73,7 @@
   border-radius: 99px;
   width: 20px;
   height: 20px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 800;
   display: flex;
   align-items: center;
@@ -79,9 +88,10 @@
   display: flex;
   gap: 2px;
 }
+
 .header__nav-item {
   padding: 12px 22px;
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: 500;
   color: var(--text-mid);
   background: none;
@@ -92,11 +102,160 @@
   border-radius: 8px 8px 0 0;
   font-family: inherit;
 }
+
 .header__nav-item:hover {
   color: var(--sage);
 }
+
 .header__nav-item--active {
   font-weight: 700;
   color: var(--sage);
   border-bottom-color: var(--sage);
+}
+
+/* 날씨 배경 선택 드롭다운 */
+.header__weather-select {
+  margin-left: 12px;
+  padding: 6px 12px;
+  font-size: var(--font-sm);
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--text-mid);
+  background: var(--beige);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+  align-self: center;
+}
+
+.header__weather-select:hover,
+.header__weather-select:focus {
+  border-color: var(--sage);
+  color: var(--sage);
+}
+
+/* 글자 크기 컨트롤러 */
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header__font-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--beige);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 3px;
+}
+
+.header__font-btn {
+  padding: 5px 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  background: none;
+  border: none;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.header__font-btn:hover {
+  color: var(--sage);
+  background: var(--white);
+}
+
+.header__font-btn--active {
+  background: var(--white);
+  color: var(--sage);
+  box-shadow: var(--shadow-sm);
+}
+
+/* AI 맞춤추천 탭 */
+.header__nav-item--ai {
+  color: #F27405;
+  font-weight: 700;
+}
+
+.header__nav-item--ai:hover {
+  color: #F27405;
+}
+
+.header__nav-item--ai.header__nav-item--active {
+  color: #F27405;
+  border-bottom-color: #F27405;
+}
+
+/* 실시간 시계 */
+.header__clock {
+  margin-left: auto;
+  align-self: center;
+  color: var(--text-dark);
+  padding: 0 12px;
+  background: none;
+  border: none;
+  white-space: nowrap;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.header__clock-label {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.header__clock-time {
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.header__clock-colon {
+  animation: clock-blink 1s infinite;
+  color: var(--sage);
+  display: inline-block;
+  width: 0.5ch;
+  text-align: center;
+}
+
+@keyframes clock-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.header__clock-seconds {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  margin-left: 6px;
+  opacity: 0.7;
+}
+
+/* 건강 알리미 탭 */
+.header__nav-item--alarm {
+  color: var(--sage);
+  font-weight: 700;
+}
+
+.header__nav-item--alarm:hover {
+  color: var(--sage);
+}
+
+.header__nav-item--alarm.header__nav-item--active {
+  color: var(--sage);
+  border-bottom-color: var(--sage);
+  background: var(--sage-light);
 }
