@@ -15,6 +15,7 @@ import Header from './components/Header.jsx';
 import AlarmNotifier from './components/AlarmNotifier.jsx';
 import { UserContext } from './components/UserContext.jsx';
 import products from './data/product.json'
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 
 export default function App() {
@@ -84,6 +85,9 @@ export default function App() {
         {renderPage()}
       </LocationProvider>
       <AlarmNotifier />
+      {["MainPage", "HealthRecommendPage", "BoardListPage", "BoardDetailPage", "ProductListPage", "ProductDetailPage"].includes(page) && (
+        <ScrollToTop />
+      )}
     </>
   );
 }
