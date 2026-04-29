@@ -16,6 +16,18 @@
   margin-bottom: 24px;
 }
 
+.cart-back-btn {
+  background: none;
+  border: none;
+  color: #4a7a50;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 20px;
+  padding: 0;
+  display: block;
+}
+
 /* 로그인 필요 */
 .cart-login-req {
   text-align: center;

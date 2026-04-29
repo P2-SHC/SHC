@@ -9,6 +9,8 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
   const { addToCart } = useContext(CartContext);
   const [selectedQty, setSelectedQty] = useState(1);
 
+  if (!product) return <div className="pd-page"><div className="pd-container">상품을 찾을 수 없습니다.</div></div>;
+
   // 실시간 재고 상태 가져오기
   const currentStock = getStock(product.id);
   const isOutOfStock = currentStock <= 0;
@@ -106,7 +108,7 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
               </button>
               <button className="pd-cart-btn" onClick={() => {
                 addToCart(product, selectedQty);
-                navigate("CartPage");
+                navigate("CartPage", { productId: product.id });
               }}>
                 장바구니
               </button>

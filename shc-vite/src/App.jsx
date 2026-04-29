@@ -35,11 +35,11 @@ export default function App() {
 
   const navigate = (pageName, params = {}) => {
     setPage(pageName);
-    setSelectedPostId(params.postId ?? null);
-    setCategory(params.category ?? "");
-    setProductId(params.productId ?? "");
-    setFrom(params.from ?? "");
-    setFromPostId(params.fromPostId ?? null);
+    if (params.postId !== undefined) setSelectedPostId(params.postId);
+    if (params.category !== undefined) setCategory(params.category);
+    if (params.productId !== undefined) setProductId(params.productId);
+    if (pageName !== page) setFrom(params.from ?? page);
+    if (params.fromPostId !== undefined) setFromPostId(params.fromPostId);
     if (params.orderItems !== undefined) setOrderItems(params.orderItems);
     if (params.fromCart !== undefined) setFromCart(params.fromCart);
   }
@@ -54,7 +54,7 @@ export default function App() {
       case "MainPage":
         return <MainPage navigate={navigate} weatherIcon={weatherIcon} onWeatherLoad={setWeatherIcon} />
       case "CartPage":
-        return <CartPage navigate={navigate} />
+        return <CartPage navigate={navigate} from={from} category={category} productId={productId} />
       case "LoginPage":
         return <LoginPage navigate={navigate} />
       case "RegisterPage":
@@ -85,7 +85,7 @@ export default function App() {
         {renderPage()}
       </LocationProvider>
       <AlarmNotifier />
-      {["MainPage", "HealthRecommendPage", "BoardListPage", "BoardDetailPage", "ProductListPage", "ProductDetailPage"].includes(page) && (
+      {["MainPage", "CartPage", "HealthRecommendPage", "BoardListPage", "BoardDetailPage", "ProductListPage", "ProductDetailPage"].includes(page) && (
         <ScrollToTop />
       )}
     </>

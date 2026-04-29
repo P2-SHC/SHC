@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { CartContext } from '../components/CartContext.jsx';
 import { ProductContext } from '../components/ProductContext.jsx';
 
-export default function CartPage({ navigate }) {
+export default function CartPage({ navigate, from, category, productId }) {
   const { cartItems, removeFromCart, updateCartQuantity } = useContext(CartContext);
   const { decreaseStock, getStock } = useContext(ProductContext);
   const [checkedIds, setCheckedIds] = useState(() => cartItems.map(item => item.id));
@@ -32,6 +32,16 @@ export default function CartPage({ navigate }) {
     return (
       <div className="cart-page">
         <div className="cart-container">
+          <button className="cart-back-btn" onClick={() => {
+            if (from === "ProductDetailPage") navigate("ProductDetailPage", { productId: productId });
+            else if (from === "BoardListPage") navigate("BoardListPage", { category: category });
+            else if (from === "ProductListPage") navigate("ProductListPage");
+            else if (from === "HealthRecommendPage") navigate("HealthRecommendPage");
+            else if (from === "AlarmPage") navigate("AlarmPage");
+            else navigate("MainPage");
+          }}>
+            ← 이전으로 돌아가기
+          </button>
           <h1 className="cart-title">장바구니</h1>
           <div className="cart-empty">
             <div className="cart-empty-icon">🛒</div>
@@ -48,6 +58,16 @@ export default function CartPage({ navigate }) {
   return (
     <div className="cart-page">
       <div className="cart-container">
+        <button className="cart-back-btn" onClick={() => {
+          if (from === "ProductDetailPage") navigate("ProductDetailPage", { productId: productId });
+          else if (from === "BoardListPage") navigate("BoardListPage", { category: category });
+          else if (from === "ProductListPage") navigate("ProductListPage");
+          else if (from === "HealthRecommendPage") navigate("HealthRecommendPage");
+          else if (from === "AlarmPage") navigate("AlarmPage");
+          else navigate("MainPage");
+        }}>
+          ← 이전으로 돌아가기
+        </button>
         <h1 className="cart-title">장바구니</h1>
 
         <div className="cart-list">
