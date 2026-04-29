@@ -53,6 +53,7 @@ function buildPrompt(conditions, freeText) {
 
   return `당신은 시니어 헬스케어 사이트의 건강 추천 어시스턴트입니다.
 사용자의 건강 정보를 분석하여 아래 목록에서만 적합한 상품과 게시글을 추천해주세요.
+헬스케어와 연관되지 않은 질문에는 답하면 안됩니다.
 
 [사용자 건강 정보]
 ${userInfo}
@@ -115,9 +116,23 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
       }
 
       const data = await res.json();
-      const raw = data.response.trim();
+
+      // AWS Guardrail이 차단한 경우 처리
+      if (data.blocked || data.guardrailAction === 'BLOCKED') {
+        setError(data.message || '헬스케어와 관련 없는 질문에는 답변드리기 어렵습니다. 건강 관련 질문을 입력해주세요.');
+        return;
+      }
+
+      const raw = (data.response ?? '').trim();
       const jsonStart = raw.indexOf('{');
       const jsonEnd = raw.lastIndexOf('}');
+
+      // JSON 구조가 없는 경우 → Guardrail 거절 메시지이거나 빈 응답
+      if (jsonStart === -1 || jsonEnd === -1 || jsonEnd < jsonStart) {
+        setError(raw || '헬스케어와 관련 없는 질문에는 답변드리기 어렵습니다. 건강 관련 질문을 입력해주세요.');
+        return;
+      }
+
       const jsonStr = raw.slice(jsonStart, jsonEnd + 1);
 
       // Claude가 JSON 문자열 값 안에 literal 줄바꿈을 넣는 경우 처리
