@@ -75,7 +75,7 @@ export default function MainPage({ navigate, weatherIcon, onWeatherLoad }) {
                 <p className="featured-card__label">최신 인기글</p>
                 {featuredPost ? (
                   <div className="featured-card__body">
-                    <div className="featured-card__img" onClick={() => navigate("BoardDetailPage", { postId: featuredPost.id })} style={{ cursor: 'pointer' }}>
+                    <div className="featured-card__img" onClick={() => navigate("BoardDetailPage", { postId: featuredPost.id, from: 'MainPage' })} style={{ cursor: 'pointer' }}>
                       {getFirstImage(featuredPost.content) ? (
                         <img src={getFirstImage(featuredPost.content)} alt={featuredPost.title} />
                       ) : (
@@ -104,7 +104,7 @@ export default function MainPage({ navigate, weatherIcon, onWeatherLoad }) {
                     .slice(0, 5)
                     .map(post => (
                       <button key={post.id} className="board-post-card" onClick={() => {
-                        navigate("BoardDetailPage", { postId: post.id });
+                        navigate("BoardDetailPage", { postId: post.id, from: 'MainPage' });
                       }}>
                         <div className="board-post-card__img">
                           {getFirstImage(post.content) ? (

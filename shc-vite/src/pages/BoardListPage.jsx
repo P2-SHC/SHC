@@ -107,7 +107,7 @@ export default function BoardListPage({ navigate, category }) {
             ) : (
               <>
                 {visiblePosts.map(post => (
-                  <button key={post.id} className="board-post-card" onClick={() => { navigate("BoardDetailPage", { postId: post.id }) }}>
+                  <button key={post.id} className="board-post-card" onClick={() => { navigate("BoardDetailPage", { postId: post.id, from: 'BoardListPage' }) }}>
                     <div className="board-post-card__img">
                       {/* dev 브랜치의 이미지 미리보기 로직 통합 */}
                       {getFirstImage(post.content) ? (
@@ -143,7 +143,7 @@ export default function BoardListPage({ navigate, category }) {
                 <button
                   key={post.id}
                   className="board-top5__item"
-                  onClick={() => { navigate("BoardDetailPage", { postId: post.id }) }}
+                  onClick={() => { navigate("BoardDetailPage", { postId: post.id, from: 'BoardListPage' }) }}
                 >
                   <span className={`board-top5__rank board-top5__rank--${index + 1}`}>
                     {index + 1}

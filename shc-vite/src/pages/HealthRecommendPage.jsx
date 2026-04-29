@@ -263,7 +263,10 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
                     <button
                       key={`${post.category}-${post.id}`}
                       className="hr-post-card card"
-                      onClick={() => navigate('BoardDetailPage', { postId: post.id, category: post.category })}
+                      onClick={() => {
+                        onSaveState({ selected, freeText, result });
+                        navigate('BoardDetailPage', { postId: post.id, category: post.category, from: 'HealthRecommendPage' });
+                      }}
                     >
                       <span className="hr-post-card__category">{CATEGORY_LABEL[post.category]}</span>
                       <span className="hr-post-card__title">{post.title}</span>
@@ -279,6 +282,11 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
             </button>
           </div>
         )}
+
+        <div className="hr-disclaimer">
+          본 답변은 AI가 생성한 것으로, 사실과 다를 수 있습니다.<br />
+          의료 답변에 대한 판단은 전문가 또는 공식 자료를 확인해 주세요.
+        </div>
       </div>
     </div>
   );
