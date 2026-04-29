@@ -72,8 +72,8 @@ ${postSummary}
 
 반드시 아래 JSON 형식으로만 응답하세요 (다른 텍스트 없이):
 {
-  "productIds": [숫자 배열],
-  "posts": [{"category": "recipe|life|exercise", "id": 숫자} 배열],
+  "productIds": [1, 2, 3],
+  "posts": [{"category": "recipe", "id": 1}, {"category": "life", "id": 2}],
   "comment": "마크다운 조언 텍스트"
 }`;
 }
@@ -135,19 +135,35 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
 
       const jsonStr = raw.slice(jsonStart, jsonEnd + 1);
 
-      // Claude가 JSON 문자열 값 안에 literal 줄바꿈을 넣는 경우 처리
-      const sanitized = jsonStr.replace(/("(?:[^"\\]|\\.)*")/gs, (match) =>
-        match.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t')
-      );
-      const parsed = JSON.parse(sanitized);
+      // JSON 보정 로직 강화
+      let sanitized = jsonStr
+        // 1. 문자열 내 줄바꿈/탭 처리
+        .replace(/("(?:[^"\\]|\\.)*")/gs, (match) =>
+          match.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t')
+        )
+        // 2. 객체/배열 사이 누락된 쉼표 보정 (예: } { -> } , {)
+        .replace(/\}\s*\{/g, '},{')
+        .replace(/\]\s*\[/g, '],[')
+        // 3. 숫자 배열 내 누락된 쉼표 보정 (예: [1 2 3] -> [1, 2, 3])
+        .replace(/(\d)\s+(\d)/g, '$1, $2')
+        // 4. 후행 쉼표 제거 (예: [1, 2, ] -> [1, 2])
+        .replace(/,\s*([\]\}])/g, '$1');
+
+      let parsed;
+      try {
+        parsed = JSON.parse(sanitized);
+      } catch (parseErr) {
+        console.error('AI JSON Parse Error:', parseErr, 'Raw string:', sanitized);
+        throw new Error('응답 데이터 형식이 올바르지 않습니다.');
+      }
 
       const recommendedProducts = (parsed.productIds || [])
-        .map(id => products.find(p => p.id === id))
+        .map(id => products.find(p => p.id === Number(id)))
         .filter(Boolean);
 
       const recommendedPosts = (parsed.posts || [])
         .map(({ category, id }) => {
-          const post = articles.find(p => p.id === id && p.category === category);
+          const post = articles.find(p => p.id === Number(id) && p.category === category);
           return post ? { ...post } : null;
         })
         .filter(Boolean);
@@ -158,7 +174,8 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
         posts: recommendedPosts,
       });
     } catch (err) {
-      setError('추천을 불러오는 중 오류가 발생했습니다: ' + err.message);
+      console.error('Recommendation Error:', err);
+      setError('추천을 생성하는 과정에서 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
     } finally {
       setLoading(false);
     }
