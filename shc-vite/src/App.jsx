@@ -66,7 +66,7 @@ export default function App() {
       case "BoardListPage":
         return <BoardListPage navigate={navigate} category={category} />
       case "BoardDetailPage":
-        return <BoardDetailPage navigate={navigate} postId={selectedPostId} />
+        return <BoardDetailPage navigate={navigate} postId={selectedPostId} from={from} />
       case "HealthRecommendPage":
         return <HealthRecommendPage navigate={navigate} savedState={healthSavedState} onSaveState={setHealthSavedState} />
       case "CheckoutPage":

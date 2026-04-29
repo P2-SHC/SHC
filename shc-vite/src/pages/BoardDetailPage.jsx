@@ -9,7 +9,7 @@ import rehypeRaw from 'rehype-raw';
 /**
  * BoardDetailPage - 게시판 상세 (SHC-003)
  */
-export default function BoardDetailPage({ navigate, postId }) {
+export default function BoardDetailPage({ navigate, postId, from }) {
   const post = articles.find(article => article.id === postId);
 
   if (!post) {
@@ -17,7 +17,13 @@ export default function BoardDetailPage({ navigate, postId }) {
       <div className="page">
         <div className="container--sm">
           <p>게시글을 찾을 수 없습니다.</p>
-          <button onClick={() => navigate("BoardListPage")}>목록으로 돌아가기</button>
+          <button onClick={() => {
+            if (from === 'HealthRecommendPage') {
+              navigate('HealthRecommendPage');
+            } else {
+              navigate('BoardListPage');
+            }
+          }}>목록으로 돌아가기</button>
         </div>
       </div>
     );
@@ -48,7 +54,17 @@ export default function BoardDetailPage({ navigate, postId }) {
   return (
     <div className="page">
       <div className="container--sm">
-        <button className="detail-back" onClick={() => { navigate("BoardListPage", { category: post.category }) }}>← 목록으로 돌아가기</button>
+        <button className="detail-back" onClick={() => {
+          if (from === 'HealthRecommendPage') {
+            navigate('HealthRecommendPage');
+          } else if (from === 'MainPage') {
+            navigate('MainPage');
+          } else {
+            navigate('BoardListPage', { category: post.category });
+          }
+        }}>
+          {from === 'HealthRecommendPage' ? '← 추천 결과로 돌아가기' : from === 'MainPage' ? '← 메인으로 돌아가기' : '← 목록으로 돌아가기'}
+        </button>
 
         {/* 본문 */}
         <article className="detail-article">
