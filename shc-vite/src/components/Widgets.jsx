@@ -158,8 +158,11 @@ export function WeatherWidget({ navigate, onWeatherLoad, onIconClick }) {
           const res = await fetch(url);
           const data = await res.json();
           setWeatherData(data);
-          // 날씨 아이콘 코드를 MainPage로 전달 (배경 테마 적용용)
-          onWeatherLoad?.(data.weather[0].icon);
+          console.log(data);
+          // weatherDes.json에서 id에 해당하는 아이콘 코드를 찾아서 전달
+          const weatherInfo = weatherDescriptions.find(w => w.id === data.weather[0].id);
+          const iconCode = weatherInfo ? weatherInfo.icon : data.weather[0].icon;
+          onWeatherLoad?.(iconCode);
         } catch (error) {
           console.error("Weather fetch error:", error);
         }
@@ -187,9 +190,9 @@ export function WeatherWidget({ navigate, onWeatherLoad, onIconClick }) {
           <div className="widget__temp">{Math.round(weatherData.main.temp)}°</div>
           <span className="widget__icon widget__icon--lg">
             {/* 날씨 아이콘 동적 처리 (선택사항) */}
-            <img 
-              src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} 
-              alt="Weather icon" 
+            <img
+              src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+              alt="Weather icon"
               onClick={onIconClick}
               style={{ cursor: onIconClick ? 'pointer' : 'default' }}
             />
