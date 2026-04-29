@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import products from '../data/product.json';
+import products from '../../public/data/product.json';
 import articles from '../article/articleData.json';
 import './HealthRecommendPage.css';
 
