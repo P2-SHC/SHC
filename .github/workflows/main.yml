@@ -1,29 +1,22 @@
 name: Deploy to EC2
-
 on:
   push:
     branches: [main]
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build Docker image
-        run: docker build -t shc-app ./shc-vite
-
-      - name: Save image as tar
-        run: docker save shc-app | gzip > shc-app.tar.gz
-
-      - name: Copy to EC2
+      - name: Copy source to EC2
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: shc-app.tar.gz
+          source: ./shc-vite
           target: ~/
+          rm: true
 
       - name: Deploy on EC2
         uses: appleboy/ssh-action@v1.0.0
@@ -32,7 +25,10 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker load < ~/shc-app.tar.gz
+            cd ~/shc-vite
+            npm ci
+            npm run build
+            docker build -t shc-app .
             docker stop shc-app || true
             docker rm shc-app || true
             docker run -d --name shc-app -p 80:80 shc-app
