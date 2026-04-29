@@ -15,7 +15,7 @@ jobs:
       - name: 2. Node.js 환경 설정
         uses: actions/setup-node@v4
         with:
-          node-version: '24.14.1''
+          node-version: '24.14.1' # 작은따옴표 오타 수정
           
       - name: 3. 패키지 설치 및 빌드
         run: |
