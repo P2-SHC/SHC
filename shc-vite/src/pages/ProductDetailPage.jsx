@@ -28,11 +28,10 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
   // 바로 구매 함수
   const handleBuyNow = () => {
     if (isOutOfStock) return;
-    const success = decreaseStock(product.id, selectedQty);
-    if (success) {
-      alert("주문이 완료되었습니다!");
-      setSelectedQty(1); // 구매 후 선택 수량 초기화
-    }
+    navigate('CheckoutPage', {
+      orderItems: [{ ...product, quantity: selectedQty }],
+      fromCart: false,
+    });
   };
 
   return (

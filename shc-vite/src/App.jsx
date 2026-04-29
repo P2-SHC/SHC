@@ -9,6 +9,7 @@ import ProductListPage from './pages/ProductListPage.jsx';
 import ProductDetailPage from './pages/ProductDetailPage.jsx';
 import BoardListPage from './pages/BoardListPage.jsx';
 import HealthRecommendPage from './pages/HealthRecommendPage.jsx';
+import CheckoutPage from './pages/CheckoutPage.jsx';
 import AlarmPage from './pages/AlarmPage.jsx';
 import Header from './components/Header.jsx';
 import AlarmNotifier from './components/AlarmNotifier.jsx';
@@ -28,6 +29,8 @@ export default function App() {
   const [from, setFrom] = useState("");
   const [fromPostId, setFromPostId] = useState(null);
   const [healthSavedState, setHealthSavedState] = useState(null);
+  const [orderItems, setOrderItems] = useState([]);
+  const [fromCart, setFromCart] = useState(false);
 
   const navigate = (pageName, params = {}) => {
     setPage(pageName);
@@ -36,6 +39,8 @@ export default function App() {
     setProductId(params.productId ?? "");
     setFrom(params.from ?? "");
     setFromPostId(params.fromPostId ?? null);
+    if (params.orderItems !== undefined) setOrderItems(params.orderItems);
+    if (params.fromCart !== undefined) setFromCart(params.fromCart);
   }
 
   const logout = async () => {
@@ -61,9 +66,11 @@ export default function App() {
       case "BoardListPage":
         return <BoardListPage navigate={navigate} category={category} />
       case "BoardDetailPage":
-        return <BoardDetailPage navigate={navigate} postId={selectedPostId} />
+        return <BoardDetailPage navigate={navigate} postId={selectedPostId} from={from} />
       case "HealthRecommendPage":
         return <HealthRecommendPage navigate={navigate} savedState={healthSavedState} onSaveState={setHealthSavedState} />
+      case "CheckoutPage":
+        return <CheckoutPage navigate={navigate} orderItems={orderItems} fromCart={fromCart} />
       case "AlarmPage":
         return <AlarmPage navigate={navigate} />
       default: break;
