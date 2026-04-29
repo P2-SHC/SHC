@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import initialProducts from '../data/product.json';
+import initialProducts from '../../public/data/product.json';
 
 // 상품 및 재고 관리를 위한 Context 생성
 export const ProductContext = createContext();

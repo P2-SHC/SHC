@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { UserContext } from '../components/UserContext.jsx';
-import register3Img from '../data/registerIMG/register3.png';
+import register3Img from '../../public/data/registerIMG/register3.png';
 import './LoginPage.css';
 
 export default function LoginPage({ navigate }) {

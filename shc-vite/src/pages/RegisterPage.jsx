@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { UserContext } from '../components/UserContext.jsx';
-import registerImg from '../data/registerIMG/register.png';
+import registerImg from '../../public/data/registerIMG/register.png';
 import './RegisterPage.css';
 
 const HEALTH_CONDITIONS = [

@@ -1,6 +1,6 @@
 import Badge from '../components/Badge.jsx';
 import './ProductListPage.css';
-import products from '../data/product.json'
+import products from '../../public/data/product.json'
 import ProductItem from './ProductItem.jsx'
 import { useState } from 'react';
 

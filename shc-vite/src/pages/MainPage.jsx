@@ -14,10 +14,11 @@ const CATEGORY_ICON = { recipe: "🥗", life: "🧘", exercise: "🏃" };
 const today = new Date();
 
 const getFirstImage = (content) => {
-  const match = content.match(/!\[.*?\]\((.*?)\)/);
+  const match = content.match(/!\[.*?\]\s*\((.*?)\)/);
   if (match) {
-    const src = match[1];
-    return src.startsWith('http') ? src : `/src/data/boardIMG/${src}`;
+    const src = match[1].trim();
+    if (src.startsWith('http') || src.startsWith('/')) return src;
+    return `/data/boardIMG/${src}`;
   }
   return null;
 };

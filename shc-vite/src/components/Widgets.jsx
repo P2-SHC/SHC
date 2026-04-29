@@ -1,8 +1,8 @@
 import './Widgets.css';
 import { useContext, useState, useEffect } from 'react';
 import { LocationContext } from './LocationContext.jsx'
-import weatherDescriptions from '../data/weatherDes.json';
-import products from '../data/product.json'
+import weatherDescriptions from '../../public/data/weatherDes.json';
+import products from '../../public/data/product.json'
 /**
  * AirQualityWidget - 미세먼지 위젯 (Glassmorphism)
  */
