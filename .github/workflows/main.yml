@@ -21,6 +21,13 @@ jobs:
         working-directory: ./shc-vite
         run: |
           npm install
+          
+          # .env 파일 생성 및 GitHub Secrets 환경변수 주입
+          echo "VITE_DUST_API_KEY=${{ secrets.VITE_DUST_API_KEY }}" > .env
+          echo "VITE_WEATHER_API_KEY=${{ secrets.VITE_WEATHER_API_KEY }}" >> .env
+          echo "VITE_IP_GEOLOCATION_API_KEY=${{ secrets.VITE_IP_GEOLOCATION_API_KEY }}" >> .env
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
+          
           npm run build
 
       - name: 4. 배포에 필요한 파일만 모으기
