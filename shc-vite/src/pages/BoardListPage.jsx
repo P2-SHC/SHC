@@ -9,11 +9,12 @@ const PAGE_SIZE = 5;
  * BoardListPage - 게시판 목록 (SHC-002)
  */
 const getFirstImage = (content) => {
-  const match = content.match(/!\[.*?\]\((.*?)\)/);
-  if (match) {
-    const src = match[1];
-    return src.startsWith('http') ? src : `/src/data/boardIMG/${src}`;
-  }
+    const match = content.match(/!\[.*?\]\s*\((.*?)\)/);
+    if (match) {
+      const src = match[1].trim();
+      if (src.startsWith('http') || src.startsWith('/')) return src;
+      return `/data/boardIMG/${src}`;
+    }
   return null;
 };
 

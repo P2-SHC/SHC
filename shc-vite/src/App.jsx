@@ -14,7 +14,7 @@ import AlarmPage from './pages/AlarmPage.jsx';
 import Header from './components/Header.jsx';
 import AlarmNotifier from './components/AlarmNotifier.jsx';
 import { UserContext } from './components/UserContext.jsx';
-import products from './data/product.json'
+import products from '../public/data/product.json'
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 

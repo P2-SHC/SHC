@@ -1,7 +1,7 @@
 import Badge from '../components/Badge.jsx';
 import './BoardDetailPage.css';
 import articles from "../article/articleData.json";
-import products from "../data/product.json";
+import products from "../../public/data/product.json";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -78,7 +78,10 @@ export default function BoardDetailPage({ navigate, postId, from }) {
               rehypePlugins={[rehypeRaw]}
               components={{
                 img: ({ src, alt }) => {
-                  const fullSrc = src.startsWith('http') ? src : `/src/data/boardIMG/${src}`;
+                  let fullSrc = src;
+                  if (src && !src.startsWith('http') && !src.startsWith('/')) {
+                    fullSrc = src.startsWith('data/boardIMG/') ? `/${src}` : `/data/boardIMG/${src}`;
+                  }
                   return <img src={fullSrc} alt={alt} style={{ maxWidth: '100%', borderRadius: '8px', margin: '1rem 0' }} />;
                 },
                 iframe: (props) => (
