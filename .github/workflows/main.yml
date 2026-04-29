@@ -3,7 +3,7 @@ name: Deploy React to EC2
 on:
   push:
     branches:
-      - main # push될 때 작동할 브랜치 이름
+      - main
 
 jobs:
   deploy:
@@ -15,20 +15,22 @@ jobs:
       - name: 2. Node.js 환경 설정
         uses: actions/setup-node@v4
         with:
-          node-version: '24.14.1' # 작은따옴표 오타 수정
-          
+          node-version: '24.14.1'
+
       - name: 3. 패키지 설치 및 빌드
+        working-directory: ./shc-vite
         run: |
           npm install
           npm run build
 
       - name: 4. 배포에 필요한 파일만 모으기
+        working-directory: ./shc-vite
         run: |
-          mkdir deploy
-          cp -r dist deploy/
-          cp Dockerfile deploy/
-          cp default.conf deploy/
-          cp docker-compose.yml deploy/
+          mkdir ../deploy # 최상위 폴더에 deploy를 만들어야 scp가 찾기 쉽습니다.
+          cp -r dist ../deploy/
+          cp Dockerfile ../deploy/
+          cp default.conf ../deploy/
+          cp docker-compose.yml ../deploy/
 
       - name: 5. EC2 서버로 배포 파일 전송
         uses: appleboy/scp-action@master
