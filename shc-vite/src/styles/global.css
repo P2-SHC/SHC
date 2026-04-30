@@ -47,6 +47,12 @@ html {
   font-size: 16px;
 }
 
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
 *,
 *::before,
 *::after {
@@ -201,6 +207,15 @@ a {
   max-width: 800px;
   margin: 0 auto;
   padding: 28px 24px;
+}
+
+@media (max-width: 768px) {
+  .container,
+  .container--md,
+  .container--sm,
+  .container--xs {
+    padding: 16px 16px;
+  }
 }
 
 /* ──────────────────────────────────────────

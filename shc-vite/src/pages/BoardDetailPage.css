@@ -18,8 +18,20 @@
   box-shadow: var(--shadow-sm);
   margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+  .detail-article {
+    padding: 24px 20px;
+  }
+}
 .detail-article__badge   { margin-bottom: 14px; }
 .detail-article__title   { font-size: 1.625rem; font-weight: 800; color: var(--text-dark); line-height: 1.4; margin-bottom: 12px; }
+
+@media (max-width: 768px) {
+  .detail-article__title {
+    font-size: 1.375rem;
+  }
+}
 .detail-article__meta    { font-size: 0.9375rem; color: var(--text-light); margin-bottom: 0; }
 .detail-article__divider { height: 1px; background: var(--border-light); margin: 20px 0; }
 .detail-article__content { font-size: 1.0625rem; color: #3a3a3a; line-height: 1.8; }
@@ -37,6 +49,19 @@
 .detail-article__content blockquote { border-left: 4px solid var(--sage); padding-left: 1rem; color: #666; font-style: italic; margin: 1.5rem 0; background: var(--beige); padding: 10px 20px; border-radius: 0 8px 8px 0; }
 .detail-article__content hr { border: none; height: 1px; background: var(--border-light); margin: 2rem 0; }
 
+.detail-article__content img {
+  max-width: 100%;
+  height: auto !important;
+  border-radius: var(--r-md);
+}
+
+.detail-article__content iframe {
+  width: 100% !important;
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  border-radius: var(--r-md);
+}
+
 
 /* 관련 상품 */
 .detail-products {
@@ -45,6 +70,12 @@
   padding: 28px 32px;
   box-shadow: var(--shadow-sm);
   margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .detail-products {
+    padding: 20px;
+  }
 }
 .detail-products__title {
   font-size: 1.125rem;
@@ -56,6 +87,18 @@
   display: grid;
   grid-template-columns: repeat(3,1fr);
   gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .detail-products__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .detail-products__grid {
+    grid-template-columns: 1fr;
+  }
 }
 .detail-product-card {
   background: var(--beige);
@@ -97,6 +140,13 @@
 .comment__text   { font-size: 1rem; color: #3a3a3a; }
 
 .comment-form { display: flex; gap: 10px; }
+
+@media (max-width: 480px) {
+  .comment-form {
+    flex-direction: column;
+  }
+}
+
 .comment-form__input { flex: 1; }
 
 .comment-login-notice {
