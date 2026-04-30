@@ -38,7 +38,7 @@ const getWeatherKeyword = (icon) => {
   return '환절기';
 };
 
-export function AirQualityWidget({ navigate, isDark, weatherIcon }) {
+export function AirQualityWidget({ navigate, isDark, weatherIcon, className = "" }) {
   const { locationData, loading: locationLoading } = useContext(LocationContext);
   const [microDustData, setMicroDustData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -105,7 +105,7 @@ export function AirQualityWidget({ navigate, isDark, weatherIcon }) {
   const recommendedProducts = [microDustProduct, ...weatherProducts].filter(Boolean);
 
   return (
-    <div className="widget-container">
+    <div className={`widget-container ${className}`}>
       <div className={`widget ${aqiInfo.class}`}>
         <div className="widget__title">미세먼지 현황 · {displayCity}</div>
         <div className="widget__main-row">
@@ -140,7 +140,7 @@ export function AirQualityWidget({ navigate, isDark, weatherIcon }) {
 /**
  * WeatherWidget - 날씨 위젯 (Glassmorphism)
  */
-export function WeatherWidget({ navigate, onWeatherLoad, onIconClick }) {
+export function WeatherWidget({ navigate, onWeatherLoad, onIconClick, className = "" }) {
   //geoIpify에서 가져온 위도 경도를 사용하여 openWeatherMap에서 날씨 정보를 가져옵니다.
   const { locationData, loading } = useContext(LocationContext);
   const [weatherData, setWeatherData] = useState(null);
@@ -182,7 +182,7 @@ export function WeatherWidget({ navigate, onWeatherLoad, onIconClick }) {
   const displayCity = getCleanCityName(locationData?.location?.city);
 
   return (
-    <div className="widget-container">
+    <div className={`widget-container ${className}`}>
       <div className="widget widget--blue">
         <div className="widget__title">현재 날씨 · {displayCity}</div>
         <div className="widget__main-row">

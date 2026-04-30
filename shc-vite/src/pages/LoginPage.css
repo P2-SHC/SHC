@@ -3,6 +3,12 @@
   display: flex;
 }
 
+@media (max-width: 900px) {
+  .login-page {
+    flex-direction: column;
+  }
+}
+
 /* 좌측 브랜드 영역 */
 .login-brand {
   flex: 1;
@@ -13,6 +19,14 @@
   padding: 60px 72px;
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .login-brand {
+    padding: 40px 24px;
+    flex: none;
+    min-height: 200px;
+  }
 }
 
 .login-circle-1 {
@@ -66,6 +80,16 @@
   margin-bottom: 18px;
 }
 
+@media (max-width: 900px) {
+  .login-brand-title {
+    font-size: 1.75rem;
+    margin-bottom: 8px;
+  }
+  .login-brand-desc {
+    font-size: 0.9375rem;
+  }
+}
+
 .login-brand-desc {
   font-size: 1.125rem;
   color: rgba(255, 255, 255, 0.75);
@@ -81,6 +105,13 @@
   justify-content: center;
   padding: 60px 52px;
   background: #fff;
+}
+
+@media (max-width: 900px) {
+  .login-form-area {
+    width: 100%;
+    padding: 40px 24px;
+  }
 }
 
 .login-header {
