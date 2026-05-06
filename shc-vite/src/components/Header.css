@@ -166,37 +166,42 @@
 
 .header__font-ctrl {
   display: flex;
-  align-items: center;
-  gap: 2px;
-  background: var(--beige);
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 3px;
+  gap: 4px;
 }
 
-.header__font-btn {
-  padding: 5px 12px;
+.header__lang-ctrl {
+  display: flex;
+  gap: 4px;
+  margin-left: 10px;
+  border-left: 1px solid var(--border-light);
+  padding-left: 10px;
+}
+
+.header__font-btn,
+.header__lang-btn {
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--white);
+  border: 1px solid var(--border-light);
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--text-mid);
-  background: none;
-  border: none;
-  border-radius: var(--r-sm);
   cursor: pointer;
-  transition: all 0.15s;
-  font-family: inherit;
-  line-height: 1;
+  transition: all 0.2s;
 }
 
-.header__font-btn:hover {
+.header__font-btn:hover,
+.header__lang-btn:hover {
+  background: var(--sage-light);
   color: var(--sage);
-  background: var(--white);
+  border-color: var(--sage-mid);
 }
 
-.header__font-btn--active {
-  background: var(--white);
-  color: var(--sage);
-  box-shadow: var(--shadow-sm);
+.header__font-btn--active,
+.header__lang-btn--active {
+  background: var(--sage);
+  color: var(--white);
+  border-color: var(--sage);
 }
 
 /* AI 맞춤추천 탭 */

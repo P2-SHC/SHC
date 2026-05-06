@@ -1,15 +1,40 @@
 import React, { createContext, useState, useEffect } from 'react';
-import initialProducts from '../../public/data/product.json';
+import { useTranslation } from 'react-i18next';
+import koProducts from '../../public/data/product.json';
+import enProducts from '../../public/data/productEn.json';
+import jaProducts from '../../public/data/productJp.json';
 
 // 상품 및 재고 관리를 위한 Context 생성
 export const ProductContext = createContext();
 
 export function ProductProvider({ children }) {
-    // 1. 초기 데이터 로드 (localStorage 확인 -> 없으면 JSON 사용)
-    const [products, setProducts] = useState(() => {
+    const { i18n } = useTranslation();
+
+    // 1. 초기 데이터 로드 (언어별 매핑)
+    const getInitialProducts = () => {
+        const lang = i18n.language.split('-')[0];
+        let baseProducts = koProducts;
+        if (lang === 'en') baseProducts = enProducts;
+        else if (lang === 'ja') baseProducts = jaProducts;
+
         const savedProducts = localStorage.getItem('shc_products');
-        return savedProducts ? JSON.parse(savedProducts) : initialProducts;
-    });
+        if (savedProducts) {
+            const parsed = JSON.parse(savedProducts);
+            // 언어 전환 시 제목/설명 등은 파일 데이터를 따르고, 수량(quantity) 등 상태 정보만 유지
+            return baseProducts.map(p => {
+                const saved = parsed.find(sp => sp.id === p.id);
+                return saved ? { ...p, quantity: saved.quantity } : p;
+            });
+        }
+        return baseProducts;
+    };
+
+    const [products, setProducts] = useState(getInitialProducts);
+
+    // 언어 변경 시 제품 정보(텍스트) 업데이트
+    useEffect(() => {
+        setProducts(getInitialProducts());
+    }, [i18n.language]);
 
     // 2. 상태가 변경될 때마다 localStorage에 저장 (데이터 영속성)
     useEffect(() => {

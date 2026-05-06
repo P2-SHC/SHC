@@ -1,7 +1,8 @@
 import Badge from '../components/Badge.jsx';
 import './BoardListPage.css';
-import articles from '../article/articleData.json';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ArticleContext } from '../components/ArticleContext.jsx';
 
 const PAGE_SIZE = 5;
 
@@ -19,24 +20,27 @@ const getFirstImage = (content) => {
 };
 
 export default function BoardListPage({ navigate, category }) {
-  const [postList] = useState(articles);
+  const { articles } = useContext(ArticleContext);
+  const [postList, setPostList] = useState(articles);
   const [searchTerm, setSearchTerm] = useState("");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);  //최초 값 5개의 글
   const sentinelRef = useRef(null);
+  const { t } = useTranslation();
+
   const categoryData = {
     recipe: {
-      title: "레시피",
-      desc: "건강에 좋은 음식 레시피를 공유해요",
+      title: t('board.recipe'),
+      desc: t('board.recipe_desc'),
       icon: "🥗"
     },
     life: {
-      title: "라이프",
-      desc: "일상 속 건강 관리 팁과 습관을 나누어보세요",
+      title: t('board.life'),
+      desc: t('board.life_desc'),
       icon: "🧘"
     },
     exercise: {
-      title: "운동",
-      desc: "효과적인 운동 루틴과 건강한 몸만들기 정보를 공유합니다",
+      title: t('board.exercise'),
+      desc: t('board.exercise_desc'),
       icon: "🏃"
     }
   };
@@ -57,6 +61,11 @@ export default function BoardListPage({ navigate, category }) {
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
   }, [searchTerm, category]);
+
+  // articles 데이터가 변경될 때마다 postList 업데이트
+  useEffect(() => {
+    setPostList(articles);
+  }, [articles]);
 
   // IntersectionObserver로 무한 스크롤
   const handleObserver = useCallback((entries) => {
@@ -92,7 +101,7 @@ export default function BoardListPage({ navigate, category }) {
         <div className="board-search">
           <input
             className="input board-search__input"
-            placeholder="게시글 검색..."
+            placeholder={t('board.search_placeholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -103,7 +112,7 @@ export default function BoardListPage({ navigate, category }) {
           <div className="board-list">
             {filtered.length === 0 ? (
               <div className="board-empty">
-                <p className="board-empty__text">검색 결과가 없습니다.</p>
+                <p className="board-empty__text">{t('board.no_results')}</p>
               </div>
             ) : (
               <>
@@ -120,7 +129,7 @@ export default function BoardListPage({ navigate, category }) {
                     <div className="board-post-card__body">
                       {post.viewCount > 1000 && <Badge />}
                       <p className="board-post-card__title">{post.title}</p>
-                      <p className="board-post-card__meta">{post.createdAt} · 조회수 {post.viewCount}</p>
+                      <p className="board-post-card__meta">{post.createdAt} · {t('main.views')} {post.viewCount}</p>
                     </div>
                   </button>
                 ))}
@@ -128,7 +137,7 @@ export default function BoardListPage({ navigate, category }) {
                 {/* feat/boardScroll 브랜치의 무한 스크롤 감지 로직 통합 */}
                 <div ref={sentinelRef} className="board-sentinel" />
                 {isEnd && (
-                  <p className="board-end-text">마지막입니다</p>
+                  <p className="board-end-text">{t('board.end_text')}</p>
                 )}
               </>
             )}
@@ -136,7 +145,7 @@ export default function BoardListPage({ navigate, category }) {
 
           {/* TOP5 사이드바 */}
           <aside className="board-top5">
-            <div className="board-top5__title">👑 조회수 TOP 5</div>
+            <div className="board-top5__title">{t('board.top5_title')}</div>
             {[...postList]
               .sort((a, b) => b.viewCount - a.viewCount)
               .slice(0, 5)
