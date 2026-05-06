@@ -1,29 +1,35 @@
 import Badge from '../components/Badge.jsx';
 import './BoardDetailPage.css';
-import articles from "../article/articleData.json";
-import products from "../../public/data/product.json";
+import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ArticleContext } from '../components/ArticleContext.jsx';
+import { ProductContext } from '../components/ProductContext.jsx';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+// import { useTranslation } from 'react-i18next';
 
 /**
  * BoardDetailPage - 게시판 상세 (SHC-003)
  */
 export default function BoardDetailPage({ navigate, postId, from }) {
+  const { articles } = useContext(ArticleContext);
+  const { products } = useContext(ProductContext);
   const post = articles.find(article => article.id === postId);
+  const { t } = useTranslation();
 
   if (!post) {
     return (
       <div className="page">
         <div className="container--sm">
-          <p>게시글을 찾을 수 없습니다.</p>
+          <p>{t('board.post_not_found')}</p>
           <button onClick={() => {
             if (from === 'HealthRecommendPage') {
               navigate('HealthRecommendPage');
             } else {
               navigate('BoardListPage');
             }
-          }}>목록으로 돌아가기</button>
+          }}>{t('board.back_to_list')}</button>
         </div>
       </div>
     );
@@ -63,14 +69,14 @@ export default function BoardDetailPage({ navigate, postId, from }) {
             navigate('BoardListPage', { category: post.category });
           }
         }}>
-          {from === 'HealthRecommendPage' ? '← 추천 결과로 돌아가기' : from === 'MainPage' ? '← 메인으로 돌아가기' : '← 목록으로 돌아가기'}
+          {from === 'HealthRecommendPage' ? t('board.back_to_rec') : from === 'MainPage' ? t('board.back_to_main') : t('board.back_to_list')}
         </button>
 
         {/* 본문 */}
         <article className="detail-article">
           <div className="detail-article__badge">{post.viewCount > 1000 && <Badge />}</div>
           <h1 className="detail-article__title">{post.title}</h1>
-          <p className="detail-article__meta">{post.createdAt} · 조회 {post.viewCount}</p>
+          <p className="detail-article__meta">{post.createdAt} · {t('board.view_count')} {post.viewCount}</p>
           <div className="detail-article__divider" />
           <div className="detail-article__content">
             <ReactMarkdown
@@ -101,7 +107,7 @@ export default function BoardDetailPage({ navigate, postId, from }) {
 
         {/* 관련 상품 추천 */}
         <div className="detail-products">
-          <h2 className="detail-products__title">추천 상품</h2>
+          <h2 className="detail-products__title">{t('board.rec_products')}</h2>
           <div className="detail-products__grid">
             {recommendedProducts.length > 0 ? (
               recommendedProducts.map(product => (
@@ -112,11 +118,11 @@ export default function BoardDetailPage({ navigate, postId, from }) {
                 >
                   <img className="detail-product-card__img" src={product.image} alt={product.title} />
                   <p className="detail-product-card__name">{product.title}</p>
-                  <p className="detail-product-card__price">{product.price.toLocaleString()}원</p>
+                  <p className="detail-product-card__price">{product.price.toLocaleString()}{t('board.currency')}</p>
                 </button>
               ))
             ) : (
-              <p className="detail-products__empty">관련 추천 상품이 없습니다.</p>
+              <p className="detail-products__empty">{t('board.no_rec_products')}</p>
             )}
           </div>
         </div>

@@ -1,0 +1,628 @@
+[
+    {
+        "id": 1,
+        "category": "recipe",
+        "title": "有機エキストラバージンオリーブオイル",
+        "keyword": [
+            "健康食",
+            "高血圧",
+            "食事"
+        ],
+        "description": "冷圧搾法で抽出した、栄養豊富なプレミアム有機オリーブオイルです。",
+        "price": 28000,
+        "quantity": 5,
+        "image": "/img/product_1.jpg"
+    },
+    {
+        "id": 2,
+        "category": "exercise",
+        "title": "静音室内ステッパー",
+        "keyword": [
+            "運動",
+            "有酸素",
+            "ホームトレーニング",
+            "体重管理"
+        ],
+        "description": "階下の騒音を気にせず、自宅で手軽に下半身の筋力を強化できるステッパーです。",
+        "price": 45000,
+        "quantity": 30,
+        "image": "/img/product_2.jpg"
+    },
+    {
+        "id": 3,
+        "category": "recipe",
+        "title": "砂糖不使用ステビアトマト (500g)",
+        "keyword": [
+            "健康食",
+            "ダイエット",
+            "糖尿病",
+            "体重管理"
+        ],
+        "description": "血糖値を気にせず甘さを楽しめる、新鮮なステビアミニトマトです。",
+        "price": 8900,
+        "quantity": 100,
+        "image": "/img/product_3.jpg"
+    },
+    {
+        "id": 4,
+        "category": "exercise",
+        "title": "高弾性ヨガマット (10mm)",
+        "keyword": [
+            "運動",
+            "ホームトレーニング",
+            "関節・膝の痛み",
+            "ストレス"
+        ],
+        "description": "厚みのあるクッションで関節を保護し、ストレッチ時の滑りを防ぐマットです。",
+        "price": 15000,
+        "quantity": 80,
+        "image": "/img/product_4.jpg"
+    },
+    {
+        "id": 5,
+        "category": "life",
+        "title": "スマートピルケース (アラーム機能付き)",
+        "keyword": [
+            "健康管理",
+            "健康習慣"
+        ],
+        "description": "設定時間にアラームが鳴り、サプリメントの飲み忘れを防ぐスマートデバイスです。",
+        "price": 12000,
+        "quantity": 40,
+        "image": "/img/product_5.jpg"
+    },
+    {
+        "id": 6,
+        "category": "recipe",
+        "title": "プレミアム国産発芽玄米 (2kg)",
+        "keyword": [
+            "健康食",
+            "消化・腸の健康",
+            "食物繊維"
+        ],
+        "description": "通常の玄米より食感が柔らかく、消化しやすくて栄養価の高い発芽玄米です。",
+        "price": 13500,
+        "quantity": 60,
+        "image": "/img/product_6.jpg"
+    },
+    {
+        "id": 7,
+        "category": "life",
+        "title": "ヒノキ頸椎枕",
+        "keyword": [
+            "睡眠障害",
+            "ストレス",
+            "脳・記憶力"
+        ],
+        "description": "首のC字カーブを支え、深い眠りをサポートし首の疲れをほぐすヒノキ枕です。",
+        "price": 22000,
+        "quantity": 25,
+        "image": "/img/product_7.jpg"
+    },
+    {
+        "id": 8,
+        "category": "recipe",
+        "title": "低塩手作りナッツバー",
+        "keyword": [
+            "健康食",
+            "脳・記憶力",
+            "慢性疲労"
+        ],
+        "description": "ナトリウムを控え、プレミアムナッツをたっぷり使った健康的なおやつセットです。",
+        "price": 18000,
+        "quantity": 150,
+        "image": "/img/product_8.jpg"
+    },
+    {
+        "id": 9,
+        "category": "exercise",
+        "title": "デジタル大画面体重計",
+        "keyword": [
+            "健康管理",
+            "健康習慣",
+            "運動"
+        ],
+        "description": "大きな数字表示で視認性が高く、誰でも簡単に体重を確認できます。",
+        "price": 19800,
+        "quantity": 55,
+        "image": "/img/product_9.png"
+    },
+    {
+        "id": 10,
+        "category": "life",
+        "title": "ノンスリップ指圧スリッパ",
+        "keyword": [
+            "健康",
+            "血液循環",
+            "ストレス"
+        ],
+        "description": "足裏のツボを刺激して血行を促進し、むくみを和らげる室内用スリッパです。",
+        "price": 9900,
+        "quantity": 70,
+        "image": "/img/product_10.jpg"
+    },
+    {
+        "id": 11,
+        "category": "life",
+        "title": "KF94黄砂防疫マスク (30枚)",
+        "keyword": [
+            "微小粒子状物質・呼吸器",
+            "微小粒子状物質・呼吸器",
+            "微小粒子状物質・呼吸器",
+            "微小粒子状物質・呼吸器"
+        ],
+        "description": "微細粉塵と黄砂を94%遮断し、呼吸器を保護する医薬部外品マスクです。",
+        "price": 15000,
+        "quantity": 200,
+        "image": "/img/product_11.jpg"
+    },
+    {
+        "id": 12,
+        "category": "life",
+        "title": "ミニ静音空気清浄機",
+        "keyword": [
+            "微小粒子状物質・呼吸器",
+            "微小粒子状物質・呼吸器",
+            "微小粒子状物質・呼吸器"
+        ],
+        "description": "寝室やリビングで使いやすい、静音設計の高性能フィルター空気清浄機です。",
+        "price": 59000,
+        "quantity": 15,
+        "image": "/img/product_12.jpg"
+    },
+    {
+        "id": 13,
+        "category": "life",
+        "title": "低刺激アイウォッシュ液",
+        "keyword": [
+            "微小粒子状物質・呼吸器",
+            "目の健康",
+            "目の健康"
+        ],
+        "description": "微細粉塵で痛む目を優しく洗い流し、異物感を取り除く洗浄液です。",
+        "price": 12000,
+        "quantity": 50,
+        "image": "/img/product_13.jpg"
+    },
+    {
+        "id": 14,
+        "category": "recipe",
+        "title": "有機キキョウ梨ジュース",
+        "keyword": [
+            "免疫力強化",
+            "免疫力強化",
+            "免疫力強化",
+            "健康"
+        ],
+        "description": "季節の変わり目の喉のケアに、国産キキョウと梨をたっぷり使った健康エキスです。",
+        "price": 35000,
+        "quantity": 120,
+        "image": "/img/product_14.jpg"
+    },
+    {
+        "id": 15,
+        "category": "recipe",
+        "title": "プレミアム6年根紅参精",
+        "keyword": [
+            "免疫力強化",
+            "免疫力強化",
+            "健康",
+            "免疫力強化"
+        ],
+        "description": "免疫力が低下しやすい時期に活力を補う、高濃縮紅参エキスです。",
+        "price": 85000,
+        "quantity": 45,
+        "image": "/img/product_15.jpg"
+    },
+    {
+        "id": 16,
+        "category": "life",
+        "title": "超軽量3段自動折りたたみ傘",
+        "keyword": [
+            "血液循環",
+            "血液循環",
+            "血液循環"
+        ],
+        "description": "片手で軽く開閉でき、強風にも強い超軽量傘です。",
+        "price": 18000,
+        "quantity": 150,
+        "image": "/img/product_16.jpg"
+    },
+    {
+        "id": 17,
+        "category": "life",
+        "title": "ノンスリップレインブーツ",
+        "keyword": [
+            "血液循環",
+            "血液循環",
+            "血液循環"
+        ],
+        "description": "滑りやすい雨の日でも安全に歩ける、強力なグリップ力の底面のレインブーツです。",
+        "price": 42000,
+        "quantity": 30,
+        "image": "/img/product_17.jpg"
+    },
+    {
+        "id": 18,
+        "category": "life",
+        "title": "紫外線カットアームカバー",
+        "keyword": [
+            "肌の健康",
+            "慢性疲労",
+            "肌の健康"
+        ],
+        "description": "強い紫外線を遮断し、着用時に即座にひんやりとした冷感を与える機能性カバーです。",
+        "price": 8900,
+        "quantity": 200,
+        "image": "/img/product_18.jpg"
+    },
+    {
+        "id": 19,
+        "category": "life",
+        "title": "ノンケミカル低刺激日焼け止め",
+        "keyword": [
+            "肌の健康",
+            "肌の健康",
+            "肌の健康",
+            "肌の健康"
+        ],
+        "description": "敏感肌の方でも安心して使用できる、低刺激の日焼け止めです。",
+        "price": 24000,
+        "quantity": 80,
+        "image": "/img/product_19.jpg"
+    },
+    {
+        "id": 20,
+        "category": "life",
+        "title": "充電式携帯用ハンドウォーマー",
+        "keyword": [
+            "血液循環",
+            "血液循環",
+            "血液循環"
+        ],
+        "description": "寒い冬の外出時に、両面発熱で体温を温かく維持する充電式カイロです。",
+        "price": 22000,
+        "quantity": 60,
+        "image": "/img/product_20.jpg"
+    },
+    {
+        "id": 21,
+        "category": "life",
+        "title": "スマホ対応防寒手袋",
+        "keyword": [
+            "血液循環",
+            "血液循環",
+            "血液循環"
+        ],
+        "description": "手袋を外さずにスマートフォン操作が可能な、厚手の防寒手袋です。",
+        "price": 15000,
+        "quantity": 100,
+        "image": "/img/product_21.jpg"
+    },
+    {
+        "id": 22,
+        "category": "life",
+        "title": "高保湿ボディローション",
+        "keyword": [
+            "血液循環",
+            "肌の健康",
+            "肌の健康",
+            "肌の健康"
+        ],
+        "description": "冷たい風で乾燥した肌を潤す、セラミド配合の高保湿ローションです。",
+        "price": 19000,
+        "quantity": 75,
+        "image": "/img/product_22.jpg"
+    },
+    {
+        "id": 23,
+        "category": "recipe",
+        "title": "有機ビタミンC (90日分)",
+        "keyword": [
+            "免疫力強化",
+            "免疫力強化",
+            "血液循環",
+            "免疫力強化"
+        ],
+        "description": "日照不足の曇りの日でも活力をプラスする、高含有ビタミンCサプリメントです。",
+        "price": 29000,
+        "quantity": 110,
+        "image": "/img/product_23.jpg"
+    },
+    {
+        "id": 24,
+        "category": "life",
+        "title": "アロマセラピーディフューザー",
+        "keyword": [
+            "睡眠障害",
+            "ストレス",
+            "血液循環"
+        ],
+        "description": "曇りの日の室内を明るい雰囲気に変える、森林の香りのディフューザーです。",
+        "price": 25000,
+        "quantity": 40,
+        "image": "/img/product_24.jpg"
+    },
+    {
+        "id": 25,
+        "category": "life",
+        "title": "携帯用ミニ扇風機",
+        "keyword": [
+            "慢性疲労",
+            "慢性疲労",
+            "血液循環"
+        ],
+        "description": "酷暑の中でも涼しい風を送る、静音・高出力のミニ扇風機です。",
+        "price": 13500,
+        "quantity": 130,
+        "image": "/img/product_25.jpg"
+    },
+    {
+        "id": 26,
+        "category": "exercise",
+        "title": "水分補給電解質飲料 (10個入り)",
+        "keyword": [
+            "慢性疲労",
+            "運動",
+            "健康管理"
+        ],
+        "description": "汗をたくさんかく暑い日に、素早く水分を補給できる電解質飲料です。",
+        "price": 12000,
+        "quantity": 90,
+        "image": "/img/product_26.jpg"
+    },
+    {
+        "id": 27,
+        "category": "recipe",
+        "title": "国産ハチミツ柚子茶",
+        "keyword": [
+            "免疫力強化",
+            "免疫力強化",
+            "慢性疲労",
+            "免疫力強化",
+            "慢性疲労"
+        ],
+        "description": "肌寒い日に温かく楽しめる、甘くて香り高い柚子茶です。",
+        "price": 14000,
+        "quantity": 85,
+        "image": "/img/product_27.jpg"
+    },
+    {
+        "id": 28,
+        "category": "life",
+        "title": "機能性ウィンドブレーカー",
+        "keyword": [
+            "免疫力強化",
+            "血液循環",
+            "免疫力強化",
+            "運動"
+        ],
+        "description": "変わりやすい天気や風雨から体温を守る防風ジャケットです。",
+        "price": 59000,
+        "quantity": 25,
+        "image": "/img/product_28.jpg"
+    },
+    {
+        "id": 29,
+        "category": "exercise",
+        "title": "医療用膝関節サポーター",
+        "keyword": [
+            "関節・膝の痛み",
+            "関節・膝の痛み",
+            "運動",
+            "血液循環"
+        ],
+        "description": "膝関節を安定させ、日常生活や軽い運動時の痛みを効果的に和らげるサポーターです。",
+        "price": 18000,
+        "quantity": 60,
+        "image": "/img/product_29.jpg"
+    },
+    {
+        "id": 30,
+        "category": "exercise",
+        "title": "温熱ヒートパッド (肩・膝兼用)",
+        "keyword": [
+            "関節・膝の痛み",
+            "血液循環",
+            "慢性疲労",
+            "ストレス"
+        ],
+        "description": "肩や膝などどこでも使える、自動温度調節機能付き電気ヒートパッドです。",
+        "price": 32000,
+        "quantity": 45,
+        "image": "/img/product_30.jpg"
+    },
+    {
+        "id": 31,
+        "category": "exercise",
+        "title": "グルコサミンMSM関節サプリメント (90日分)",
+        "keyword": [
+            "関節・膝の痛み",
+            "骨・骨粗鬆症",
+            "健康管理",
+            "健康習慣"
+        ],
+        "description": "関節軟骨を保護し炎症を抑える、グルコサミンとMSMを高配合した関節専門サプリメントです。",
+        "price": 42000,
+        "quantity": 80,
+        "image": "/img/product_31.jpg"
+    },
+    {
+        "id": 32,
+        "category": "recipe",
+        "title": "カルシウム・マグネシウム・ビタミンD3 (120日分)",
+        "keyword": [
+            "骨・骨粗鬆症",
+            "骨・骨粗鬆症",
+            "免疫力強化",
+            "健康管理"
+        ],
+        "description": "カルシウムの吸収を最大化するビタミンD3とマグネシウムを配合した、骨の健康総合サプリです。",
+        "price": 35000,
+        "quantity": 100,
+        "image": "/img/product_32.jpg"
+    },
+    {
+        "id": 33,
+        "category": "recipe",
+        "title": "国産低温乾燥煮干しカルシウムおやつ (200g)",
+        "keyword": [
+            "骨・骨粗鬆症",
+            "健康食",
+            "骨・骨粗鬆症",
+            "健康習慣"
+        ],
+        "description": "天然カルシウム豊富な国産煮干しを低温乾燥させ、カリッと仕上げた健康おやつです。",
+        "price": 12000,
+        "quantity": 120,
+        "image": "/img/product_33.jpg"
+    },
+    {
+        "id": 34,
+        "category": "recipe",
+        "title": "高含有ビタミンD3 (365日分)",
+        "keyword": [
+            "骨・骨粗鬆症",
+            "免疫力強化",
+            "健康管理",
+            "免疫力強化"
+        ],
+        "description": "骨の健康と免疫力維持に必須のビタミンD3を、1日1粒でしっかり摂取できるサプリです。",
+        "price": 19000,
+        "quantity": 90,
+        "image": "/img/product_34.jpg"
+    },
+    {
+        "id": 35,
+        "category": "recipe",
+        "title": "国産サバ缶詰 (150g × 3缶)",
+        "keyword": [
+            "血液循環",
+            "脳・記憶力",
+            "関節・膝の痛み",
+            "健康食"
+        ],
+        "description": "オメガ3 (EPA/DHA) 豊富な国産サバ缶。血行、脳、関節の健康をサポートします。",
+        "price": 9500,
+        "quantity": 150,
+        "image": "/img/product_35.jpg"
+    },
+    {
+        "id": 36,
+        "category": "recipe",
+        "title": "冷凍ブルーベリー (500g)",
+        "keyword": [
+            "目の健康",
+            "肌の健康",
+            "脳・記憶力",
+            "健康食"
+        ],
+        "description": "アントシアニン豊富なブルーベリー。視力保護、肌の抗酸化、認知機能維持に効果的です。",
+        "price": 11000,
+        "quantity": 120,
+        "image": "/img/product_36.jpg"
+    },
+    {
+        "id": 37,
+        "category": "recipe",
+        "title": "無加糖低温搾汁ニンジンジュース (200ml × 6個入り)",
+        "keyword": [
+            "目の健康",
+            "免疫力強化",
+            "健康食"
+        ],
+        "description": "ベータカロテン豊富な国産ニンジンを低温搾汁。栄養そのままの無加糖健康ジュースです。",
+        "price": 16000,
+        "quantity": 80,
+        "image": "/img/product_37.jpg"
+    },
+    {
+        "id": 38,
+        "category": "recipe",
+        "title": "コラーゲンペプチドスティック (30包)",
+        "keyword": [
+            "肌の健康",
+            "関節・膝の痛み",
+            "骨・骨粗鬆症"
+        ],
+        "description": "低分子コラーゲンペプチドで、肌の弾力改善と関節軟骨保護をサポートするサプリです。",
+        "price": 38000,
+        "quantity": 70,
+        "image": "/img/product_38.jpg"
+    },
+    {
+        "id": 39,
+        "category": "recipe",
+        "title": "有機オートミール (1kg)",
+        "keyword": [
+            "消化・腸の健康",
+            "体重管理",
+            "糖尿病",
+            "健康食"
+        ],
+        "description": "ベータグルカン含有量が高く、血糖値を緩やかに上げ、満腹感が長持ちする有機オートミールです。",
+        "price": 13000,
+        "quantity": 100,
+        "image": "/img/product_39.jpg"
+    },
+    {
+        "id": 40,
+        "category": "recipe",
+        "title": "国産有機プレーンヨーグルト (150g × 4個入り)",
+        "keyword": [
+            "消化・腸の健康",
+            "免疫力強化",
+            "骨・骨粗鬆症",
+            "健康食"
+        ],
+        "description": "乳酸菌とカルシウム豊富な無加糖ヨーグルト。腸の健康、免疫力、骨の健康をサポートします。",
+        "price": 8500,
+        "quantity": 90,
+        "image": "/img/product_40.jpg"
+    },
+    {
+        "id": 41,
+        "category": "recipe",
+        "title": "ザクロ濃縮原液 (500ml)",
+        "keyword": [
+            "肌の健康",
+            "血液循環",
+            "高血圧",
+            "健康食"
+        ],
+        "description": "ポリフェノールと天然エストロゲン豊富なザクロ濃縮液。肌の弾力、血管の健康、血圧管理に効果的です。",
+        "price": 28000,
+        "quantity": 60,
+        "image": "/img/product_41.jpg"
+    },
+    {
+        "id": 42,
+        "category": "recipe",
+        "title": "有機ターメリックパウダー (200g)",
+        "keyword": [
+            "関節・膝の痛み",
+            "消化・腸の健康",
+            "免疫力強化",
+            "健康食"
+        ],
+        "description": "クルクミン含有量が高い有機ターメリックパウダー。関節の炎症緩和、消化促進、免疫力強化をサポートします。",
+        "price": 12000,
+        "quantity": 110,
+        "image": "/img/product_42.png"
+    },
+    {
+        "id": 43,
+        "category": "recipe",
+        "title": "国産大豆豆腐 (300g × 2パック)",
+        "keyword": [
+            "糖尿病",
+            "体重管理",
+            "骨・骨粗鬆症",
+            "健康食"
+        ],
+        "description": "国産大豆で作られた植物性タンパク質豊富な豆腐。血糖調節、体重管理、カルシウム補給に効果的です。",
+        "price": 6500,
+        "quantity": 200,
+        "image": "/img/product_43.jpg"
+    }
+]

@@ -1,46 +1,36 @@
-import { useState } from 'react';
+import { useState, useContext, useMemo } from 'react';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import products from '../../public/data/product.json';
-import articles from '../article/articleData.json';
+import { ArticleContext } from '../components/ArticleContext.jsx';
+import { ProductContext } from '../components/ProductContext.jsx';
 import './HealthRecommendPage.css';
 
-const HEALTH_CONDITIONS = [
-  { id: '고혈압', label: '고혈압', icon: '❤️' },
-  { id: '당뇨', label: '당뇨', icon: '🩸' },
-  { id: '관절통', label: '관절·무릎 통증', icon: '🦵' },
-  { id: '눈건강', label: '눈 건강', icon: '👁️' },
-  { id: '수면', label: '수면 장애', icon: '😴' },
-  { id: '소화', label: '소화·장 건강', icon: '🌿' },
-  { id: '피로', label: '만성 피로', icon: '⚡' },
-  { id: '스트레스', label: '스트레스', icon: '🧘' },
-  { id: '면역력', label: '면역력 강화', icon: '🛡️' },
-  { id: '체중관리', label: '체중 관리', icon: '⚖️' },
-  { id: '뼈건강', label: '뼈·골다공증', icon: '🦴' },
-  { id: '혈액순환', label: '혈액 순환', icon: '🔄' },
-  { id: '미세먼지', label: '미세먼지·호흡기', icon: '😷' },
-  { id: '두뇌건강', label: '두뇌·기억력', icon: '🧠' },
-  { id: '피부건강', label: '피부 건강', icon: '✨' },
-];
-
-// BOARDS 상수가 제거되고 articleData.json 데이터를 사용합니다.
-
-const CATEGORY_LABEL = { recipe: '레시피', life: '라이프', exercise: '운동' };
+// HEALTH_CONDITIONS와 CATEGORY_LABEL이 컴포넌트 내부로 이동되었습니다 (t 함수 사용을 위해).
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-function buildPrompt(conditions, freeText) {
+function buildPrompt(conditions, freeText, products, articles) {
   const productSummary = products
     .map(p => `[${p.id}] ${p.title} (키워드: ${p.keyword.join(', ')})`)
     .join('\n');
 
   const postSummary = articles
     .filter(article => {
-      // 선택된 건강 상태(id)와 게시글의 키워드가 일치하는 것만 필터링 (공백 제거 후 비교)
-      if (conditions.length === 0) return true; // 선택된 게 없으면 전체 중 일부 제공
-      return article.keyword.some(k =>
-        conditions.some(cond => k.replace(/\s/g, '') === cond.replace(/\s/g, ''))
-      );
+      // 선택된 건강 상태(id)와 게시글의 키워드가 일치하는 것만 필터링
+      if (conditions.length === 0) return true;
+      
+      return article.keyword.some(k => {
+        const cleanK = k.replace(/\s/g, '');
+        return conditions.some(condId => {
+          // condId는 'high_blood_pressure' 등 영문 키
+          // article.keyword는 현재 언어에 따라 다름 (ko: '고혈압', en: 'High Blood Pressure' 등)
+          // i18next를 통해 condId에 해당하는 번역어와 비교
+          const localizedLabel = i18next.t(`ai_recommend.conditions.${condId}`).replace(/\s/g, '');
+          return cleanK === localizedLabel;
+        });
+      });
     })
     .slice(0, 20) // 너무 많으면 프롬프트가 길어지므로 최대 20개로 제한
     .map(p => `[${p.category}:${p.id}] ${p.title} (키워드: ${p.keyword.join(', ')})`)
@@ -79,11 +69,45 @@ ${postSummary}
 }
 
 export default function HealthRecommendPage({ navigate, savedState, onSaveState }) {
+  const { articles } = useContext(ArticleContext);
+  const { products } = useContext(ProductContext);
   const [selected, setSelected] = useState(savedState?.selected ?? []);
   const [freeText, setFreeText] = useState(savedState?.freeText ?? '');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(savedState?.result ?? null);
   const [error, setError] = useState('');
+  const { t } = useTranslation();
+
+  const HEALTH_CONDITIONS_BASE = [
+    { id: 'high_blood_pressure', icon: '❤️' },
+    { id: 'diabetes', icon: '🩸' },
+    { id: 'joint_pain', icon: '🦵' },
+    { id: 'eye_health', icon: '👁️' },
+    { id: 'sleep_disorder', icon: '😴' },
+    { id: 'digestion', icon: '🌿' },
+    { id: 'fatigue', icon: '⚡' },
+    { id: 'stress', icon: '🧘' },
+    { id: 'immunity', icon: '🛡️' },
+    { id: 'weight_management', icon: '⚖️' },
+    { id: 'bone_health', icon: '🦴' },
+    { id: 'blood_circulation', icon: '🔄' },
+    { id: 'respiratory', icon: '😷' },
+    { id: 'brain_health', icon: '🧠' },
+    { id: 'skin_health', icon: '✨' },
+  ];
+
+  const healthConditions = useMemo(() => 
+    HEALTH_CONDITIONS_BASE.map(c => ({
+      ...c,
+      label: t(`ai_recommend.conditions.${c.id}`)
+    })), [t]
+  );
+
+  const CATEGORY_LABEL = {
+    recipe: t('board.recipe'),
+    life: t('board.life'),
+    exercise: t('board.exercise')
+  };
 
   const currentUser = JSON.parse(localStorage.getItem('shc_current_user') || '{}');
   const userInterests = currentUser?.interests ?? [];
@@ -96,7 +120,7 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
 
   const handleSubmit = async () => {
     if (selected.length === 0 && !freeText.trim()) {
-      setError('건강 상태를 하나 이상 선택하거나 직접 입력해주세요.');
+      setError(t('ai_recommend.error_select'));
       return;
     }
     setError('');
@@ -107,12 +131,12 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: buildPrompt(selected, freeText) }),
+        body: JSON.stringify({ message: buildPrompt(selected, freeText, products, articles) }),
       });
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || '서버 오류가 발생했습니다.');
+        throw new Error(data.error || t('ai_recommend.error_general'));
       }
 
       const data = await res.json();
@@ -154,7 +178,7 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
         parsed = JSON.parse(sanitized);
       } catch (parseErr) {
         console.error('AI JSON Parse Error:', parseErr, 'Raw string:', sanitized);
-        throw new Error('응답 데이터 형식이 올바르지 않습니다.');
+        throw new Error(t('ai_recommend.error_general'));
       }
 
       const recommendedProducts = (parsed.productIds || [])
@@ -175,7 +199,7 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
       });
     } catch (err) {
       console.error('Recommendation Error:', err);
-      setError('추천을 생성하는 과정에서 일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      setError(t('ai_recommend.error_general'));
     } finally {
       setLoading(false);
     }
@@ -195,16 +219,16 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
         <div className="hr-header">
           <div className="hr-header__icon">💊</div>
           <div>
-            <h1 className="hr-header__title">건강 맞춤 추천</h1>
-            <p className="hr-header__desc">건강 상태를 알려주시면 맞춤 상품과 건강 정보를 추천해드려요</p>
+            <h1 className="hr-header__title">{t('ai_recommend.title')}</h1>
+            <p className="hr-header__desc">{t('ai_recommend.desc')}</p>
           </div>
         </div>
 
         {!result && (
           <div className="hr-form card">
-            <h2 className="hr-form__section-title">현재 건강 상태를 선택해주세요</h2>
+            <h2 className="hr-form__section-title">{t('ai_recommend.form_title')}</h2>
             <div className="hr-conditions">
-              {HEALTH_CONDITIONS.map(c => (
+              {healthConditions.map(c => (
                 <button
                   key={c.id}
                   className={`hr-condition-btn${selected.includes(c.id) ? ' hr-condition-btn--active' : ''}`}
@@ -218,11 +242,11 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
             </div>
 
             <h2 className="hr-form__section-title hr-form__section-title--mt">
-              추가로 알려주실 내용이 있나요? <span className="hr-form__optional">(선택)</span>
+              {t('ai_recommend.extra_title')} <span className="hr-form__optional">{t('ai_recommend.optional')}</span>
             </h2>
             <textarea
               className="input hr-textarea"
-              placeholder="예) 무릎이 자주 붓고 아파요. 소화도 잘 안 되는 편입니다."
+              placeholder={t('ai_recommend.textarea_placeholder')}
               value={freeText}
               onChange={e => setFreeText(e.target.value)}
               rows={4}
@@ -235,7 +259,7 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
               onClick={handleSubmit}
               disabled={loading}
             >
-              {loading ? '🔍 분석 중...' : '맞춤 추천 받기'}
+              {loading ? t('ai_recommend.analyzing') : t('ai_recommend.get_rec')}
             </button>
           </div>
         )}
@@ -243,14 +267,14 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
         {loading && (
           <div className="hr-loading">
             <div className="hr-loading__spinner" />
-            <p>건강 정보를 분석하고 있어요…</p>
+            <p>{t('ai_recommend.analyzing_desc')}</p>
           </div>
         )}
 
         {result && (
           <div className="hr-result">
             <div className="hr-comment card">
-              <div className="hr-comment__label">🤖 AI 건강 조언</div>
+              <div className="hr-comment__label">{t('ai_recommend.ai_advice')}</div>
               <div className="hr-comment__body">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{result.comment}</ReactMarkdown>
               </div>
@@ -258,7 +282,7 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
 
             {result.products?.length > 0 && (
               <section className="hr-section">
-                <h2 className="hr-section__title">추천 상품</h2>
+                <h2 className="hr-section__title">{t('ai_recommend.rec_products')}</h2>
                 <div className="hr-product-grid">
                   {result.products.map(product => (
                     <button
@@ -274,7 +298,7 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
                       </div>
                       <div className="hr-product-card__name">{product.title}</div>
                       <div className="hr-product-card__price">
-                        {product.price.toLocaleString('ko-KR')}원
+                        {product.price.toLocaleString('ko-KR')}{t('board.currency')}
                       </div>
                       <div className="hr-product-card__tags">
                         {product.keyword.slice(0, 2).map(k => (
@@ -289,7 +313,7 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
 
             {result.posts?.length > 0 && (
               <section className="hr-section">
-                <h2 className="hr-section__title">추천 건강 정보</h2>
+                <h2 className="hr-section__title">{t('ai_recommend.rec_info')}</h2>
                 <div className="hr-post-list">
                   {result.posts.map(post => (
                     <button
@@ -310,14 +334,13 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
             )}
 
             <button className="btn btn--outline btn--full hr-reset" onClick={handleReset}>
-              다시 추천받기
+              {t('ai_recommend.reset')}
             </button>
           </div>
         )}
 
         <div className="hr-disclaimer">
-          본 답변은 AI가 생성한 것으로, 사실과 다를 수 있습니다.<br />
-          의료 답변에 대한 판단은 전문가 또는 공식 자료를 확인해 주세요.
+          {t('ai_recommend.disclaimer')}
         </div>
       </div>
     </div>

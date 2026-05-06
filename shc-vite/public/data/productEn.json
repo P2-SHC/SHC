@@ -1,0 +1,619 @@
+[
+    {
+        "id": 1,
+        "category": "recipe",
+        "title": "Organic Extra Virgin Olive Oil",
+        "keyword": [
+            "Healthy Food",
+            "High Blood Pressure",
+            "Diet"
+        ],
+        "description": "Premium organic olive oil extracted using the cold-press method, rich in nutrients.",
+        "price": 28000,
+        "quantity": 5,
+        "image": "/img/product_1.jpg"
+    },
+    {
+        "id": 2,
+        "category": "exercise",
+        "title": "Quiet Indoor Stepper",
+        "keyword": [
+            "Exercise",
+            "Cardio",
+            "Home Training",
+            "Weight Management"
+        ],
+        "description": "A stepper that allows you to easily strengthen lower body muscles at home without worrying about floor noise.",
+        "price": 45000,
+        "quantity": 30,
+        "image": "/img/product_2.jpg"
+    },
+    {
+        "id": 3,
+        "category": "recipe",
+        "title": "Sugar-Free Stevia Tomatoes (500g)",
+        "keyword": [
+            "Healthy Food",
+            "Diet",
+            "Diabetes",
+            "Weight Management"
+        ],
+        "description": "Fresh stevia cherry tomatoes that you can enjoy sweetly without worrying about the glycemic index.",
+        "price": 8900,
+        "quantity": 100,
+        "image": "/img/product_3.jpg"
+    },
+    {
+        "id": 4,
+        "category": "exercise",
+        "title": "High-Elasticity Yoga Mat (10mm)",
+        "keyword": [
+            "Exercise",
+            "Home Training",
+            "Joint Pain",
+            "Stress"
+        ],
+        "description": "A mat with thick cushioning that protects joints and prevents slipping during stretching.",
+        "price": 15000,
+        "quantity": 80,
+        "image": "/img/product_4.jpg"
+    },
+    {
+        "id": 5,
+        "category": "life",
+        "title": "Smart Pill Case (with Alarm)",
+        "keyword": [
+            "Health Management",
+            "Health Habit"
+        ],
+        "description": "A smart device that alerts you at set times to help you remember to take your supplements.",
+        "price": 12000,
+        "quantity": 40,
+        "image": "/img/product_5.jpg"
+    },
+    {
+        "id": 6,
+        "category": "recipe",
+        "title": "Premium Domestic Germinated Brown Rice (2kg)",
+        "keyword": [
+            "Healthy Food",
+            "Digestion",
+            "Dietary Fiber"
+        ],
+        "description": "Germinated brown rice with a softer texture than regular brown rice, offering better digestion and high nutrition.",
+        "price": 13500,
+        "quantity": 60,
+        "image": "/img/product_6.jpg"
+    },
+    {
+        "id": 7,
+        "category": "life",
+        "title": "Cypress Cervical Pillow",
+        "keyword": [
+            "Sleep Disorder",
+            "Stress",
+            "Neck Pain"
+        ],
+        "description": "A cypress pillow that supports the natural C-curve of the neck to help induce deep sleep and relieve neck fatigue.",
+        "price": 22000,
+        "quantity": 25,
+        "image": "/img/product_7.jpg"
+    },
+    {
+        "id": 8,
+        "category": "recipe",
+        "title": "Low-Sodium Handmade Nut Bar",
+        "keyword": [
+            "Healthy Food",
+            "Brain Health",
+            "Memory"
+        ],
+        "description": "A healthy snack set made with premium nuts and reduced sodium content.",
+        "price": 18000,
+        "quantity": 150,
+        "image": "/img/product_8.jpg"
+    },
+    {
+        "id": 9,
+        "category": "exercise",
+        "title": "Large Display Digital Scale",
+        "keyword": [
+            "Health Management",
+            "Health Habit",
+            "Exercise"
+        ],
+        "description": "A scale with a large numeric display for easy readability, making it simple for anyone to check their weight.",
+        "price": 19800,
+        "quantity": 55,
+        "image": "/img/product_9.png"
+    },
+    {
+        "id": 10,
+        "category": "life",
+        "title": "Non-Slip Acupressure Slippers",
+        "keyword": [
+            "Health",
+            "Blood Circulation",
+            "Stress"
+        ],
+        "description": "Indoor slippers that stimulate acupressure points on the soles of the feet to promote blood circulation and reduce swelling.",
+        "price": 9900,
+        "quantity": 70,
+        "image": "/img/product_10.jpg"
+    },
+    {
+        "id": 11,
+        "category": "life",
+        "title": "KF94 Fine Dust Mask (30 packs)",
+        "keyword": [
+            "Respiratory Health",
+            "Bronchial Health",
+            "Yellow Dust"
+        ],
+        "description": "A certified mask that blocks 94% of fine dust and yellow dust to protect your respiratory system.",
+        "price": 15000,
+        "quantity": 200,
+        "image": "/img/product_11.jpg"
+    },
+    {
+        "id": 12,
+        "category": "life",
+        "title": "Mini Quiet Air Purifier",
+        "keyword": [
+            "Respiratory Health",
+            "Air Purification",
+            "Indoor Health"
+        ],
+        "description": "A high-performance air purifier with a quiet design, perfect for bedrooms or living rooms.",
+        "price": 59000,
+        "quantity": 15,
+        "image": "/img/product_12.jpg"
+    },
+    {
+        "id": 13,
+        "category": "life",
+        "title": "Gentle Hypoallergenic Eye Wash",
+        "keyword": [
+            "Respiratory Health",
+            "Eye Health"
+        ],
+        "description": "An eye wash that gently cleanses eyes irritated by fine dust to remove foreign particles.",
+        "price": 12000,
+        "quantity": 50,
+        "image": "/img/product_13.jpg"
+    },
+    {
+        "id": 14,
+        "category": "recipe",
+        "title": "Organic Balloon Flower & Pear Juice",
+        "keyword": [
+            "Seasonal Change",
+            "Cold",
+            "Immunity"
+        ],
+        "description": "A healthy juice made with plenty of domestic balloon flower root and pear, perfect for throat health during seasonal changes.",
+        "price": 35000,
+        "quantity": 120,
+        "image": "/img/product_14.jpg"
+    },
+    {
+        "id": 15,
+        "category": "recipe",
+        "title": "Premium 6-Year-Old Red Ginseng Extract",
+        "keyword": [
+            "Seasonal Change",
+            "Immunity",
+            "Health",
+            "Vitamin"
+        ],
+        "description": "A highly concentrated red ginseng extract that boosts energy when immunity is prone to dropping during seasonal changes.",
+        "price": 85000,
+        "quantity": 45,
+        "image": "/img/product_15.jpg"
+    },
+    {
+        "id": 16,
+        "category": "life",
+        "title": "Ultra-Lightweight 3-Fold Automatic Umbrella",
+        "keyword": [
+            "Rain",
+            "Monsoon Season",
+            "Rainy Day"
+        ],
+        "description": "An ultra-lightweight umbrella that can be opened and closed easily with one hand and is resistant to strong winds.",
+        "price": 18000,
+        "quantity": 150,
+        "image": "/img/product_16.jpg"
+    },
+    {
+        "id": 17,
+        "category": "life",
+        "title": "Non-Slip Rain Boots",
+        "keyword": [
+            "Rain",
+            "Heavy Rain",
+            "Monsoon Season"
+        ],
+        "description": "Rain boots with a strong grip sole that allow you to walk safely even on slippery, rainy roads.",
+        "price": 42000,
+        "quantity": 30,
+        "image": "/img/product_17.jpg"
+    },
+    {
+        "id": 18,
+        "category": "life",
+        "title": "UV Protection Cooling Sleeves",
+        "keyword": [
+            "UV Rays",
+            "Heatwave",
+            "Sunlight"
+        ],
+        "description": "Functional sleeves that block strong UV rays and provide an instant cooling sensation when worn.",
+        "price": 8900,
+        "quantity": 200,
+        "image": "/img/product_18.jpg"
+    },
+    {
+        "id": 19,
+        "category": "life",
+        "title": "Hypoallergenic Inorganic Sunscreen",
+        "keyword": [
+            "UV Rays",
+            "Skin Health",
+            "Low-Irritation Care"
+        ],
+        "description": "A low-irritation inorganic sunscreen that is safe for sensitive skin.",
+        "price": 24000,
+        "quantity": 80,
+        "image": "/img/product_19.jpg"
+    },
+    {
+        "id": 20,
+        "category": "life",
+        "title": "Rechargeable Portable Hand Warmer",
+        "keyword": [
+            "Snow",
+            "Blood Circulation",
+            "Body Temperature Maintenance"
+        ],
+        "description": "A double-sided heating hand warmer that keeps you warm during outdoor activities in cold winter.",
+        "price": 22000,
+        "quantity": 60,
+        "image": "/img/product_20.jpg"
+    },
+    {
+        "id": 21,
+        "category": "life",
+        "title": "Smart Touch Cold Weather Gloves",
+        "keyword": [
+            "Snow",
+            "Frostbite Prevention",
+            "Cold Wave"
+        ],
+        "description": "Thick cold weather gloves that allow you to operate your smartphone without taking them off.",
+        "price": 15000,
+        "quantity": 100,
+        "image": "/img/product_21.jpg"
+    },
+    {
+        "id": 22,
+        "category": "life",
+        "title": "High-Moisturizing Body Lotion",
+        "keyword": [
+            "Cold Wave",
+            "Dryness",
+            "Skin Health"
+        ],
+        "description": "A high-moisturizing ceramide lotion that keeps skin soft and hydrated, protecting it from cold, harsh winds.",
+        "price": 19000,
+        "quantity": 75,
+        "image": "/img/product_22.jpg"
+    },
+    {
+        "id": 23,
+        "category": "recipe",
+        "title": "Organic Vitamin C (90-day supply)",
+        "keyword": [
+            "Vitamin",
+            "Immunity",
+            "Cloudy Weather",
+            "Cold"
+        ],
+        "description": "A high-potency Vitamin C supplement that adds vitality on gloomy, cloudy days.",
+        "price": 29000,
+        "quantity": 110,
+        "image": "/img/product_23.jpg"
+    },
+    {
+        "id": 24,
+        "category": "life",
+        "title": "Aromatherapy Diffuser",
+        "keyword": [
+            "Sleep Disorder",
+            "Stress",
+            "Cloudy Weather"
+        ],
+        "description": "A diffuser with a subtle forest scent that brightens up indoor atmospheres on cloudy days.",
+        "price": 25000,
+        "quantity": 40,
+        "image": "/img/product_24.jpg"
+    },
+    {
+        "id": 25,
+        "category": "life",
+        "title": "Portable Mini Fan",
+        "keyword": [
+            "Heatwave",
+            "Heatstroke Prevention",
+            "Body Temperature Regulation"
+        ],
+        "description": "A quiet, high-output mini fan that delivers cool air even in the middle of a heatwave.",
+        "price": 13500,
+        "quantity": 130,
+        "image": "/img/product_25.jpg"
+    },
+    {
+        "id": 26,
+        "category": "exercise",
+        "title": "Electrolyte Hydration Drink (10 packs)",
+        "keyword": [
+            "Heatwave",
+            "Exercise",
+            "Health Management"
+        ],
+        "description": "An electrolyte drink that helps with rapid rehydration on hot days when you sweat a lot.",
+        "price": 12000,
+        "quantity": 90,
+        "image": "/img/product_26.jpg"
+    },
+    {
+        "id": 27,
+        "category": "recipe",
+        "title": "Domestic Honey Citron Tea",
+        "keyword": [
+            "Seasonal Change",
+            "Cold",
+            "Chronic Fatigue",
+            "Immunity"
+        ],
+        "description": "A sweet and fragrant citron tea that is perfect to enjoy warm on chilly days.",
+        "price": 14000,
+        "quantity": 85,
+        "image": "/img/product_27.jpg"
+    },
+    {
+        "id": 28,
+        "category": "life",
+        "title": "Functional Windbreaker",
+        "keyword": [
+            "Seasonal Change",
+            "Body Temperature Maintenance",
+            "Cold Prevention",
+            "Exercise"
+        ],
+        "description": "A windproof jacket that protects your body temperature from unpredictable weather and wind/rain.",
+        "price": 59000,
+        "quantity": 25,
+        "image": "/img/product_28.jpg"
+    },
+    {
+        "id": 29,
+        "category": "exercise",
+        "title": "Medical Knee Joint Support",
+        "keyword": [
+            "Joint/Knee Pain",
+            "Exercise",
+            "Fall Prevention"
+        ],
+        "description": "A support that stably holds the knee joint, effectively relieving pain during daily activities and light exercise.",
+        "price": 18000,
+        "quantity": 60,
+        "image": "/img/product_29.jpg"
+    },
+    {
+        "id": 30,
+        "category": "exercise",
+        "title": "Thermal Heating Pad (Shoulder & Knee)",
+        "keyword": [
+            "Joint/Knee Pain",
+            "Blood Circulation",
+            "Muscle Pain",
+            "Stress"
+        ],
+        "description": "An electric heating pad with automatic temperature control that can be wrapped around the shoulders or knees.",
+        "price": 32000,
+        "quantity": 45,
+        "image": "/img/product_30.jpg"
+    },
+    {
+        "id": 31,
+        "category": "exercise",
+        "title": "Glucosamine MSM Joint Supplement (90-day supply)",
+        "keyword": [
+            "Joint/Knee Pain",
+            "Bone/Osteoporosis",
+            "Health Management",
+            "Health Habit"
+        ],
+        "description": "A specialized joint supplement with high-potency Glucosamine and MSM to protect cartilage and reduce inflammation.",
+        "price": 42000,
+        "quantity": 80,
+        "image": "/img/product_31.jpg"
+    },
+    {
+        "id": 32,
+        "category": "recipe",
+        "title": "Calcium Magnesium Vitamin D3 (120-day supply)",
+        "keyword": [
+            "Bone/Osteoporosis",
+            "Immunity",
+            "Health Management"
+        ],
+        "description": "A comprehensive bone health supplement formulated with Vitamin D3 and Magnesium to maximize calcium absorption.",
+        "price": 35000,
+        "quantity": 100,
+        "image": "/img/product_32.jpg"
+    },
+    {
+        "id": 33,
+        "category": "recipe",
+        "title": "Domestic Low-Temperature Dried Anchovy Calcium Snack (200g)",
+        "keyword": [
+            "Bone/Osteoporosis",
+            "Healthy Food",
+            "Health Habit"
+        ],
+        "description": "A healthy snack made by drying domestic anchovies at low temperatures, rich in natural calcium and crispy.",
+        "price": 12000,
+        "quantity": 120,
+        "image": "/img/product_33.jpg"
+    },
+    {
+        "id": 34,
+        "category": "recipe",
+        "title": "High-Potency Vitamin D3 (365-day supply)",
+        "keyword": [
+            "Bone/Osteoporosis",
+            "Immunity",
+            "Health Management",
+            "Vitamin"
+        ],
+        "description": "A supplement providing sufficient Vitamin D3 in one pill daily, essential for bone health and maintaining immunity.",
+        "price": 19000,
+        "quantity": 90,
+        "image": "/img/product_34.jpg"
+    },
+    {
+        "id": 35,
+        "category": "recipe",
+        "title": "Domestic Canned Mackerel (150g x 3 packs)",
+        "keyword": [
+            "Blood Circulation",
+            "Brain/Memory",
+            "Joint/Knee Pain",
+            "Healthy Food"
+        ],
+        "description": "Domestic canned mackerel rich in Omega-3 EPA/DHA, helpful for blood circulation, brain health, and joint inflammation relief.",
+        "price": 9500,
+        "quantity": 150,
+        "image": "/img/product_35.jpg"
+    },
+    {
+        "id": 36,
+        "category": "recipe",
+        "title": "Frozen Blueberries (500g)",
+        "keyword": [
+            "Eye Health",
+            "Skin Health",
+            "Brain/Memory",
+            "Healthy Food"
+        ],
+        "description": "Frozen blueberries rich in anthocyanin, effective for eye protection, skin antioxidant support, and cognitive function maintenance.",
+        "price": 11000,
+        "quantity": 120,
+        "image": "/img/product_36.jpg"
+    },
+    {
+        "id": 37,
+        "category": "recipe",
+        "title": "Unsweetened Cold-Pressed Carrot Juice (200ml x 6 packs)",
+        "keyword": [
+            "Eye Health",
+            "Immunity",
+            "Healthy Food"
+        ],
+        "description": "Unsweetened healthy juice made by cold-pressing domestic carrots, packed with beta-carotene and nutrients.",
+        "price": 16000,
+        "quantity": 80,
+        "image": "/img/product_37.jpg"
+    },
+    {
+        "id": 38,
+        "category": "recipe",
+        "title": "Collagen Peptide Stick (30 packs)",
+        "keyword": [
+            "Skin Health",
+            "Joint/Knee Pain",
+            "Bone/Osteoporosis"
+        ],
+        "description": "A daily health stick supplement with low-molecular-weight collagen peptides that helps improve skin elasticity and protect joint cartilage.",
+        "price": 38000,
+        "quantity": 70,
+        "image": "/img/product_38.jpg"
+    },
+    {
+        "id": 39,
+        "category": "recipe",
+        "title": "Organic Oats (1kg)",
+        "keyword": [
+            "Digestion",
+            "Weight Management",
+            "Diabetes",
+            "Healthy Food"
+        ],
+        "description": "Low-GI organic oats with high beta-glucan content, which raises blood sugar slowly and keeps you full for longer.",
+        "price": 13000,
+        "quantity": 100,
+        "image": "/img/product_39.jpg"
+    },
+    {
+        "id": 40,
+        "category": "recipe",
+        "title": "Domestic Organic Plain Yogurt (150g x 4 packs)",
+        "keyword": [
+            "Digestion",
+            "Immunity",
+            "Bone/Osteoporosis",
+            "Healthy Food"
+        ],
+        "description": "Unsweetened plain yogurt rich in probiotics and calcium, helpful for gut health, immunity, and bone health.",
+        "price": 8500,
+        "quantity": 90,
+        "image": "/img/product_40.jpg"
+    },
+    {
+        "id": 41,
+        "category": "recipe",
+        "title": "Pomegranate Concentrate (500ml)",
+        "keyword": [
+            "Skin Health",
+            "Blood Circulation",
+            "High Blood Pressure",
+            "Healthy Food"
+        ],
+        "description": "Pomegranate concentrate rich in polyphenols and natural estrogen, effective for skin elasticity, vascular health, and blood pressure management.",
+        "price": 28000,
+        "quantity": 60,
+        "image": "/img/product_41.jpg"
+    },
+    {
+        "id": 42,
+        "category": "recipe",
+        "title": "Organic Turmeric Powder (200g)",
+        "keyword": [
+            "Joint/Knee Pain",
+            "Digestion",
+            "Immunity",
+            "Healthy Food"
+        ],
+        "description": "Organic turmeric powder with high curcumin content, helpful for relieving joint inflammation, promoting digestion, and boosting immunity.",
+        "price": 12000,
+        "quantity": 110,
+        "image": "/img/product_42.png"
+    },
+    {
+        "id": 43,
+        "category": "recipe",
+        "title": "Domestic Soy Tofu (300g x 2 packs)",
+        "keyword": [
+            "Diabetes",
+            "Weight Management",
+            "Bone/Osteoporosis",
+            "Healthy Food"
+        ],
+        "description": "Tofu made from domestic soybeans, rich in plant-based protein, effective for blood sugar control, weight management, and calcium supplementation.",
+        "price": 6500,
+        "quantity": 200,
+        "image": "/img/product_43.jpg"
+    }
+]

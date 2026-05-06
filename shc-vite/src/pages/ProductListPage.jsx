@@ -1,14 +1,20 @@
 import Badge from '../components/Badge.jsx';
 import './ProductListPage.css';
-import products from '../../public/data/product.json'
 import ProductItem from './ProductItem.jsx'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { ProductContext } from '../components/ProductContext.jsx';
+import { useTranslation } from 'react-i18next';
 
 /**
  * ProductListPage - 상품 전체보기 (SHC-004)
  */
 export default function ProductListPage({ navigate }) {
+  const { products } = useContext(ProductContext);
+  const { t } = useTranslation();
   const [count, setCount] = useState(0);
+  
+  if (!products) return <div className="page"><div className="container--md">Loading...</div></div>;
+
   let length = products.length - (count * 6 + 9);
   if (length < 0) length = 0;
 
@@ -19,8 +25,8 @@ export default function ProductListPage({ navigate }) {
         <div className="product-list-header">
           <span className="product-list-header__icon">💊</span>
           <div>
-            <h1 className="product-list-header__title">건강상품</h1>
-            <p className="product-list-header__desc">시니어를 위한 맞춤 건강기능식품</p>
+            <h1 className="product-list-header__title">{t('product_detail.list_title')}</h1>
+            <p className="product-list-header__desc">{t('product_detail.list_desc')}</p>
           </div>
         </div>
 
@@ -31,7 +37,7 @@ export default function ProductListPage({ navigate }) {
         </div>
 
         <div className="product-list-more">
-          {length != 0 ? <button onClick={() => { setCount(count + 1) }} className="btn btn--outline btn--lg">상품 더보기</button> : <></>}
+          {length != 0 ? <button onClick={() => { setCount(count + 1) }} className="btn btn--outline btn--lg">{t('product_detail.more')}</button> : <></>}
         </div>
       </div>
     </div>
