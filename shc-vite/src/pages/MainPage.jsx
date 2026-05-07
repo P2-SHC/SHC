@@ -3,8 +3,9 @@ import Badge from '../components/Badge.jsx';
 import './MainPage.css';
 import { AirQualityWidget, WeatherWidget } from '../components/Widgets.jsx';
 import WeatherBackground from '../components/WeatherBackground.jsx';
-import { useState } from "react";
-import articles from '../article/articleData.json';
+import { useState, useContext, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
+import { ArticleContext } from '../components/ArticleContext.jsx';
 
 const CATEGORY_ICON = { recipe: "🥗", life: "🧘", exercise: "🏃" };
 
@@ -36,9 +37,16 @@ const cleanContent = (content, maxLength = 100) => {
 };
 
 export default function MainPage({ navigate, weatherIcon, onWeatherLoad }) {
+  const { articles } = useContext(ArticleContext);
   const [postList, setPostList] = useState(articles);
   const [clickCount, setClickCount] = useState(0);
   const [isZenMode, setIsZenMode] = useState(false);
+  const { t } = useTranslation();
+
+  // articles 데이터가 변경될 때마다 postList 업데이트
+  useEffect(() => {
+    setPostList(articles);
+  }, [articles]);
 
   // 비·천둥번개일 때 어두운 배경이므로 텍스트 흰색 처리
   const isDark = weatherIcon && (weatherIcon.startsWith('10') || weatherIcon.startsWith('11'));
@@ -67,13 +75,13 @@ export default function MainPage({ navigate, weatherIcon, onWeatherLoad }) {
       {weatherIcon && <WeatherBackground weatherCode={weatherIcon} />}
       <div className="page" style={{ background: 'transparent', position: 'relative', zIndex: 1 }}>
         <div className={`container main-layout${isZenMode ? ' zen-mode' : ''}`}>
-          {!isZenMode && <AirQualityWidget navigate={navigate} isDark={isDark} weatherIcon={weatherIcon} />}
+          {!isZenMode && <AirQualityWidget navigate={navigate} isDark={isDark} weatherIcon={weatherIcon} className="main-air-quality" />}
 
           {!isZenMode && (
             <main className="main-content">
               {/* 최신 인기글 */}
               <div className="featured-card">
-                <p className="featured-card__label">최신 인기글</p>
+                <p className="featured-card__label">{t('main.featured_label')}</p>
                 {featuredPost ? (
                   <div className="featured-card__body">
                     <div className="featured-card__img" onClick={() => navigate("BoardDetailPage", { postId: featuredPost.id, from: 'MainPage' })} style={{ cursor: 'pointer' }}>
@@ -91,13 +99,13 @@ export default function MainPage({ navigate, weatherIcon, onWeatherLoad }) {
                     </div>
                   </div>
                 ) : (
-                  <p className="featured-card__empty">게시글이 없습니다.</p>
+                  <p className="featured-card__empty">{t('main.no_posts')}</p>
                 )}
               </div>
 
               {/* 최신 건강 정보 */}
               <section className="main-section">
-                <h2 className={`main-section__title${isDark ? ' text-white' : ''}`}>최신 건강 정보</h2>
+                <h2 className={`main-section__title${isDark ? ' text-white' : ''}`}>{t('main.latest_health')}</h2>
                 <div className="board-list">
                   {[...postList]
                     //   글 가장 최신순으로 정렬
@@ -117,7 +125,7 @@ export default function MainPage({ navigate, weatherIcon, onWeatherLoad }) {
                         <div className="board-post-card__body">
                           {post.viewCount > 1000 && <Badge />}
                           <p className="board-post-card__title">{post.title}</p>
-                          <p className="board-post-card__meta">{post.createdAt} · 조회수 {post.viewCount}</p>
+                          <p className="board-post-card__meta">{post.createdAt} · {t('main.views')} {post.viewCount}</p>
                         </div>
                       </button>
                     ))}
@@ -126,7 +134,7 @@ export default function MainPage({ navigate, weatherIcon, onWeatherLoad }) {
             </main>
           )}
 
-          <WeatherWidget navigate={navigate} onWeatherLoad={onWeatherLoad} onIconClick={handleIconClick} />
+          <WeatherWidget navigate={navigate} onWeatherLoad={onWeatherLoad} onIconClick={handleIconClick} className="main-weather" />
         </div>
       </div>
     </div>

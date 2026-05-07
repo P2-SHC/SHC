@@ -1,7 +1,9 @@
 import React from 'react'
 import Badge from '../components/Badge'
+import { useTranslation } from 'react-i18next';
 
 function ProductItem({ product, navigate }) {
+    const { t } = useTranslation();
     return (
         <div className="product-item-container">
             <button className="product-list-card" onClick={() => { navigate("ProductDetailPage", { productId: product.id }) }}>
@@ -11,7 +13,7 @@ function ProductItem({ product, navigate }) {
                 <p className="product-list-card__category">{product.keyword.join(", ")}</p>
                 <p className="product-list-card__name">{product.title}</p>
                 <div className="product-list-card__footer">
-                    <span className="product-list-card__price">{product.price.toLocaleString()}원</span>
+                    <span className="product-list-card__price">{product.price.toLocaleString()}{t('board.currency')}</span>
                     {/* <Badge /> */}
                 </div>
             </button>

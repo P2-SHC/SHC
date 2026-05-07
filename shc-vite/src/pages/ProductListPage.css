@@ -29,6 +29,18 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+@media (max-width: 960px) {
+  .product-grid--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .product-grid--3 {
+    grid-template-columns: 1fr;
+  }
+}
+
 .product-grid--gap-lg {
   gap: 20px;
 }
@@ -64,6 +76,12 @@
   overflow: hidden;
   margin-bottom: 14px;
   background: #c17f5a15;
+}
+
+@media (max-width: 768px) {
+  .product-list-card__img {
+    height: 180px;
+  }
 }
 
 .product-list-card__img img {

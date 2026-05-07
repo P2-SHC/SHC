@@ -1,31 +1,40 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { UserContext } from '../components/UserContext.jsx';
 import registerImg from '../../public/data/registerIMG/register.png';
 import './RegisterPage.css';
 
-const HEALTH_CONDITIONS = [
-  { id: '고혈압', label: '고혈압', icon: '❤️' },
-  { id: '당뇨', label: '당뇨', icon: '🩸' },
-  { id: '관절통', label: '관절·무릎 통증', icon: '🦵' },
-  { id: '눈건강', label: '눈 건강', icon: '👁️' },
-  { id: '수면', label: '수면 장애', icon: '😴' },
-  { id: '소화', label: '소화·장 건강', icon: '🌿' },
-  { id: '피로', label: '만성 피로', icon: '⚡' },
-  { id: '스트레스', label: '스트레스', icon: '🧘' },
-  { id: '면역력', label: '면역력 강화', icon: '🛡️' },
-  { id: '체중관리', label: '체중 관리', icon: '⚖️' },
-  { id: '뼈건강', label: '뼈·골다공증', icon: '🦴' },
-  { id: '혈액순환', label: '혈액 순환', icon: '🔄' },
-  { id: '미세먼지', label: '미세먼지·호흡기', icon: '😷' },
-  { id: '두뇌건강', label: '두뇌·기억력', icon: '🧠' },
-  { id: '피부건강', label: '피부 건강', icon: '✨' },
+const HEALTH_CONDITIONS_BASE = [
+  { id: 'high_blood_pressure', icon: '❤️' },
+  { id: 'diabetes', icon: '🩸' },
+  { id: 'joint_pain', icon: '🦵' },
+  { id: 'eye_health', icon: '👁️' },
+  { id: 'sleep_disorder', icon: '😴' },
+  { id: 'digestion', icon: '🌿' },
+  { id: 'fatigue', icon: '⚡' },
+  { id: 'stress', icon: '🧘' },
+  { id: 'immunity', icon: '🛡️' },
+  { id: 'weight_management', icon: '⚖️' },
+  { id: 'bone_health', icon: '🦴' },
+  { id: 'blood_circulation', icon: '🔄' },
+  { id: 'respiratory', icon: '😷' },
+  { id: 'brain_health', icon: '🧠' },
+  { id: 'skin_health', icon: '✨' },
 ];
 
 export default function RegisterPage({ navigate }) {
+  const { t } = useTranslation();
   const { register } = useContext(UserContext);
   const [form, setForm] = useState({ name: '', username: '', password: '', passwordConfirm: '', age: '' });
   const [interests, setInterests] = useState([]);
   const [error, setError] = useState('');
+
+  const healthConditions = useMemo(() => 
+    HEALTH_CONDITIONS_BASE.map(c => ({
+      ...c,
+      label: t(`ai_recommend.conditions.${c.id}`)
+    })), [t]
+  );
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -36,19 +45,19 @@ export default function RegisterPage({ navigate }) {
   const handleSubmit = async () => {
     setError('');
     if (!form.name || !form.username || !form.password) {
-      setError('이름, 아이디, 비밀번호는 필수입니다.');
+      setError(t('register.error_required'));
       return;
     }
     if (!/^[a-zA-Z0-9]{4,12}$/.test(form.username)) {
-      setError('아이디는 영문+숫자 4~12자여야 합니다.');
+      setError(t('register.error_id_format'));
       return;
     }
     if (form.password.length < 8) {
-      setError('비밀번호는 8자 이상이어야 합니다.');
+      setError(t('register.error_pw_length'));
       return;
     }
     if (form.password !== form.passwordConfirm) {
-      setError('비밀번호가 일치하지 않습니다.');
+      setError(t('register.error_pw_mismatch'));
       return;
     }
     const result = await register({
@@ -75,40 +84,40 @@ export default function RegisterPage({ navigate }) {
           <img src={registerImg} alt="register" className="reg-brand-img" />
         </div>
         <div className="reg-brand-content">
-          <h1 className="reg-brand-title">시니어헬스케어<br />커뮤니티에<br />오신 것을<br />환영합니다</h1>
-          <p className="reg-brand-desc">건강한 노후를 위한<br />가장 쉬운 시작</p>
+          <h1 className="reg-brand-title" dangerouslySetInnerHTML={{ __html: t('register.brand_title') }} />
+          <p className="reg-brand-desc" dangerouslySetInnerHTML={{ __html: t('register.brand_desc') }} />
         </div>
       </div>
 
       {/* 우측 폼 */}
       <div className="reg-form-area">
-        <h2 className="reg-title">회원가입</h2>
+        <h2 className="reg-title">{t('register.title')}</h2>
 
         <div>
-          <label className="reg-label">이름 *</label>
-          <input className="reg-input" name="name" placeholder="이름을 입력하세요" value={form.name} onChange={handleChange} />
+          <label className="reg-label">{t('register.label_name')}</label>
+          <input className="reg-input" name="name" placeholder={t('register.placeholder_name')} value={form.name} onChange={handleChange} />
         </div>
         <div>
-          <label className="reg-label">아이디 *</label>
-          <input className="reg-input" name="username" placeholder="영문+숫자 4-12자" value={form.username} onChange={handleChange} />
+          <label className="reg-label">{t('register.label_id')}</label>
+          <input className="reg-input" name="username" placeholder={t('register.placeholder_id')} value={form.username} onChange={handleChange} />
         </div>
         <div>
-          <label className="reg-label">비밀번호 *</label>
-          <input className="reg-input" type="password" name="password" placeholder="8자 이상" value={form.password} onChange={handleChange} />
+          <label className="reg-label">{t('register.label_pw')}</label>
+          <input className="reg-input" type="password" name="password" placeholder={t('register.placeholder_pw')} value={form.password} onChange={handleChange} />
         </div>
         <div>
-          <label className="reg-label">비밀번호 확인 *</label>
-          <input className="reg-input" type="password" name="passwordConfirm" placeholder="비밀번호 재입력" value={form.passwordConfirm} onChange={handleChange} />
+          <label className="reg-label">{t('register.label_pw_confirm')}</label>
+          <input className="reg-input" type="password" name="passwordConfirm" placeholder={t('register.placeholder_pw_confirm')} value={form.passwordConfirm} onChange={handleChange} />
         </div>
         <div>
-          <label className="reg-label">나이</label>
-          <input className="reg-input" type="number" name="age" placeholder="나이를 입력하세요" value={form.age} onChange={handleChange} />
+          <label className="reg-label">{t('register.label_age')}</label>
+          <input className="reg-input" type="number" name="age" placeholder={t('register.placeholder_age')} value={form.age} onChange={handleChange} />
         </div>
 
         <div style={{ marginBottom: 20 }}>
-          <label className="reg-interest-label">건강 관심사</label>
+          <label className="reg-interest-label">{t('register.interest_label')}</label>
           <div className="reg-interest-wrapper">
-            {HEALTH_CONDITIONS.map(c => (
+            {healthConditions.map(c => (
               <button
                 key={c.id}
                 className={`reg-interest-btn${interests.includes(c.id) ? ' active' : ''}`}
@@ -123,11 +132,11 @@ export default function RegisterPage({ navigate }) {
         {error && <p className="reg-error">{error}</p>}
 
         <button className="reg-submit-btn" onClick={handleSubmit}>
-          회원가입 완료
+          {t('register.submit_btn')}
         </button>
         <div className="reg-footer">
-          이미 계정이 있으신가요?{' '}
-          <button className="reg-link" onClick={() => navigate('LoginPage')}>로그인</button>
+          {t('register.has_account')}{' '}
+          <button className="reg-link" onClick={() => navigate('LoginPage')}>{t('register.go_login')}</button>
         </div>
       </div>
     </div>

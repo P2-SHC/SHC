@@ -1,9 +1,11 @@
 import { useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { UserContext } from '../components/UserContext.jsx';
 import register3Img from '../../public/data/registerIMG/register3.png';
 import './LoginPage.css';
 
 export default function LoginPage({ navigate }) {
+  const { t } = useTranslation();
   const { login } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +14,7 @@ export default function LoginPage({ navigate }) {
   const handleLogin = async () => {
     setError('');
     if (!username || !password) {
-      setError('아이디와 비밀번호를 입력하세요.');
+      setError(t('login.error_required'));
       return;
     }
     const result = await login(username, password);
@@ -33,32 +35,32 @@ export default function LoginPage({ navigate }) {
           <img src={register3Img} alt="register3" />
         </div>
         <div className="login-brand-content">
-          <h1 className="login-brand-title">건강한 내일을<br />시니어헬스케어와<br />함께 시작하세요</h1>
-          <p className="login-brand-desc">레시피, 운동, 라이프스타일까지<br />시니어를 위한 모든 건강 정보</p>
+          <h1 className="login-brand-title" dangerouslySetInnerHTML={{ __html: t('login.brand_title') }} />
+          <p className="login-brand-desc" dangerouslySetInnerHTML={{ __html: t('login.brand_desc') }} />
         </div>
       </div>
 
       {/* 우측 폼 영역 */}
       <div className="login-form-area">
         <div className="login-header">
-          <h2 className="login-title">로그인</h2>
-          <p className="login-subtitle">계정에 로그인하세요</p>
+          <h2 className="login-title">{t('login.title')}</h2>
+          <p className="login-subtitle">{t('login.subtitle')}</p>
         </div>
 
         <div>
-          <label className="login-label">아이디</label>
+          <label className="login-label">{t('login.label_id')}</label>
           <input
             className="login-input"
-            placeholder="아이디를 입력하세요"
+            placeholder={t('login.placeholder_id')}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
           />
-          <label className="login-label">비밀번호</label>
+          <label className="login-label">{t('login.label_pw')}</label>
           <input
             className="login-input"
             type="password"
-            placeholder="비밀번호를 입력하세요"
+            placeholder={t('login.placeholder_pw')}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
@@ -68,15 +70,15 @@ export default function LoginPage({ navigate }) {
         {error && <p className="login-error">{error}</p>}
 
         <button className="login-btn" onClick={handleLogin}>
-          로그인
+          {t('login.btn')}
         </button>
 
         <div className="login-footer">
-          계정이 없으신가요?{' '}
-          <button className="login-link" onClick={() => navigate('RegisterPage')}>회원가입</button>
+          {t('login.no_account')}{' '}
+          <button className="login-link" onClick={() => navigate('RegisterPage')}>{t('login.go_register')}</button>
         </div>
 
-        <button className="login-back-btn" onClick={() => navigate('MainPage')}>← 메인으로 돌아가기</button>
+        <button className="login-back-btn" onClick={() => navigate('MainPage')}>{t('login.back_to_main')}</button>
       </div>
     </div>
   );

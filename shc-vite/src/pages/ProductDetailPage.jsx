@@ -2,14 +2,16 @@ import { useState, useContext } from 'react';
 import { ProductContext } from '../components/ProductContext.jsx';
 import { CartContext } from '../components/CartContext.jsx';
 import Badge from '../components/Badge.jsx';
+import { useTranslation } from 'react-i18next';
 import './ProductDetailPage.css';
 
 export default function ProductDetailPage({ navigate, product, from, fromPostId }) {
+  const { t } = useTranslation();
   const { getStock, decreaseStock } = useContext(ProductContext);
   const { addToCart } = useContext(CartContext);
   const [selectedQty, setSelectedQty] = useState(1);
 
-  if (!product) return <div className="pd-page"><div className="pd-container">상품을 찾을 수 없습니다.</div></div>;
+  if (!product) return <div className="pd-page"><div className="pd-container">{t('product_detail.not_found')}</div></div>;
 
   // 실시간 재고 상태 가져오기
   const currentStock = getStock(product.id);
@@ -21,7 +23,7 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
     const newQty = selectedQty + amount;
     if (newQty < 1) return;
     if (newQty > currentStock) {
-      alert(`현재 주문 가능한 최대 수량은 ${currentStock}개입니다.`);
+      alert(t('product_detail.qty_limit', { count: currentStock }));
       return;
     }
     setSelectedQty(newQty);
@@ -34,6 +36,13 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
       orderItems: [{ ...product, quantity: selectedQty }],
       fromCart: false,
     });
+  };
+
+  const getBackBtnLabel = () => {
+    if (from === "BoardDetailPage") return t('product_detail.back_to_board');
+    if (from === "MainPage") return t('product_detail.back_to_main');
+    if (from === "HealthRecommendPage") return t('product_detail.back_to_rec');
+    return t('product_detail.back_to_list');
   };
 
   return (
@@ -50,7 +59,7 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
             navigate("ProductListPage");
           }
         }}>
-          {from === "BoardDetailPage" ? "← 게시글로 돌아가기" : from === "MainPage" ? "← 메인으로" : from === "HealthRecommendPage" ? "← 추천 결과로 돌아가기" : "← 상품 목록으로"}
+          {getBackBtnLabel()}
         </button>
 
         <div className="pd-card">
@@ -65,11 +74,11 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
             {/* <div className="pd-tag-wrapper"><Badge /></div> */}
 
             <p className="pd-desc">{product.description}</p>
-            <div className="pd-price">{product.price.toLocaleString()}원</div>
+            <div className="pd-price">{product.price.toLocaleString()}{t('board.currency')}</div>
 
             {/* 수량 및 재고 알림 */}
             <div className="pd-qty-wrapper">
-              <span className="pd-qty-label">수량</span>
+              <span className="pd-qty-label">{t('product_detail.qty')}</span>
               <div className="pd-qty-controls">
                 <button
                   className="pd-qty-btn"
@@ -84,16 +93,16 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
                 >+</button>
               </div>
               <span className="pd-total-price">
-                총 {(product.price * (isOutOfStock ? 0 : selectedQty)).toLocaleString()}원
+                {t('product_detail.total_price')} {(product.price * (isOutOfStock ? 0 : selectedQty)).toLocaleString()}{t('board.currency')}
               </span>
             </div>
 
             {/* 재고 경고 메시지 */}
             <div className="pd-stock-status">
               {isOutOfStock ? (
-                <span className="stock-alert stock-alert--error">⚠️ 현재 품절된 상품입니다.</span>
+                <span className="stock-alert stock-alert--error">{t('product_detail.out_of_stock')}</span>
               ) : isLowStock ? (
-                <span className="stock-alert stock-alert--warn">⚠️ 품절 임박! 현재 {currentStock}개 남았습니다.</span>
+                <span className="stock-alert stock-alert--warn">{t('product_detail.low_stock', { count: currentStock })}</span>
               ) : null}
             </div>
 
@@ -104,13 +113,13 @@ export default function ProductDetailPage({ navigate, product, from, fromPostId 
                 onClick={handleBuyNow}
                 disabled={isOutOfStock}
               >
-                {isOutOfStock ? '품절' : '바로 구매'}
+                {isOutOfStock ? t('product_detail.sold_out') : t('product_detail.buy_now')}
               </button>
               <button className="pd-cart-btn" onClick={() => {
                 addToCart(product, selectedQty);
                 navigate("CartPage", { productId: product.id });
               }}>
-                장바구니
+                {t('product_detail.add_to_cart')}
               </button>
             </div>
           </div>

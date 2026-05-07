@@ -3,6 +3,12 @@
   display: flex;
 }
 
+@media (max-width: 960px) {
+  .reg-page {
+    flex-direction: column;
+  }
+}
+
 /* 좌측 브랜드 영역 */
 .reg-brand {
   flex: 1;
@@ -13,6 +19,14 @@
   padding: 60px 72px;
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 960px) {
+  .reg-brand {
+    padding: 40px 24px;
+    flex: none;
+    min-height: 180px;
+  }
 }
 
 .reg-circle-1 {
@@ -74,6 +88,16 @@
   margin-bottom: 18px;
 }
 
+@media (max-width: 960px) {
+  .reg-brand-title {
+    font-size: 1.625rem;
+    margin-bottom: 8px;
+  }
+  .reg-brand-desc {
+    font-size: 0.875rem;
+  }
+}
+
 .reg-brand-desc {
   font-size: 1.125rem;
   color: rgba(255, 255, 255, 0.75);
@@ -90,6 +114,14 @@
   padding: 48px 52px;
   background: #fff;
   overflow-y: auto;
+}
+
+@media (max-width: 960px) {
+  .reg-form-area {
+    width: 100%;
+    padding: 40px 24px;
+    overflow-y: visible;
+  }
 }
 
 .reg-title {

@@ -2,8 +2,10 @@ import './CartPage.css';
 import { useContext, useState } from 'react';
 import { CartContext } from '../components/CartContext.jsx';
 import { ProductContext } from '../components/ProductContext.jsx';
+import { useTranslation } from 'react-i18next';
 
 export default function CartPage({ navigate, from, category, productId }) {
+  const { t } = useTranslation();
   const { cartItems, removeFromCart, updateCartQuantity } = useContext(CartContext);
   const { decreaseStock, getStock } = useContext(ProductContext);
   const [checkedIds, setCheckedIds] = useState(() => cartItems.map(item => item.id));
@@ -19,7 +21,7 @@ export default function CartPage({ navigate, from, category, productId }) {
 
   const handleOrder = () => {
     if (selectedItems.length === 0) {
-      alert('주문할 상품을 선택해주세요.');
+      alert(t('cart.select_item_alert'));
       return;
     }
     navigate('CheckoutPage', {
@@ -40,14 +42,14 @@ export default function CartPage({ navigate, from, category, productId }) {
             else if (from === "AlarmPage") navigate("AlarmPage");
             else navigate("MainPage");
           }}>
-            ← 이전으로 돌아가기
+            {t('cart.back_btn')}
           </button>
-          <h1 className="cart-title">장바구니</h1>
+          <h1 className="cart-title">{t('cart.title')}</h1>
           <div className="cart-empty">
             <div className="cart-empty-icon">🛒</div>
-            <p className="cart-empty-text">장바구니가 비어있습니다.</p>
+            <p className="cart-empty-text">{t('cart.empty_text')}</p>
             <button className="cart-empty-btn" onClick={() => navigate('ProductListPage')}>
-              상품 둘러보기
+              {t('cart.browse_products')}
             </button>
           </div>
         </div>
@@ -66,9 +68,9 @@ export default function CartPage({ navigate, from, category, productId }) {
           else if (from === "AlarmPage") navigate("AlarmPage");
           else navigate("MainPage");
         }}>
-          ← 이전으로 돌아가기
+          {t('cart.back_btn')}
         </button>
-        <h1 className="cart-title">장바구니</h1>
+        <h1 className="cart-title">{t('cart.title')}</h1>
 
         <div className="cart-list">
           {cartItems.map(item => {
@@ -87,9 +89,9 @@ export default function CartPage({ navigate, from, category, productId }) {
                 </div>
                 <div className="cart-item-info">
                   <div className="cart-item-name">{item.title}</div>
-                  <div className="cart-item-price">{item.price.toLocaleString()}원</div>
+                  <div className="cart-item-price">{item.price.toLocaleString()}{t('board.currency')}</div>
                   {isOutOfStock && (
-                    <div className="cart-item-stock-warn">품절</div>
+                    <div className="cart-item-stock-warn">{t('cart.out_of_stock')}</div>
                   )}
                 </div>
                 <div className="cart-qty-controls">
@@ -105,7 +107,7 @@ export default function CartPage({ navigate, from, category, productId }) {
                     disabled={item.quantity >= stock}
                   >+</button>
                 </div>
-                <div className="cart-item-total">{(item.price * item.quantity).toLocaleString()}원</div>
+                <div className="cart-item-total">{(item.price * item.quantity).toLocaleString()}{t('board.currency')}</div>
                 <button className="cart-item-remove" onClick={() => {
                   removeFromCart(item.id);
                   setCheckedIds(prev => prev.filter(id => id !== item.id));
@@ -117,11 +119,11 @@ export default function CartPage({ navigate, from, category, productId }) {
 
         <div className="cart-summary">
           <div className="cart-summary-row">
-            <span className="cart-summary-label">선택 상품 합계</span>
-            <span className="cart-summary-total">{totalPrice.toLocaleString()}원</span>
+            <span className="cart-summary-label">{t('cart.summary_label')}</span>
+            <span className="cart-summary-total">{totalPrice.toLocaleString()}{t('board.currency')}</span>
           </div>
           <button className="cart-submit-btn" onClick={handleOrder}>
-            {totalPrice.toLocaleString()}원 주문하기
+            {t('cart.order_btn', { amount: totalPrice.toLocaleString() })}
           </button>
         </div>
       </div>

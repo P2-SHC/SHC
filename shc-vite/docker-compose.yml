@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  react-frontend:
+    build: .
+    container_name: react-frontend
+    ports:
+      - "80:80"  # 외부의 80번 포트(웹 기본 포트)를 내부 80번으로 연결
+    restart: always

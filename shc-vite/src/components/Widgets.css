@@ -6,6 +6,13 @@
   flex-shrink: 0;
 }
 
+@media (max-width: 1024px) {
+  .widget-container {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
 .widget {
   border-radius: 20px;
   padding: 20px;
@@ -203,11 +210,21 @@
   gap: 8px;
 }
 
+@media (max-width: 1024px) {
+  .widget__product-list {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* 미니 상품 카드 스타일 */
-.widget__product-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+@media (max-width: 1024px) {
+  .mini-product-card {
+    min-width: 140px;
+    flex: 0 0 auto;
+  }
 }
 
 .mini-product-card {

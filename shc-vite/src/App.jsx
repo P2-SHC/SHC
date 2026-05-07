@@ -14,12 +14,13 @@ import AlarmPage from './pages/AlarmPage.jsx';
 import Header from './components/Header.jsx';
 import AlarmNotifier from './components/AlarmNotifier.jsx';
 import { UserContext } from './components/UserContext.jsx';
-import products from '../public/data/product.json'
+import { ProductContext } from './components/ProductContext.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 
 export default function App() {
   const { currentUser, logout: userLogout } = useContext(UserContext);
+  const { products } = useContext(ProductContext);
   const isLogin = !!currentUser;
 
   const [page, setPage] = useState("MainPage");
