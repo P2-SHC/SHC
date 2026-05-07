@@ -41,7 +41,7 @@
 ### 2.2 핵심 목표
 
 | 목표 | 구현 방향 |
-|------|---------|
+|------|---------| 
 | **접근성(Accessibility)** | WCAG AAA 수준의 가독성, 큰 폰트, 고대비 UI |
 | **직관성(Intuitiveness)** | 카드 기반 UI, 복잡한 페이지 이동 최소화 |
 | **개인화(Personalization)** | 회원 건강 관심사 기반 AI 맞춤 추천 |
@@ -50,7 +50,7 @@
 
 ### 2.3 디자인 원칙
 
-- **Typography**: 기본 폰트 18px 이상, 전역 폰트 크기 조절(0.8x / 1.0x / 1.4x) 지원
+- **Typography**: 기본 폰트 16px 기준, 전역 폰트 크기 조절(0.8x / 1.0x / 1.4x) 지원
 - **Visuals**: 모든 인터랙션 요소 최소 44×44px, 고대비 테두리·아이콘
 - **UX 패턴**: Neo-minimalism, Card-based UI, Soft Glassmorphism(날씨 위젯)
 - **컬러 팔레트**: Sage Green, Soft Beige, Warm Peach 기반의 따뜻한 자연 색상
@@ -63,20 +63,21 @@
 
 | 페이지 | 설명 |
 |--------|------|
-| **메인 페이지** | 인기글 피처링, 최신 게시글, 날씨/미세먼지 위젯, 위치 기반 상품 추천 |
+| **메인 페이지** | 인기글 피처링, 최신 게시글, 날씨/미세먼지 위젯, 날씨 기반 상품 추천 |
 | **게시판 (목록/상세)** | 레시피 / 라이프 / 운동 카테고리, 무한 스크롤, 키워드 검색, 마크다운 렌더링 |
 | **상품 (목록/상세)** | 3열 그리드, 더보기 페이징, 실시간 재고 표시, 바로구매·장바구니 |
 | **장바구니** | 사용자별 분리 저장, 체크박스 선택 주문, 수량 조절 |
 | **주문/결제** | 배송지·결제수단·약관 동의·재고 선검증, 데스크톱/모바일 반응형 |
 | **로그인 / 회원가입** | SHA-256 해싱, 건강 관심사 다중 선택 |
-| **AI 건강 맞춤 추천** | Claude API 기반 상품·게시글·조언 추천, 결과 상태 보존 |
+| **AI 건강 맞춤 추천** | Claude API 기반 상품·게시글·조언 추천, AWS Guardrail 필터링, 결과 상태 보존 |
 | **건강 알리미** | 약 복용 / 혈당 체크 / 혈압 체크 알람 (사용자별 분리) |
 
 ### 3.2 공통 기능
 
-- **헤더**: 폰트 크기 조절 [A A A], 메인 네비게이션, 활성 탭 강조, 로그인 상태 표시
+- **헤더**: 폰트 크기 조절 [작게 기본 크게], 메인 네비게이션, 활성 탭 강조, 로그인 상태 표시, 실시간 시계
 - **날씨 배경(WeatherBackground)**: 7가지 날씨 코드별 풀스크린 애니메이션 (Canvas/CSS)
 - **건강 알리미 팝업(AlarmNotifier)**: 앱 전역 30초 간격 알람 체크, 큐 기반 모달 표시
+- **ScrollToTop**: 스크롤 300px 이상 시 "TOP" 버튼 표시 (7개 주요 페이지에서 활성)
 - **Zen Mode**: 메인 페이지에서 날씨 아이콘 5회 클릭 시 UI 숨김 모드
 
 ---
@@ -100,7 +101,7 @@
 
 | API | 용도 | 환경변수 |
 |-----|------|---------|
-| **Claude AI (Anthropic)** | AI 건강 맞춤 추천 | `VITE_API_URL` |
+| **Claude AI (Anthropic)** | AI 건강 맞춤 추천 (AWS Guardrail 연동) | `VITE_API_URL` |
 | **OpenWeatherMap** | 현재 위치 날씨 정보 | `VITE_WEATHER_API_KEY` |
 | **WAQI (World Air Quality Index)** | 미세먼지(AQI) 정보 | `VITE_DUST_API_KEY` |
 | **geo.ipify.org** | IP 기반 위치 감지 | `VITE_IP_GEOLOCATION_API_KEY` |
@@ -122,16 +123,17 @@
 
 ```
 main.jsx
-└── UserContext.Provider              ← 회원/로그인
-    └── CartContext.Provider          ← 사용자별 장바구니
+└── FontSizeContext.Provider          ← 전역 폰트 (최상위)
+    └── UserContext.Provider          ← 회원/로그인
         └── ProductContext.Provider   ← 상품 재고
-            └── AlarmContext.Provider ← 약/혈당/혈압 알람
-                └── FontSizeContext.Provider ← 전역 폰트
+            └── CartContext.Provider  ← 사용자별 장바구니
+                └── AlarmContext.Provider ← 약/혈당/혈압 알람
                     └── App
                         ├── Header
                         ├── LocationContext.Provider  (페이지 렌더 시)
                         │   └── renderPage()
-                        └── AlarmNotifier             (항상 렌더)
+                        ├── AlarmNotifier             (항상 렌더)
+                        └── ScrollToTop               (주요 페이지에서 렌더)
 ```
 
 ### 5.2 전체 데이터 흐름
@@ -153,7 +155,7 @@ App.jsx (navigate로 페이지 전환)
   │   ├── geo.ipify.org → { lat, lng }
   │   │       ├──▶ OpenWeatherMap → 날씨 + weatherIcon
   │   │       └──▶ WAQI           → 미세먼지 AQI
-  │   └── Claude AI → 맞춤 추천 JSON
+  │   └── Claude AI (AWS Guardrail) → 맞춤 추천 JSON
   │
   └── 페이지 간 데이터 전달
       ├── ProductDetailPage / CartPage  → CheckoutPage (orderItems)
@@ -164,6 +166,7 @@ App.jsx (navigate로 페이지 전환)
 ### 5.3 라우팅(State 기반 SPA)
 
 URL을 변경하지 않고 `App.jsx`의 `useState`로 페이지/파라미터를 관리한다.
+`navigate` 함수에서 `from`은 명시하지 않으면 현재 페이지(`page`)를 자동으로 설정한다.
 
 | state | 용도 |
 |-------|------|
@@ -171,10 +174,10 @@ URL을 변경하지 않고 `App.jsx`의 `useState`로 페이지/파라미터를 
 | `category` | 게시판 카테고리 |
 | `selectedPostId` | 게시글 상세 ID |
 | `productId` | 상품 상세 ID |
-| `from` / `fromPostId` | 돌아가기 분기용 출처 정보 |
+| `from` / `fromPostId` | 돌아가기 분기용 출처 정보 (from은 자동 설정) |
 | `healthSavedState` | AI 추천 결과 보존 |
 | `orderItems` / `fromCart` | 결제 페이지 전달용 |
-| `weatherIcon` | 위젯 추천 키워드 매핑용 날씨 코드 |
+| `weatherIcon` | 날씨 배경 + 위젯 추천 키워드 매핑용 날씨 코드 |
 
 ---
 
@@ -183,13 +186,13 @@ URL을 변경하지 않고 `App.jsx`의 `useState`로 페이지/파라미터를 
 ### 6.1 핵심 데이터 타입
 
 ```ts
-// 사용자
+// 사용자 (shc_users 저장 형태)
 User
 ├── username         : string
 ├── name             : string
-├── passwordHash     : string    // shc_users 전용 (current_user엔 없음)
-├── age?             : number
-└── healthInterests? : string[]  // 회원가입 시 선택한 건강 관심사
+├── password         : string    // SHA-256 해시값 (shc_current_user에는 제외)
+├── age?             : number | null
+└── interests?       : string[]  // 회원가입 시 선택한 건강 관심사
 
 // 상품 (product.json / shc_products)
 Product
@@ -239,7 +242,7 @@ localStorage
 │
 ├── [전역 - 계정 무관]
 │   ├── shc_users                          → User[]
-│   ├── shc_current_user                   → User (passwordHash 제외)
+│   ├── shc_current_user                   → User (password 제외)
 │   ├── shc_products                       → Product[]
 │   └── shc_font_scale                     → "small" | "default" | "large"
 │
@@ -256,13 +259,13 @@ localStorage
 ## 7. 핵심 알고리즘
 
 ### 7.1 메인 페이지 인기글 선정
-날짜 근접도와 조회수를 조합한 점수로 상위 1개 피처링.
+날짜 근접도(현재 날짜와의 차이)가 가장 작은 게시글 우선, 동일 날짜면 조회수가 높은 게시글을 피처링.
 
 ```js
-const featured = [...articles].sort((a, b) => {
-  const dateScore = new Date(b.createdAt) - new Date(a.createdAt);
-  const viewScore = (b.viewCount - a.viewCount) * 86400000; // 1일 가중치
-  return dateScore + viewScore;
+const featuredPost = [...postList].sort((a, b) => {
+  const diffA = Math.abs(today - new Date(a.createdAt));
+  const diffB = Math.abs(today - new Date(b.createdAt));
+  return diffA !== diffB ? diffA - diffB : b.viewCount - a.viewCount;
 })[0];
 ```
 
@@ -293,9 +296,11 @@ products[]
 ### 7.4 AI 건강 맞춤 추천 (Claude API)
 사용자의 건강 상태와 사이트 내 상품/게시글 목록을 프롬프트로 전달, JSON 응답을 파싱.
 
-- **프롬프트 입력**: 선택 건강 키워드 + 자유 입력 + 전체 상품·게시글 목록
+- **프롬프트 입력**: 선택 건강 키워드 + 자유 입력 + 전체 상품·관련 게시글 목록 (최대 20개)
 - **규칙**: 관련성 높은 것만 엄선, 개수 강제 없음(1~4개), 목록 외 추천 금지(프롬프트 어택 방지)
+- **AWS Guardrail**: 헬스케어와 무관한 질문은 서버에서 차단, `blocked` 또는 `guardrailAction` 필드로 감지
 - **응답 형식**: `{ productIds: [], posts: [{ category, id }], comment: "..." }`
+- **JSON 보정**: 문자열 내 줄바꿈, 누락된 쉼표, 후행 쉼표 등을 자동 보정
 - **상태 보존**: 추천 결과를 `App.jsx`의 `healthSavedState`로 저장 → 상품 상세 다녀와도 결과 복구
 
 ### 7.5 결제 — 재고 선검증 후 일괄 차감
@@ -319,6 +324,9 @@ if (fromCart) orderItems.forEach(item => removeFromCart(item.id));
 - `shc_alarm_fired_{username}_{날짜}` 키로 같은 날 같은 알람 중복 발화 방지
 - 동시 알람 큐(`pendingAlarms`) → 순서대로 모달 표시, 대기 개수 표시
 
+### 7.7 날씨 아이콘 코드 한국어 변환
+`weatherDes.json`에서 OpenWeatherMap의 날씨 ID에 해당하는 아이콘 코드와 한국어 설명을 매핑하여 WeatherWidget에 표시한다.
+
 ---
 
 ## 8. 프로젝트 구조
@@ -328,14 +336,17 @@ SHC/
 ├── shc-vite/                          # 메인 애플리케이션
 │   ├── public/
 │   │   └── data/
-│   │       └── product.json           # 상품 데이터
+│   │       ├── product.json           # 상품 데이터
+│   │       ├── weatherDes.json        # 날씨 ID → 한국어 설명 매핑
+│   │       ├── boardIMG/              # 게시글 이미지
+│   │       └── registerIMG/           # 인증 페이지 이미지
 │   ├── src/
 │   │   ├── App.jsx                    # State 기반 라우팅
 │   │   ├── main.jsx                   # Context Provider 계층
 │   │   ├── article/
 │   │   │   └── articleData.json       # 게시글 데이터
 │   │   ├── components/
-│   │   │   ├── Header.jsx             # 전역 GNB
+│   │   │   ├── Header.jsx             # 전역 GNB (시계 포함)
 │   │   │   ├── WeatherBackground.jsx  # 날씨 배경 애니메이션
 │   │   │   ├── AlarmNotifier.jsx      # 전역 알람 팝업
 │   │   │   ├── Widgets.jsx            # 날씨/미세먼지 위젯
@@ -345,9 +356,9 @@ SHC/
 │   │   │   ├── AlarmContext.jsx       # 약/혈당/혈압 알람
 │   │   │   ├── FontSizeContext.jsx    # 전역 폰트 크기
 │   │   │   ├── LocationContext.jsx    # 사용자 위치
-│   │   │   ├── Badge.jsx
-│   │   │   ├── ProductImg.jsx
-│   │   │   └── ScrollToTop.jsx
+│   │   │   ├── Badge.jsx             # 인기 배지
+│   │   │   ├── ProductImg.jsx         # 상품 이미지
+│   │   │   └── ScrollToTop.jsx        # 스크롤 상단 이동 버튼
 │   │   ├── pages/
 │   │   │   ├── MainPage.jsx
 │   │   │   ├── BoardListPage.jsx
@@ -362,7 +373,8 @@ SHC/
 │   │   │   ├── HealthRecommendPage.jsx
 │   │   │   └── AlarmPage.jsx
 │   │   └── styles/
-│   │       └── tokens.js
+│   │       ├── global.css             # 전역 스타일
+│   │       └── tokens.js             # 디자인 토큰
 │   ├── Dockerfile
 │   ├── nginx.conf
 │   ├── package.json
@@ -454,3 +466,4 @@ CMD ["nginx", "-g", "daemon off;"]
 | [DESIGN.md](./DESIGN.md) | 디자인 컨셉, 색상 팔레트, 접근성 가이드라인 |
 | [기능명세서.md](./기능명세서.md) | 페이지별 기능 상세 명세 |
 | [기술구현명세서.md](./기술구현명세서.md) | 핵심 구현 방식, 데이터 흐름, 알고리즘 (개발자용) |
+| [발표자료_다이어그램.md](./발표자료_다이어그램.md) | 자료구조 및 데이터 흐름 다이어그램 |
