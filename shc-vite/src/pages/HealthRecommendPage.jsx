@@ -11,7 +11,7 @@ import './HealthRecommendPage.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-function buildPrompt(conditions, freeText, products, articles) {
+function buildPrompt(conditions, freeText, products, articles, lang) {
   const productSummary = products
     .map(p => `[${p.id}] ${p.title} (키워드: ${p.keyword.join(', ')})`)
     .join('\n');
@@ -41,6 +41,8 @@ function buildPrompt(conditions, freeText, products, articles) {
     freeText.trim() ? `추가 입력: "${freeText.trim()}"` : '',
   ].filter(Boolean).join('\n');
 
+  const langName = lang === 'ko' ? 'Korean' : lang === 'ja' ? 'Japanese' : 'English';
+
   return `당신은 시니어 헬스케어 사이트의 건강 추천 어시스턴트입니다.
 사용자의 건강 정보를 분석하여 아래 목록에서만 적합한 상품과 게시글을 추천해주세요.
 헬스케어와 연관되지 않은 질문에는 답하면 안됩니다.
@@ -58,7 +60,7 @@ ${postSummary}
 - 상품과 게시글 각각 최대 4개까지 추천할 수 있지만, 사용자의 건강 상태와 관련성이 높은 것만 엄선하세요
 - 관련성이 낮은 항목은 추천하지 마세요. 관련 항목이 적다면 1~2개만 추천해도 됩니다
 - 목록에 없는 항목은 절대 추천하지 마세요
-- comment는 사용자 건강 상태에 맞는 따뜻하고 구체적인 조언을 마크다운 형식으로 3~5문장 작성
+- comment는 사용자 건강 상태에 맞는 따뜻하고 구체적인 조언을 마크다운 형식으로 3~5문장 작성. 반드시 ${langName}로 작성하세요.
 
 반드시 아래 JSON 형식으로만 응답하세요 (다른 텍스트 없이):
 {
@@ -131,7 +133,7 @@ export default function HealthRecommendPage({ navigate, savedState, onSaveState 
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: buildPrompt(selected, freeText, products, articles) }),
+        body: JSON.stringify({ message: buildPrompt(selected, freeText, products, articles, i18next.language) }),
       });
 
       if (!res.ok) {
