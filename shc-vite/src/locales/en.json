@@ -182,7 +182,8 @@
     "edit": "Edit",
     "delete": "Delete",
     "login": "Login",
-    "add": "Add"
+    "add": "Add",
+    "popular": "Popular"
   },
   "alarm": {
     "page_title": "🔔 Healthcare Alarm",

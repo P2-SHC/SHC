@@ -182,7 +182,8 @@
     "edit": "수정",
     "delete": "삭제",
     "login": "로그인",
-    "add": "추가"
+    "add": "추가",
+    "popular": "인기"
   },
   "alarm": {
     "page_title": "🔔 건강 알리미",

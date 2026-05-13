@@ -147,7 +147,7 @@ export function WeatherWidget({ navigate, onWeatherLoad, onIconClick, className 
   //geoIpify에서 가져온 위도 경도를 사용하여 openWeatherMap에서 날씨 정보를 가져옵니다.
   const { locationData, loading } = useContext(LocationContext);
   const [weatherData, setWeatherData] = useState(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     // 위치 데이터가 로드된 후에만 날씨를 가져옵니다.
@@ -180,9 +180,11 @@ export function WeatherWidget({ navigate, onWeatherLoad, onIconClick, className 
     return <div className="widget widget--blue">{t('widgets.weather_loading')}</div>;
   }
 
-  // weatherDes.json에서 현재 날씨 ID와 일치하는 한국어 설명을 찾습니다.
   const weatherInfo = weatherDescriptions.find(item => item.id === weatherData.weather[0].id);
-  const description = weatherInfo ? weatherInfo.description : weatherData.weather[0].description;
+  const lang = i18n.language;
+  const description = weatherInfo
+    ? (lang === 'en' ? weatherInfo.description_en : lang === 'ja' ? weatherInfo.description_ja : weatherInfo.description)
+    : weatherData.weather[0].description;
   const displayCity = getCleanCityName(locationData?.location?.city);
 
   return (
