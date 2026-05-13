@@ -1,9 +1,11 @@
 import { useContext, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AlarmContext } from './AlarmContext.jsx';
 import { UserContext } from './UserContext.jsx';
 import './AlarmNotifier.css';
 
 export default function AlarmNotifier() {
+  const { t } = useTranslation();
   const { currentUser } = useContext(UserContext);
   const { medicines, bloodSugarAlarms, bloodPressureAlarms, decreaseMedicineCount } = useContext(AlarmContext);
 
@@ -56,7 +58,7 @@ export default function AlarmNotifier() {
         const fireKey = `med_${med.id}_${time}`;
         if (time === currentTime && !firedRef.current.has(fireKey)) {
           firedRef.current.add(fireKey);
-          newAlarms.push({ id: fireKey, type: 'medicine', message: `${med.name} 복용 시간입니다`, medicineId: med.id });
+          newAlarms.push({ id: fireKey, type: 'medicine', medName: med.name, medicineId: med.id });
         }
       });
     });
@@ -65,7 +67,7 @@ export default function AlarmNotifier() {
       const fireKey = `blood_sugar_${alarm.id}_${alarm.time}`;
       if (alarm.time === currentTime && !firedRef.current.has(fireKey)) {
         firedRef.current.add(fireKey);
-        newAlarms.push({ id: fireKey, type: 'blood_sugar', message: '혈당 체크 시간입니다' });
+        newAlarms.push({ id: fireKey, type: 'blood_sugar' });
       }
     });
 
@@ -73,7 +75,7 @@ export default function AlarmNotifier() {
       const fireKey = `blood_pressure_${alarm.id}_${alarm.time}`;
       if (alarm.time === currentTime && !firedRef.current.has(fireKey)) {
         firedRef.current.add(fireKey);
-        newAlarms.push({ id: fireKey, type: 'blood_pressure', message: '혈압 체크 시간입니다' });
+        newAlarms.push({ id: fireKey, type: 'blood_pressure' });
       }
     });
 
@@ -103,17 +105,24 @@ export default function AlarmNotifier() {
   const current = pendingAlarms[0];
   const icons = { medicine: '💊', blood_sugar: '🩸', blood_pressure: '❤️' };
 
+  const getMessage = (alarm) => {
+    if (alarm.type === 'medicine') return t('alarm.notify_medicine', { name: alarm.medName });
+    if (alarm.type === 'blood_sugar') return t('alarm.notify_blood_sugar');
+    if (alarm.type === 'blood_pressure') return t('alarm.notify_blood_pressure');
+    return '';
+  };
+
   return (
     <div className="alarm-overlay">
       <div className="alarm-modal">
         <div className="alarm-modal__icon">{icons[current.type]}</div>
-        <h2 className="alarm-modal__title">건강 알리미</h2>
-        <p className="alarm-modal__message">{current.message}</p>
+        <h2 className="alarm-modal__title">{t('header.alarm')}</h2>
+        <p className="alarm-modal__message">{getMessage(current)}</p>
         {pendingAlarms.length > 1 && (
-          <p className="alarm-modal__more">+{pendingAlarms.length - 1}개 알림 대기 중</p>
+          <p className="alarm-modal__more">{t('alarm.more_pending', { count: pendingAlarms.length - 1 })}</p>
         )}
         <button className="btn btn--primary alarm-modal__btn" onClick={() => dismiss(current)}>
-          확인
+          {t('common.confirm')}
         </button>
       </div>
     </div>

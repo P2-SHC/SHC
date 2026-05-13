@@ -183,6 +183,7 @@
     "delete": "삭제",
     "login": "로그인",
     "add": "추가",
+    "confirm": "확인",
     "popular": "인기"
   },
   "alarm": {
@@ -211,7 +212,11 @@
     "remaining_count": "잔여 {{count}}개",
     "med_taken": "복용 완료",
     "blood_sugar_title": "혈당 체크 알림",
-    "blood_pressure_title": "혈압 체크 알림"
+    "blood_pressure_title": "혈압 체크 알림",
+    "notify_medicine": "{{name}} 복용 시간입니다",
+    "notify_blood_sugar": "혈당 체크 시간입니다",
+    "notify_blood_pressure": "혈압 체크 시간입니다",
+    "more_pending": "+{{count}}개 알림 대기 중"
   },
   "login": {
     "brand_title": "건강한 내일을<br />시니어헬스케어와<br />함께 시작하세요",

@@ -183,6 +183,7 @@
     "delete": "Delete",
     "login": "Login",
     "add": "Add",
+    "confirm": "Confirm",
     "popular": "Popular"
   },
   "alarm": {
@@ -211,7 +212,11 @@
     "remaining_count": "{{count}} left",
     "med_taken": "Taken",
     "blood_sugar_title": "Blood Sugar Check Alarm",
-    "blood_pressure_title": "Blood Pressure Check Alarm"
+    "blood_pressure_title": "Blood Pressure Check Alarm",
+    "notify_medicine": "Time to take {{name}}",
+    "notify_blood_sugar": "Time to check your blood sugar",
+    "notify_blood_pressure": "Time to check your blood pressure",
+    "more_pending": "+{{count}} more notification(s) pending"
   },
   "login": {
     "brand_title": "Start your<br />healthy tomorrow<br />with Senior HealthCare",

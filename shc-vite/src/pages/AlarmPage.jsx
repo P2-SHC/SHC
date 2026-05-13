@@ -151,7 +151,7 @@ function MedicineForm({ initial = EMPTY_FORM, onSubmit, onCancel }) {
               value={newTime}
               onChange={e => setNewTime(e.target.value)}
             />
-            <button type="button" className="btn btn--ghost" onClick={addTime}>{t('alarm.add')}</button>
+            <button type="button" className="btn btn--ghost" onClick={addTime}>{t('common.add')}</button>
           </div>
         </div>
       </div>

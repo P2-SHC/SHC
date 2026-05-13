@@ -183,6 +183,7 @@
     "delete": "削除",
     "login": "ログイン",
     "add": "追加",
+    "confirm": "確認",
     "popular": "人気"
   },
   "alarm": {
@@ -211,7 +212,11 @@
     "remaining_count": "残り {{count}}個",
     "med_taken": "服用完了",
     "blood_sugar_title": "血糖チェックアラーム",
-    "blood_pressure_title": "血圧チェックアラーム"
+    "blood_pressure_title": "血圧チェックアラーム",
+    "notify_medicine": "{{name}}の服用時間です",
+    "notify_blood_sugar": "血糖チェックの時間です",
+    "notify_blood_pressure": "血圧チェックの時間です",
+    "more_pending": "+{{count}}件の通知が待機中"
   },
   "login": {
     "brand_title": "健康な明日を<br />シニアヘルスケアと<br />一緒に始めましょう",
