@@ -15,6 +15,7 @@
     "exercise": "運動",
     "products": "商品",
     "ai_recommend": "AI健康推薦",
+    "alarm": "健康アラーム",
     "current_time": "現在時刻",
     "user_suffix": "様"
   },
@@ -186,7 +187,7 @@
   },
   "alarm": {
     "page_title": "🔔 健康アラーム",
-    "page_desc": "薬の服用、血糖、血압チェックのアラームを設定してください",
+    "page_desc": "薬の服用、血糖、血圧チェックのアラームを設定してください",
     "tab_med": "💊 服用アラーム",
     "tab_blood_sugar": "🩸 血糖チェック",
     "tab_blood_pressure": "❤️ 血圧チェック",
