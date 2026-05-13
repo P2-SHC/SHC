@@ -6,11 +6,21 @@ const USERS_KEY = 'shc_users';
 const CURRENT_USER_KEY = 'shc_current_user';
 
 async function hashPassword(password) {
-  const encoded = new TextEncoder().encode(password);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
-  return Array.from(new Uint8Array(hashBuffer))
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('');
+  if (typeof crypto !== 'undefined' && crypto.subtle) {
+    const encoded = new TextEncoder().encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
+    return Array.from(new Uint8Array(hashBuffer))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+  }
+  // crypto.subtle은 HTTPS 또는 localhost에서만 사용 가능
+  // HTTP 환경(비보안 컨텍스트)에서의 폴백: 간단한 해시 (데모용)
+  let hash = 5381;
+  for (let i = 0; i < password.length; i++) {
+    hash = ((hash << 5) + hash) ^ password.charCodeAt(i);
+    hash = hash >>> 0;
+  }
+  return hash.toString(16).padStart(8, '0') + password.length.toString(16);
 }
 
 export function UserProvider({ children }) {
